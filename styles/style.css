@@ -1,1 +1,17 @@
 
+#mainNav {
+    background-color: #003e6eff;
+    color: white;
+}
+
+.makeWhite {
+    color:white;
+}
+
+.makeLightGrey {
+    color:lightGrey;
+}
+
+#hamburg {
+    background-color: rgb(22, 121, 196);
+}
