@@ -1,7 +1,18 @@
+.bg-info {
+    background-color: #003e6eff !important;
+}
 
 #mainNav {
     background-color: #003e6eff;
-    color: white;
+}
+
+.navbar {
+    color:white;
+}
+
+.btn {
+    background-color: #F17C0E;
+    border: none;
 }
 
 .makeWhite {
@@ -14,4 +25,8 @@
 
 #hamburg {
     background-color: rgb(22, 121, 196);
+}
+
+#copyright {
+    padding: 0 2%;
 }

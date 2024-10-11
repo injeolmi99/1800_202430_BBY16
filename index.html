@@ -2,92 +2,104 @@
 <html lang="en">
 
 <head>
-    <title>My BCIT Project</title>
-    <meta name="comp1800 template" content="My 1800 App">
+  <title>My BCIT Project</title>
+  <meta name="comp1800 template" content="My 1800 App">
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap Library CSS CDN go here -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  <!-- Bootstrap Library CSS CDN go here -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- Boostrap Library JS CDN  go here -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <!-- Boostrap Library JS CDN  go here -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
-    <!-- Other libraries go here -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Other libraries go here -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Link to styles of your own -->
-    <link rel="stylesheet" href="./styles/style.css">
+  <!-- Google Icons (Material Design)-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Link to styles of your own -->
+  <link rel="stylesheet" href="./styles/style.css">
 
 </head>
 
 <body>
 
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
-    <!------------------------------>
-    <!-- Stuff for body goes here -->
+  <!------------------------------>
+  <!-- Your HTML Layout go here -->
+  <!------------------------------>
+  <!-- Stuff for body goes here -->
 
-    <nav id="mainNav" class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand makeWhite" href="#">BCIT Clubs!</a>
-            <button id="hamburg" class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link makeLightGrey" href="#">Support</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link makeLightGrey" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link makeLightGrey" href="#">FAQ</a>
-                    </li>
-                </ul>
-                <!-- <form class="d-flex">
+  <nav id="mainNav" class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand makeWhite" href="#">BCIT Clubs!</a>
+      <button id="hamburg" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link makeLightGrey" href="#">Support</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link makeLightGrey" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link makeLightGrey" href="#">FAQ</a>
+          </li>
+        </ul>
+        <!-- <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form> -->
-            </div>
-        </div>
-    </nav>
-
-    <div class="container my-5">
-      <div class="p-5 text-center rounded-3">
-        <h1 class="text-body-emphasis">Welcome to BCIT Clubs!</h1>
-        <p class="col-lg-8 mx-auto fs-5 text-muted">
-          We're excited to have you join our community! Whether you're here to connect, learn, or share, you've come to the right place. Dive into events, discover exclusive content, and meet new friends who share your passions.
-        </p>      
       </div>
     </div>
+  </nav>
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-          <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-          </a>
-          <span class="mb-3 mb-md-0 text-body-secondary">© 2024 BBY-16</span>
-        </div>
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-          <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-house-fill"></i></use></svg></a></li>
-          <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-facebook"></i></a></li>
-          <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-instagram"></i></use></svg></a></li>
-        </ul>
-      </footer>
+  <div class="container my-5">
+    <div class="p-5 text-center rounded-3">
+      <h1 class="text-body-emphasis">Welcome to BCIT Clubs!</h1>
+      <p class="col-lg-8 mx-auto fs-5 text-muted">
+        We're excited to have you join our community! Whether you're here to connect, learn, or share, you've come to
+        the right place. Dive into events, discover exclusive content, and meet new friends who share your passions.
+      </p>
+      <button class="btn btn-primary btn-lg" type="button">Login</button>
+    </div>
+  </div>
 
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
+  <footer id="copyright" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <span class="mb-3 mb-md-0 text-body-secondary">© 2024 BBY-16</span>
+    </div>
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-house-fill"></i></use></svg></a></li>
+      <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-facebook"></i></a></li>
+      <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-instagram"></i></use></svg></a></li>
+    </ul>
+  </footer>
 
-    <!-- Link to scripts of your own -->
-    <!-- <script src="./scripts/script.js"></script> -->
+  <div class="container justify-content-evenly py-3">
+    <footer class="navbar justify-content-evenly bg-info fixed-bottom">
+      <span class="material-icons">home</span>
+      <span class="material-icons">calendar_today</span>
+      <span class="material-icons">search</span>
+      <span class="material-icons">settings</span>
+  </div>
+  </footer>
+
+  <!---------------------------------------------->
+  <!-- Your own JavaScript functions go here    -->
+  <!---------------------------------------------->
+
+  <!-- Link to scripts of your own -->
+  <!-- <script src="./scripts/script.js"></script> -->
 
 </body>
 
