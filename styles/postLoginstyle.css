@@ -1,0 +1,55 @@
+.bg-info {
+    background-color: #003e6eff !important;
+}
+
+#mainNav {
+    background-color: #003e6eff;
+}
+
+.navbar {
+    color:white;
+}
+
+.btn {
+    background-color: #F17C0E;
+    border: none;
+}
+
+.makeWhite {
+    color:white;
+}
+
+.makeLightGrey {
+    color:lightGrey;
+}
+
+#hamburg {
+    background-color: rgb(22, 121, 196);
+}
+
+#copyright {
+    padding: 0 2%;
+}
+
+/* everything above here was copy pasted from style.css and I have not yet checked how much is actually needed */
+
+
+/* icon styling for lower nav */
+.lowerNavImage {
+    max-width: 30px;
+    max-height: 30px;
+    object-fit: contain;
+    margin: 0;
+}
+
+/* styling for the buttons on the navbar and sizing for the buttons */
+.lowerNavButtons {
+  border: none;
+  height: 30px;
+  width: 20%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0;
+  background-color: #003d6bff;
+}
