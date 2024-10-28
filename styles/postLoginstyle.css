@@ -4,15 +4,14 @@
 
 #mainNav {
     background-color: #003e6eff;
+    /* it took me too long to figure out how to stick the nav to the top without breaking anything (｡>﹏<｡) */
+    position: sticky;
+    top: 0;
+    overflow: hidden;
 }
 
 .navbar {
     color:white;
-}
-
-.btn {
-    background-color: #F17C0E;
-    border: none;
 }
 
 .makeWhite {
@@ -31,8 +30,44 @@
     padding: 0 2%;
 }
 
-/* everything above here was copy pasted from style.css and I have not yet checked how much is actually needed */
+/* a lot of stuff above here was copy pasted from style.css and I have not yet checked how much is actually needed */
 
+
+/* styling for the unnoficial / official buttons*/
+.words {
+    border: none;
+    height: 30px;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0px;
+    margin-bottom: 10px;
+    background-color: #003d6bff; 
+    border: solid grey 1px;
+    color: white;
+  }
+
+.top-lock {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 23px;
+}
+
+/* styling for the buttons on the navbar and sizing for the buttons */
+.lowerNavButtons {
+  border: none;
+  height: 30px;
+  width: 25%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0;
+  background-color: #003d6bff; 
+}
 
 /* icon styling for lower nav */
 .lowerNavImage {
@@ -42,14 +77,22 @@
     margin: 0;
 }
 
-/* styling for the buttons on the navbar and sizing for the buttons */
-.lowerNavButtons {
-  border: none;
-  height: 30px;
-  width: 20%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 0;
-  background-color: #003d6bff;
+#clubsList {
+    text-align: center;
+    /* THESE MAKE THE CLUB GROUPS SCROLLABLE */
+    /* overflow: auto; */
+    /* height: 500px;; */
+}
+
+.clubGroup {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.clubGroupButton {
+    width: 80%;
+    height: 100px;
+    border-radius: 10px;
+    font-size: 20pt;
 }
