@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    vertical-align: baseline;
+}
+
+.navbar {
+    background-color: #003d6bff;
+}
+
+#mainNav {
+    background-color: #003e6eff;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.nav-link {
+    color :lightGrey;
+}
+
+#hamburg {
+    background-color: rgb(22, 121, 196);
+}
+
+.btn {
+    background-color: #F17C0E;
+    color: white;
+    border: none;
+}
+
+#copyright {
+    padding: 0 2%;
+}
+
+/*
+content styling
+*/
+
+
+/* styling for the unnoficial / official buttons*/
+.club-toggle {
+    display: flex;
+    flex-direction: row;
+    background-color: #808385;
+    /* border: solid grey 1px; */
+}
+
+.words:hover {
+    background-color: #F17C0E;
+    transition: 0.3s;
+}
+
+.words {
+    display: flex;
+    border: none;
+    height: 30px;
+    width: 50%;
+    padding: 1.25rem 0;
+    text-align: center;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: transparent;
+}
+
+/* styling for the bottom navbar & buttons */
+#bottomNav {
+    margin: 0;
+    padding: 0;
+    min-width: 100vw;
+}
+
+#bottomButtons {
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.lowerNavButton {
+    height: 100%;
+    padding: 1.5rem 0;
+    flex: 1;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #003d6bff; 
+}
+
+.lowerNavButton:hover {
+    background-color: #F17C0E;
+    transition: 0.3s;
+}
+
+/* icon styling for lower nav */
+.lowerNavImage {
+    max-width: 30px;
+    max-height: 30px;
+    object-fit: contain;
+    margin: 0;
+}

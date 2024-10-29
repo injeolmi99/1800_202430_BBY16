@@ -17,7 +17,7 @@
     */
     position: sticky;
     top: 0;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .navbar-brand {
@@ -34,6 +34,7 @@
 
 .btn {
     background-color: #F17C0E;
+    color: white;
     border: none;
 }
 

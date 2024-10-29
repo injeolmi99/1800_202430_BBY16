@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Calendar</title>
+  <meta name="comp1800 template" content="My 1800 App">
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap Library CSS CDN go here -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Boostrap Library JS CDN  go here -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <!-- Other libraries go here -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Icons (Material Design)-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Link to styles of your own -->
+  <link rel="stylesheet" href="./styles/calendarStyle.css">
+
+</head>
+
+<body>
+
+  <!------------------------------>
+  <!-- Your HTML Layout go here -->
+  <!------------------------------>
+  <!-- Stuff for body goes here -->
+
+  <!--TOP NAVBAR-->
+  <nav id="mainNav" class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">BCIT Clubs!</a>
+      <button id="hamburg" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">My Clubs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Upcoming Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Find Clubs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Support</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--CALENDAR-->
+  <div>
+
+  </div>
+
+  <!--BOTTOM NAVBAR-->
+  <div id="bottomNav" class="container justify-content-evenly fixed-bottom">
+    <div class="club-toggle">
+      <button class="words">Official</button>
+      <button class="words">Unofficial</button>
+    </div>
+    <footer id="bottomButtons" class="navbar">
+      <!--Icons are from Icons8 and flaticon if I ever get around to adding a link to their page like im supposed to-->
+      <!--I did have to edit all the flaticons though so idk if that means there mine ?-->
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-calendar-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-people-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-account-icon.png"></button>
+    </footer>
+  </div>
+
+  <!---------------------------------------------->
+  <!-- Your own JavaScript functions go here    -->
+  <!---------------------------------------------->
+
+  <!-- Link to scripts of your own -->
+  <!-- <script src="./scripts/script.js"></script> -->
+  <script src="./scripts/firebaseAPI_Team16.js"></script>
+
+</body>
+
+</html>
