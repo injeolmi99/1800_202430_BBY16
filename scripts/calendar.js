@@ -50,12 +50,12 @@ var flatpickr = $('#calendar .placeholder').flatpickr({
   }
 })
 
-eventCaledarResize($(window));
+eventCalendarResize($(window));
 $(window).on('resize', function() {
-  eventCaledarResize($(this))
+  eventCalendarResize($(this))
 })
 
-function eventCaledarResize($el) {
+function eventCalendarResize($el) {
   var width = $el.width()
   if(flatpickr.selectedDates.length) {
     flatpickr.clear()
