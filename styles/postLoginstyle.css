@@ -1,84 +1,52 @@
-.bg-info {
-    background-color: #003e6eff !important;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    vertical-align: baseline;
+}
+
+.navbar {
+    background-color: #003d6bff;
 }
 
 #mainNav {
     background-color: #003e6eff;
-    /* it took me too long to figure out how to stick the nav to the top without breaking anything (｡>﹏<｡) */
+    /*
+    it took me too long to figure out how to stick the nav to the top without breaking anything (｡>﹏<｡)
+    yayay it looks great!! c:
+    */
     position: sticky;
     top: 0;
-    overflow: hidden;
+    overflow: hidden; 
 }
 
-.navbar {
-    color:white;
+.navbar-brand {
+    color: white;
 }
 
-.makeWhite {
-    color:white;
-}
-
-.makeLightGrey {
-    color:lightGrey;
+.nav-link {
+    color :lightGrey;
 }
 
 #hamburg {
     background-color: rgb(22, 121, 196);
 }
 
+.btn {
+    background-color: #F17C0E;
+    border: none;
+}
+
 #copyright {
     padding: 0 2%;
 }
 
-/* a lot of stuff above here was copy pasted from style.css and I have not yet checked how much is actually needed */
-
-
-/* styling for the unnoficial / official buttons*/
-.words {
-    border: none;
-    height: 30px;
-    width: 50%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: 0px;
-    margin-bottom: 10px;
-    background-color: #003d6bff; 
-    border: solid grey 1px;
-    color: white;
-  }
-
-.top-lock {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    width: 100%;
-    height: 23px;
-}
-
-/* styling for the buttons on the navbar and sizing for the buttons */
-.lowerNavButtons {
-  border: none;
-  height: 30px;
-  width: 25%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 0;
-  background-color: #003d6bff; 
-}
-
-/* icon styling for lower nav */
-.lowerNavImage {
-    max-width: 30px;
-    max-height: 30px;
-    object-fit: contain;
-    margin: 0;
-}
-
+/*
+content (clubs list) styling
+*/
 #clubsList {
     text-align: center;
+    padding-bottom: 8rem;
     /* THESE MAKE THE CLUB GROUPS SCROLLABLE */
     /* overflow: auto; */
     /* height: 500px;; */
@@ -95,4 +63,80 @@
     height: 100px;
     border-radius: 10px;
     font-size: 20pt;
+}
+
+/* styling for the unnoficial / official buttons*/
+.club-toggle {
+    display: flex;
+    flex-direction: row;
+    background-color: #808385;
+    /* border: solid grey 1px; */
+}
+
+.words:hover {
+    background-color: #F17C0E;
+    transition: 0.3s;
+}
+
+.words {
+    display: flex;
+    border: none;
+    height: 30px;
+    width: 50%;
+    padding: 1.25rem 0;
+    text-align: center;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: transparent;
+}
+
+/*
+what does this do? i don't see a corresponding class in the html
+*/
+/* .top-lock {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 23px;
+} */
+
+/* styling for the bottom navbar & buttons */
+#bottomNav {
+    margin: 0;
+    padding: 0;
+    min-width: 100vw;
+}
+
+#bottomButtons {
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.lowerNavButton {
+    height: 100%;
+    padding: 1.5rem 0;
+    flex: 1;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #003d6bff; 
+}
+
+.lowerNavButton:hover {
+    background-color: #F17C0E;
+    transition: 0.3s;
+}
+
+/* icon styling for lower nav */
+.lowerNavImage {
+    max-width: 30px;
+    max-height: 30px;
+    object-fit: contain;
+    margin: 0;
 }

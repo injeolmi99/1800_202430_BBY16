@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Clubs list</title>
+  <title>Clubs List</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -24,7 +24,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Link to styles of your own -->
-  <link rel="stylesheet" href="./styles/postLoginstyle.css">
+  <link rel="stylesheet" href="./styles/postLoginStyle.css">
 
 </head>
 
@@ -38,7 +38,7 @@
   <!--TOP NAVBAR-->
   <nav id="mainNav" class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-      <a class="navbar-brand makeWhite" href="#">BCIT Clubs!</a>
+      <a class="navbar-brand" href="#">BCIT Clubs!</a>
       <button id="hamburg" class="navbar-toggler" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -47,25 +47,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">Support</a>
+            <a class="nav-link" href="#">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">About</a>
+            <a class="nav-link" href="#">My Clubs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">FAQ</a>
+            <a class="nav-link" href="#">Upcoming Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">See the Clubs You're in</a>
+            <a class="nav-link" href="#">Find Clubs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">Your Upcoming Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">Find Clubs For You</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link makeLightGrey" href="#">Your Profile</a>
+            <a class="nav-link" href="#">Support</a>
           </li>
         </ul>
         <!-- <form class="d-flex">
@@ -104,7 +98,8 @@
   </div>
 
   <!--COPYRIGHT FOOTER-->
-  <footer id="copyright" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+  <!-- commented this out because it's a bit awkward to have in combination with the sticky footer -->
+  <!-- <footer id="copyright" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="col-md-4 d-flex align-items-center">
       <span class="mb-3 mb-md-0 text-body-secondary">© 2024 BBY-16</span>
     </div>
@@ -113,23 +108,25 @@
       <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-facebook"></i></a></li>
       <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-instagram"></i></use></svg></a></li>
     </ul>
-  </footer>
+  </footer> -->
 
-  <div class="container justify-content-evenly py-3">
-    
-  </div>
-
+  <!-- <div class="container justify-content-evenly py-3">
+  not sure what this empty div does?    
+  </div> -->
+  
   <!--BOTTOM NAVBAR-->
-  <div class="container justify-content-evenly py-3">
-    <footer class="navbar justify-content-evenly bg-info fixed-bottom">
-      <button class="words" >Official</button> 
-      <button class="words" >Unofficial</button>
+  <div id="bottomNav" class="container justify-content-evenly fixed-bottom">
+    <div class="club-toggle">
+      <button class="words">Official</button>
+      <button class="words">Unofficial</button>
+    </div>
+    <footer id="bottomButtons" class="navbar">
       <!--Icons are from Icons8 and flaticon if I ever get around to adding a link to their page like im supposed to-->
       <!--I did have to edit all the flaticons though so idk if that means there mine ?-->
-      <button class="lowerNavButtons" ><img class="lowerNavImage" src="./images/white-home-icon.png"></button> 
-      <button class="lowerNavButtons" ><img class="lowerNavImage" src="./images/white-calendar-icon.png"></button>
-      <button class="lowerNavButtons"><img class="lowerNavImage" src="./images/white-people-icon.png"></button>
-      <button class="lowerNavButtons"><img class="lowerNavImage" src="./images/white-account-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-calendar-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-people-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-account-icon.png"></button>
     </footer>
   </div>
 
