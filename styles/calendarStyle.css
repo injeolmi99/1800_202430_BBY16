@@ -14,6 +14,7 @@
     position: sticky;
     top: 0;
     overflow: hidden;
+    z-index: 9999;
 }
 
 .navbar-brand {
@@ -21,7 +22,7 @@
 }
 
 .nav-link {
-    color :lightGrey;
+    color: lightGrey;
 }
 
 #hamburg {
@@ -41,7 +42,188 @@
 /*
 content (calendar) styling
 */
+.cal-modal-container {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding-bottom: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
 
+.cal-modal {
+    background: #1D252C;
+    color: #fff;
+    padding: 40px 60px;
+    text-align: center;
+
+    h3 {
+        font-size: 37px;
+        font-weight: 900;
+        margin: 0 0 1rem;
+    }
+}
+
+#calendar {
+    display: inline-block;
+
+    .placeholder {
+        display: none;
+        width: 300px;
+    }
+
+    .flatpickr-calendar {
+        background: none;
+        border: 0;
+        border-radius: 0;
+        ;
+        box-shadow: none;
+        color: #fff;
+        top: 0;
+
+        .flatpickr-innerContainer {
+            overflow: visible;
+
+            .flatpickr-weekdays {
+                overflow: visible;
+            }
+        }
+
+        .flatpickr-months {
+            .flatpickr-month {
+                color: inherit;
+                margin-bottom: 10px;
+
+                .flatpickr-current-month {
+                    font-size: 16px;
+
+                    .numInputWrapper {
+                        display: none;
+                    }
+                }
+            }
+
+            .flatpickr-prev-month, .flatpickr-next-month {
+                top: calc(50% - 23px);
+
+                svg {
+                    height: 46px;
+                    width: 46px;
+
+                    path {
+                        fill: #F17C0E;
+                    }
+                }
+            }
+
+            .flatpickr-prev-month {
+                left: -60px;
+            }
+
+            .flatpickr-next-month {
+                right: -60px;
+            }
+        }
+
+        .flatpickr-weekdays {
+            .flatpickr-weekdaycontainer {
+                max-width: 307.875px;
+                padding: 0 10px;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    background: #343F48;
+                    position: absolute;
+                    top: -32px;
+                    bottom: -230px;
+                    right: 0;
+                    width: 1px;
+                }
+
+                &:last-child::after {
+                    content: none;
+                }
+
+                .flatpickr-weekday {
+                    color: #fff;
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .dayContainer {
+            box-shadow: none;
+            padding: 0 10px;
+            position: static;
+
+            &:last-child::after {
+                content: none;
+            }
+        }
+
+        .flatpickr-day {
+            background: #fff;
+            border: 0;
+            color: #1D252C;
+            font-weight: 500;
+            transition: color .1s, background .1s;
+
+            &:hover {
+                background: #F17C0E;
+                color: #fff;
+            }
+
+            &.flatpickr-disabled, &.flatpickr-disabled:hover {
+                background: none;
+                color: #fff;
+                cursor: default;
+            }
+
+            &.selected:not(.hidden) {
+                &, &:hover, &:focus {
+                    background: #F17C0E;
+                    color: #fff;
+                }
+            }
+
+            &.nextMonthDay, &.prevMonthDay {
+                background: none;
+                color: rgba(#CFD2D3, .1) !important;
+                cursor: default;
+                visibility: visible;
+            }
+        }
+    }
+
+    .calendar-events {
+        display: block;
+        justify-content: space-around;
+        margin-top: 30px;
+        min-height: 36px;
+
+        @media screen and (min-width: 992px) {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .event {
+            font-size: 29px;
+
+            .date {
+                color: #fff;
+                font-weight: 600;
+            }
+
+            .location {
+                color: #F17C0E;
+                font-weight: 800;
+                letter-spacing: -.8px;
+            }
+        }
+    }
+}
 
 /* styling for the unnoficial / official buttons*/
 .club-toggle {
@@ -52,7 +234,7 @@ content (calendar) styling
 }
 
 .words:hover {
-    background-color: #F17C0E;
+    background-color: #707070;
     transition: 0.3s;
 }
 
@@ -91,7 +273,7 @@ content (calendar) styling
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    background-color: #003d6bff; 
+    background-color: #003d6bff;
 }
 
 .lowerNavButton:hover {

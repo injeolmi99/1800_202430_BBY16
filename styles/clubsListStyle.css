@@ -55,15 +55,22 @@ content (clubs list) styling
 
 .clubGroup {
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 .clubGroupButton {
     width: 80%;
-    height: 100px;
+    height: 150px;
+    border: none;
     border-radius: 10px;
+    padding: 0 5%;
     font-size: 20pt;
+    background-color: #c1c3c5;
+}
+
+.clubGroupButton:hover {
+    box-shadow: 0px 0px 12px rgb(81, 81, 81);
+    transition: 0.3s;
 }
 
 /* styling for the unnoficial / official buttons*/
@@ -75,7 +82,7 @@ content (clubs list) styling
 }
 
 .words:hover {
-    background-color: #F17C0E;
+    background-color: #707070;
     transition: 0.3s;
 }
 

@@ -25,6 +25,7 @@
 
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/calendarStyle.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 
@@ -67,8 +68,15 @@
   </nav>
 
   <!--CALENDAR-->
-  <div>
-
+  <div class="cal-modal-container">
+    <div class="cal-modal">
+      <h3>UPCOMING EVENTS</h3>
+      <div id="calendar">
+        <div class="placeholder"></div>
+        <div class="calendar-events">
+        </div>
+      </div>
+    </div>
   </div>
 
   <!--BOTTOM NAVBAR-->
@@ -93,6 +101,9 @@
 
   <!-- Link to scripts of your own -->
   <!-- <script src="./scripts/script.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="./scripts/calendar.js"></script>
   <script src="./scripts/firebaseAPI_Team16.js"></script>
 
 </body>
