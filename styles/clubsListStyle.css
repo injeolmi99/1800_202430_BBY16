@@ -148,3 +148,8 @@ what does this do? i don't see a corresponding class in the html
     object-fit: contain;
     margin: 0;
 }
+a{
+    display:block;
+    text-decoration: none;
+    color:black;
+}

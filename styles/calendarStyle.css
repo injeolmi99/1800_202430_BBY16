@@ -322,3 +322,8 @@ content (calendar) styling
     object-fit: contain;
     margin: 0;
 }
+a{
+    display:block;
+    text-decoration: none;
+    color:black;
+}
