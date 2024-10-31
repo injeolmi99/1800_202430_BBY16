@@ -23,6 +23,17 @@
   <!-- Google Icons (Material Design)-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <!-------------------------------------------------------->
+  <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+  <!-------------------------------------------------------->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/clubsListStyle.css">
 
@@ -69,6 +80,17 @@
       </div>
     </div>
   </nav>
+
+  <!--JUST TESTING FIREBASE IF YOU SEE THIS UNCOMMENTED I PROBABLY FORGOT TO COMMENT IT OUT OR REMOVE-->
+  <!--actually im gonna leave this in for now for whoever works on the profile to see. this sorta stuff along with whats in clubsList.js will probably be used
+  one the profile page so this could be a reference-->
+  <div class="container-fluid bg-light text-dark p-5">
+    <div class="container bg-light p-5">
+        <h1 class="display-4">Good morning <span id="name-goes-here"></span></h1>
+        <hr>
+        <p>Quote of the day: The best view comes after the hardest climb.</p>
+    </div>
+  </div>
 
   <!--CLUBS WOULD BE PUT IN HERE USEING JS--> <!--Throwing in dummy club groups-->
   <div id="clubsList">
@@ -124,8 +146,8 @@
       <!--Icons are from Icons8 and flaticon if I ever get around to adding a link to their page like im supposed to-->
       <!--I did have to edit all the flaticons though so idk if that means there mine ?-->
       <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
-      <button class="lowerNavButton"><a href="/calendar.html"><img class="lowerNavImage" src="/images/white-calendar-icon.png"></a></button>
-      <button class="lowerNavButton"><a href="/clubsList.html"><img class="lowerNavImage" src="/images/white-people-icon.png"></a></button>
+      <button class="lowerNavButton"><a href="./calendar.html"><img class="lowerNavImage" src="./images/white-calendar-icon.png"></a></button>
+      <button class="lowerNavButton"><a href="./clubsList.html"><img class="lowerNavImage" src="./images/white-people-icon.png"></a></button>
       <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-account-icon.png"></button>
     </footer>
   </div>
@@ -135,8 +157,8 @@
   <!---------------------------------------------->
 
   <!-- Link to scripts of your own -->
-  <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
+  <script src="./scripts/clubsList.js"></script>
 
 </body>
 

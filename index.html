@@ -24,9 +24,16 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-------------------------------------------------------->
-  <!-- I believe a lot of Firebase stuff needs to go here -->
+  <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
   <!-------------------------------------------------------->
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
 
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/style.css">
@@ -77,7 +84,7 @@
         We're excited to have you join our community! Whether you're here to connect, learn, or share, you've come to
         the right place. Dive into events, discover exclusive content, and meet new friends who share your passions.
       </p>
-      <button class="btn btn-primary btn-lg" type="button">Login</button>
+      <a href="login.html"><button class="btn btn-primary btn-lg" type="button">Login</button></a>
     </div>
   </div>
 
