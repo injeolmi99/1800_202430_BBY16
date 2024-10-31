@@ -20,8 +20,6 @@ var uiConfig = {
         db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
           name: user.displayName,                    //"users" collection
           email: user.email,                         //with authenticated user's ID (user.uid)
-          country: "Canada",                      //optional default profile info      
-          school: "BCIT"                          //optional default profile info
         }).then(function () {
           console.log("New user added to firestore");
           window.location.assign("clubsList.html");       //re-direct to clubsList.html after signup
@@ -41,7 +39,7 @@ var uiConfig = {
   },
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
   signInFlow: 'popup',
-  // CHANGED THIS PART TO CLUBSLIST HOPE IT WORKS
+  // THIS IS FOR WHEN YOU SIGN IN AFTER THE FIRST TIME IT WORKS
   signInSuccessUrl: 'clubsList.html',
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
