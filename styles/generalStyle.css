@@ -1,0 +1,63 @@
+/* change all navbar colors to BCIT blue */
+.navbar {
+    background-color: #003d6bff;
+}
+
+/* top navbar styling */
+#mainNav {
+    background-color: #003e6eff;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.nav-link {
+    color :lightGrey;
+}
+
+#hamburg {
+    background-color: rgb(22, 121, 196);
+}
+
+
+/* styling for the bottom navbar & buttons */
+#bottomNav {
+    margin: 0;
+    padding: 0;
+    min-width: 100vw;
+}
+
+#bottomButtons {
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.lowerNavButton {
+    height: 100%;
+    padding: 1.5rem 0;
+    flex: 1;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #003d6bff; 
+}
+
+.lowerNavButton:hover {
+    background-color: #F17C0E;
+    transition: 0.3s;
+}
+
+/* icon styling for lower nav */
+.lowerNavImage {
+    max-width: 30px;
+    max-height: 30px;
+    object-fit: contain;
+    margin: 0;
+}

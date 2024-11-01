@@ -5,7 +5,8 @@
     vertical-align: baseline;
 }
 
-.navbar {
+/* THIS IS ALL INSIDE THE GENERALSTYLE.CSS */
+/* .navbar {
     background-color: #003d6bff;
 }
 
@@ -26,7 +27,7 @@
 
 #hamburg {
     background-color: rgb(22, 121, 196);
-}
+} */
 
 .btn {
     background-color: #F17C0E;
@@ -70,8 +71,9 @@ content styling
     background-color: transparent;
 }
 
+/* THIS IS ALSO INSIDE GENERALSTYLE.CSS */
 /* styling for the bottom navbar & buttons */
-#bottomNav {
+/* #bottomNav {
     margin: 0;
     padding: 0;
     min-width: 100vw;
@@ -98,11 +100,13 @@ content styling
     background-color: #F17C0E;
     transition: 0.3s;
 }
+*/
 
 /* icon styling for lower nav */
+/* STILL INSIDE GENERALSTYLE
 .lowerNavImage {
     max-width: 30px;
     max-height: 30px;
     object-fit: contain;
     margin: 0;
-}
+} */

@@ -5,33 +5,6 @@
     vertical-align: baseline;
 }
 
-.navbar {
-    background-color: #003d6bff;
-}
-
-#mainNav {
-    background-color: #003e6eff;
-    /*
-    it took me too long to figure out how to stick the nav to the top without breaking anything (｡>﹏<｡)
-    yayay it looks great!! c:
-    */
-    position: sticky;
-    top: 0;
-    overflow: hidden;
-}
-
-.navbar-brand {
-    color: white;
-}
-
-.nav-link {
-    color :lightGrey;
-}
-
-#hamburg {
-    background-color: rgb(22, 121, 196);
-}
-
 .btn {
     background-color: #F17C0E;
     color: white;
@@ -112,42 +85,6 @@ what does this do? i don't see a corresponding class in the html (doesnt do anyt
     height: 23px;
 } */
 
-/* styling for the bottom navbar & buttons */
-#bottomNav {
-    margin: 0;
-    padding: 0;
-    min-width: 100vw;
-}
-
-#bottomButtons {
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-}
-
-.lowerNavButton {
-    height: 100%;
-    padding: 1.5rem 0;
-    flex: 1;
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    background-color: #003d6bff; 
-}
-
-.lowerNavButton:hover {
-    background-color: #F17C0E;
-    transition: 0.3s;
-}
-
-/* icon styling for lower nav */
-.lowerNavImage {
-    max-width: 30px;
-    max-height: 30px;
-    object-fit: contain;
-    margin: 0;
-}
 a{
     display:block;
     text-decoration: none;
