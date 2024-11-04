@@ -1,0 +1,54 @@
+body {
+    max-height: 100vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr auto;
+    margin: 0;
+}
+
+#mainNav {
+    grid-row: 1;
+}
+
+#whole-profile {
+    grid-row: 2;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: repeat(10, 1fr);
+}
+
+#profile-image {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 5;
+}
+
+#green {
+    grid-column: 3 / span 2;
+    grid-row: 1 / span 5; 
+    background-color: green;
+}
+
+.responsive {
+    width: 100%;
+    height: auto;
+}
+
+.rounded-circle {
+    aspect-ratio: 1 / 1;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    /* Centers the circle horizontally */
+}
+
+#username {
+    background-color: orange;
+    grid-column: 1 / span 4;
+    grid-row: 6;
+}
+
+#bottomNav {
+    grid-row: 3;
+}

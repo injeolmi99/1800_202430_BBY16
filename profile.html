@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>BCIT Clubs</title>
+  <title>Clubs List</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -34,10 +34,10 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-
   <!-- Link to styles of your own -->
-  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="./styles/clubsListStyle.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
+  <link rel="stylesheet" href="./styles/profile.css">
 
 </head>
 
@@ -60,72 +60,73 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">FAQ</a>
+            <a class="nav-link" href="#">My Clubs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="calendar.html">Upcoming Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clubsList.html">Find Clubs</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Support</a>
           </li>
         </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-primary" type="submit">Search</button>
-        </form> -->
+        <div class="d-flex">
+          <a class="btn btn-outline-success" href="../index.html">Logout</a>
+        </div>
       </div>
     </div>
   </nav>
 
-  <!--BIG TEXT IN CENTER OF SCREEN (hero / welcome)-->
-  <div class="container my-5">
-    <div class="p-5 text-center rounded-3">
-      <h1 class="text-body-emphasis">Welcome to BCIT Clubs!</h1> <!--Remove span on this line later-->
-      <p class="col-lg-8 mx-auto fs-5 text-muted">
-        We're excited to have you join our community! Whether you're here to connect, learn, or share, you've come to
-        the right place. Dive into events, discover exclusive content, and meet new friends who share your passions.
-      </p>
-      <a href="login.html"><button class="btn btn-primary btn-lg" type="button">Login</button></a>
-    </div>
-  </div>
 
-  <!--COPYRIGHT FOOTER-->
-  <footer id="copyright" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <span class="mb-3 mb-md-0 text-body-secondary">© 2024 BBY-16</span>
+  <!--IF IMPLEMENTING AN ACTUAL PROFILE PICTURE IS SEEN TO BE TOO HARD WE COULD HAVE SOME PRESET OPTIONS INSTEAD-->
+  <div id="whole-profile">
+    <div id="profile-image" class="container text-center py-4">
+      <div class="rounded-circle overflow-hidden">
+        <!--USING A DEMO PROFILE IMAGE CHANGE THIS LATER-->
+        <img class="responsive" src="https://www.profilebakery.com/wp-content/uploads/2023/04/Profile-Image-AI.jpg" alt="">
+      </div>
     </div>
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-house-fill"></i></use></svg></a></li>
-      <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-facebook"></i></a></li>
-      <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-instagram"></i></use></svg></a></li>
-    </ul>
-  </footer>
 
-  <!--BOTTOM NAVBAR--> <!--Might not be super helpful before logging in but it was really helpful for after :)-->
-  <!--
-  <div class="container justify-content-evenly py-3">
-    <footer class="navbar justify-content-evenly bg-info fixed-bottom">
-      <span class="material-icons">home</span>
-      <span class="material-icons">calendar_today</span>
-      <span class="material-icons">search</span>
-      <span class="material-icons">settings</span>
+    <div id="green"></div>
+
+    <p id="username">Username: <span id="name-goes-here"></span></p>
+    <!--Make button to change username or whatever this thing is-->
+
+    <!--Display more stuff like email and make them all changable-->
+
+    <!--Maybe a bio-->
+
+    <!--Friends list and maybe friends code or something-->
+
+    <!--Move loggout button out of the nav to the bottom of the profile-->
+
+  <!--BOTTOM NAVBAR-->
+  <div id="bottomNav" class="container justify-content-evenly fixed-bottom">
+    <footer id="bottomButtons" class="navbar">
+      <!--Icons are from Icons8 and flaticon if I ever get around to adding a link to their page like im supposed to-->
+      <!--I did have to edit all the flaticons though so idk if that means there mine ?-->
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
+      <button class="lowerNavButton"><a href="./calendar.html"><img class="lowerNavImage"
+            src="./images/white-calendar-icon.png"></a></button>
+      <button class="lowerNavButton"><a href="./clubsList.html"><img class="lowerNavImage"
+            src="./images/white-people-icon.png"></a></button>
+      <button class="lowerNavButton"><a href="./profile.html"><img class="lowerNavImage"
+            src="./images/white-account-icon.png"></a></button>
     </footer>
   </div>
-  -->
 
   <!---------------------------------------------->
   <!-- Your own JavaScript functions go here    -->
   <!---------------------------------------------->
 
   <!-- Link to scripts of your own -->
-  <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
-  <script src="./scripts/script.js"></script>
-  
-
-  <script>
-    logout();       //make sure user is logged out
-  </script>
+  <script src="./scripts/profile.js"></script>
 
 </body>
 
