@@ -51,27 +51,29 @@
 //====================================================================
 
 function displayCardsDynamically(collection) {
-    let cardTemplate = document.getElementById("clubsList1");
+    let cardTemplate = document.getElementById("clubsListTemplate");
     db.collection(collection).get()   
-        .then(allunOffClubs => {
+        .then(allClubs => {
             
-            allunOffClubs.forEach(doc => { //iterate thru each doc
+            allClubs.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var url = doc.data().URL;
                 let newcard = cardTemplate.content.cloneNode(true);
                 
-                newcard.querySelector('.unOff').innerHTML = title;
-                newcard.querySelector('.unOff').href = "clubs/" + url;
+                newcard.querySelector('.clubPage').innerHTML = title;
+                newcard.querySelector('.clubPage').href = "clubs/" + url;
                 document.getElementById(collection + "-go-here").appendChild(newcard);
             })
         })
 }
-
-displayCardsDynamically("unofficialClubs");  //input param is the name of the collection
+// displayCardsDynamically("unofficialClubs");  //input param is the name of the collection
 
 // stub, will come back to later
 function toggle(clubType) {
     document.getElementById(clubType).addEventListener("click", () => {
         if (clubType = "official")
+        {
+            
+        }
     })   
 }

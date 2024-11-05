@@ -1,5 +1,5 @@
 // generate events
-var eventDates = {}
+// var eventDates = {}
 // let day1 = formatDate(new Date(new Date().setMonth(new Date().getMonth() + 1)))
 // eventDates[day1] = [
 //   'Event 1, Location',
@@ -10,6 +10,7 @@ var eventDates = {}
 //   'Event 2, Location 3',
 // ]
 
+var eventDates = {}
 const clubCollection = db.collection("clubs")
 var time = {};
 

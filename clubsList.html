@@ -85,14 +85,27 @@
     </div>
   </nav>
 
-  <!--CLUBS WOULD BE PUT IN HERE USEING JS--> <!--Throwing in dummy club groups-->
+  <!--CLUBS WOULD BE PUT IN HERE USING JS-->
   <div id="clubsList">
-    <!--Dummy club group-->
+    <div id="clubs-go-here" class="row row-cols-auto"></div>
+  </div>    
+
+  <template id="clubsListTemplate">
+  <!--Dummy club group-->
     <div class="clubGroup">
-      <button class="clubGroupButton"><a href="clubs/sports.html">Sports</a></button>
+      <button class="clubGroupButton"><a class="clubPage"></a></button>
     </div>
+  </template>
+  
+  <!--Throwing in dummy club groups-->
+  <!-- <div id="clubsList"> -->
+    <!--Dummy club group-->
+    <!-- <div class="clubGroup">
+      <button class="clubGroupButton"><a href="clubs/sports.html">Sports</a></button>
+    </div> -->
+
     <!--Another dummy tab group...-->
-    <div class="clubGroup">
+    <!-- <div class="clubGroup">
       <button class="clubGroupButton"><a href="clubs/art.html">Art</a></button>
     </div>
     <div class="clubGroup">
@@ -110,7 +123,7 @@
     <div class="clubGroup">
       <button class="clubGroupButton">This is a long one to demonstrate looks of longness</button>
     </div>
-  </div>
+  </div> -->
 
   <!--COPYRIGHT FOOTER-->
   <!-- commented this out because it's a bit awkward to have in combination with the sticky footer -->
@@ -152,6 +165,9 @@
   <!-- Link to scripts of your own -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/clubsList.js"></script>
+  <script>
+    displayCardsDynamically("clubs");
+  </script>
 
 </body>
 

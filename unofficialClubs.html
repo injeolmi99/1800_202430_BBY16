@@ -90,10 +90,10 @@
         <div id="unofficialClubs-go-here" class="row row-cols-auto"></div>
     </div>    
   
-    <template id="clubsList1">
+    <template id="clubsListTemplate">
     <!--Dummy club group-->
         <div class="clubGroup">
-          <button class="clubGroupButton"><a class="unOff">text</a></button>
+          <button class="clubGroupButton"><a class="clubPage"></a></button>
         </div>
     </template>
   <!--COPYRIGHT FOOTER-->
@@ -136,6 +136,9 @@
   <!-- Link to scripts of your own -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/clubsList.js"></script>
+  <script>
+    displayCardsDynamically("unofficialClubs");
+  </script>
 
 </body>
 
