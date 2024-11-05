@@ -49,35 +49,7 @@
   <!-- Stuff for body goes here -->
 
   <!--TOP NAVBAR-->
-  <nav id="mainNav" class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">BCIT Clubs!</a>
-      <button id="hamburg" class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">My Clubs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Upcoming Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Find Clubs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Support</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <nav id="navPlaceholder"></nav>
 
   <!--CALENDAR-->
   <div class="cal-modal-container">  
@@ -95,16 +67,17 @@
   </div>
 
   <!--BOTTOM NAVBAR-->
-  <div id="bottomNav" class="container justify-content-evenly fixed-bottom">
+  <div id="footerPlaceholder"></div>
+  <!-- <div id="bottomNav" class="container justify-content-evenly fixed-bottom">
     <footer id="bottomButtons" class="navbar">
       <!--Icons are from Icons8 and flaticon if I ever get around to adding a link to their page like im supposed to-->
       <!--I did have to edit all the flaticons though so idk if that means there mine ?-->
-      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
+      <!-- <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
       <button class="lowerNavButton"><a href="./calendar.html"><img class="lowerNavImage" src="./images/white-calendar-icon.png"></a></button>
       <button class="lowerNavButton"><a href="./clubsList.html"><img class="lowerNavImage" src="./images/white-people-icon.png"></a></button>
       <button class="lowerNavButton"><a href="./profile.html"><img class="lowerNavImage" src="./images/white-account-icon.png"></a></button>
     </footer>
-  </div>
+  </div> -->
 
   <!---------------------------------------------->
   <!-- Your own JavaScript functions go here    -->
@@ -116,6 +89,7 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/calendar.js"></script>
+  <script src="./scripts/skeleton.js"></script>
 
 </body>
 

@@ -53,7 +53,7 @@
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("clubsList1");
     db.collection(collection).get()   
-        .then(allunOffClubs=> {
+        .then(allunOffClubs => {
             
             allunOffClubs.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
@@ -63,11 +63,15 @@ function displayCardsDynamically(collection) {
                 newcard.querySelector('.unOff').innerHTML = title;
                 newcard.querySelector('.unOff').href = "clubs/" + url;
                 document.getElementById(collection + "-go-here").appendChild(newcard);
-                
-
-            
             })
         })
 }
 
 displayCardsDynamically("unofficialClubs");  //input param is the name of the collection
+
+function toggle(clubType) {
+    document.getElementById(clubType).addEventListener("click", () => {
+        if (clubType = "official")
+        window.location.href = "./unofficialClubs"
+    })   
+}

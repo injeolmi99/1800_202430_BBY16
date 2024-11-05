@@ -4,8 +4,18 @@
 }
 
 /* top navbar styling */
+#navPlaceholder {
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    z-index: 9999;
+}
+
 #mainNav {
     background-color: #003e6eff;
+    /*
+    can remove this part once we implement the placeholder on every page
+    */
     position: sticky;
     top: 0;
     overflow: hidden;
@@ -23,7 +33,6 @@
 #hamburg {
     background-color: rgb(22, 121, 196);
 }
-
 
 /* styling for the bottom navbar & buttons */
 #bottomNav {

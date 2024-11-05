@@ -11,6 +11,7 @@ var eventDates = {}
 // ]
 
 const clubCollection = db.collection("clubs")
+var time = {};
 
 function displayEvents(collection) {
   const promises = [];
@@ -27,19 +28,20 @@ function displayEvents(collection) {
                 var eventTimestamp = event.data().date.toDate()
                 var date = formatDate(eventTimestamp);
                 console.log(date);
+                console.log(time);
                 if (!eventDates[date]) {
                   eventDates[date] = [];
                 }
-                eventDates[date].push(event.data().event + ", " + event.data().location);
+                time[date] = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+                eventDates[date].push(club.data().name + ": " + event.data().event + " || " + event.data().location);
                 console.log(eventDates[date]);
               })
             })
         )
       })
-      return Promise.all(promises);
-    })
-    .then(() => {
-      initializeCalendar()
+      Promise.all(promises).then(() => {
+        initializeCalendar();
+      })
     });
 }
 displayEvents("clubs");
@@ -64,7 +66,7 @@ function initializeCalendar() {
       var contents = '';
       if (date.length) {
         for (i = 0; i < eventDates[str].length; i++) {
-          contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l J F') + '</div><div class="location">' + eventDates[str][i] + '</div></div>';
+          contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l J F') + " @ " + time[str] + '</div><div class="location">' + eventDates[str][i] + '</div></div>';
         }
       }
       $('#calendar .calendar-events').html(contents)
