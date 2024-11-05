@@ -49,3 +49,25 @@
 //=====================================================================
 //EVERYTHING ABOVE HERE IS JUST FOR REFERENCE SECOND CHUNK IS IN PROFILE.JS
 //====================================================================
+
+function displayCardsDynamically(collection) {
+    let cardTemplate = document.getElementById("clubsList1");
+    db.collection(collection).get()   
+        .then(allunOffClubs=> {
+            
+            allunOffClubs.forEach(doc => { //iterate thru each doc
+                var title = doc.data().name;       // get value of the "name" key
+                var url = doc.data().URL;
+                let newcard = cardTemplate.content.cloneNode(true);
+                
+                newcard.querySelector('.unOff').innerHTML = title;
+                newcard.querySelector('.unOff').href = "clubs/" + url;
+                document.getElementById(collection + "-go-here").appendChild(newcard);
+                
+
+            
+            })
+        })
+}
+
+displayCardsDynamically("unofficialClubs");  //input param is the name of the collection
