@@ -69,9 +69,9 @@ function displayCardsDynamically(collection) {
 
 displayCardsDynamically("unofficialClubs");  //input param is the name of the collection
 
+// stub, will come back to later
 function toggle(clubType) {
     document.getElementById(clubType).addEventListener("click", () => {
         if (clubType = "official")
-        window.location.href = "./unofficialClubs"
     })   
 }

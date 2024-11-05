@@ -27,8 +27,8 @@ function displayEvents(collection) {
               clubEvents.forEach(event => {
                 var eventTimestamp = event.data().date.toDate()
                 var date = formatDate(eventTimestamp);
+                console.log(eventTimestamp);
                 console.log(date);
-                console.log(time);
                 if (!eventDates[date]) {
                   eventDates[date] = [];
                 }
