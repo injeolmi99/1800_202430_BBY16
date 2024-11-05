@@ -46,7 +46,7 @@ content (clubs list) styling
     transition: 0.3s;
 }
 
-/* styling for the unnoficial / official buttons*/
+/* styling for the unofficial / official buttons*/
 .club-toggle {
     display: flex;
     flex-direction: row;
@@ -85,7 +85,7 @@ what does this do? i don't see a corresponding class in the html (doesnt do anyt
     height: 23px;
 } */
 
-a{
+a {
     display:block;
     text-decoration: none;
     color:black;

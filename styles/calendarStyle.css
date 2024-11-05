@@ -60,6 +60,7 @@ content (calendar) styling
     align-items: center;
     justify-content: center;
     height: 100vh;
+    
 }
 
 .cal-modal {
@@ -77,7 +78,10 @@ content (calendar) styling
 }
 
 #calendar {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .placeholder {
         display: none;
@@ -200,7 +204,7 @@ content (calendar) styling
 
             &.nextMonthDay, &.prevMonthDay {
                 background: none;
-                color: rgba(#CFD2D3, .1) !important;
+                color: rgba(207, 210, 211, 0.1) !important;
                 cursor: default;
                 visibility: visible;
             }
@@ -208,15 +212,16 @@ content (calendar) styling
     }
 
     .calendar-events {
-        display: block;
+        display: flex;
+        flex-direction: column;
         justify-content: space-around;
         margin-top: 30px;
         min-height: 36px;
 
-        @media screen and (min-width: 992px) {
+        /* @media screen and (min-width: 992px) {
             display: flex;
             justify-content: space-around;
-        }
+        } */
 
         .event {
             font-size: 29px;
@@ -235,35 +240,10 @@ content (calendar) styling
     }
 }
 
-/* styling for the unnoficial / official buttons*/
+/* styling for the unofficial / official buttons*/
 .club-toggle {
     display: flex;
     flex-direction: row;
     background-color: #808385;
     /* border: solid grey 1px; */
-}
-
-.words:hover {
-    background-color: #707070;
-    transition: 0.3s;
-}
-
-.words {
-    display: flex;
-    border: none;
-    height: 30px;
-    width: 50%;
-    padding: 1.25rem 0;
-    text-align: center;
-    text-decoration: none;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    background-color: transparent;
-}
-
-a{
-    display:block;
-    text-decoration: none;
-    color:black;
 }

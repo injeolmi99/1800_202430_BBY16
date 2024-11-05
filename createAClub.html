@@ -35,9 +35,9 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <!-- Link to styles of your own -->
-  <link rel="stylesheet" href="./styles/calendarStyle.css">
+  <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="./styles/createAClub.css">
 
 </head>
 
@@ -79,19 +79,22 @@
     </div>
   </nav>
 
-  <!--CALENDAR-->
-  <div class="cal-modal-container">  
-    <div class="cal-modal">
-      <div class="moveRight">
-        <button class="swap" type="button"><img class="swapButton" src="./images/swapHover.png">Weekly View</button>
-      </div>
-      <h3>UPCOMING EVENTS</h3>
-      <div id="calendar">
-        <div class="placeholder"></div>
-        <div class="calendar-events">
-        </div>
-      </div>
-    </div>
+  <!--CONTENT-->
+  <div>
+    <h1>
+      Create an Unofficial Club
+    </h1>
+    <form>
+      <label for="clubName">Club Name: </label>
+      <input type="text" id="clubName" autocomplete="name">
+      
+      
+
+      <label for="description">Description: </label>
+      <textarea id="description"></textarea>
+
+
+    </form>
   </div>
 
   <!--BOTTOM NAVBAR-->
@@ -100,9 +103,9 @@
       <!--Icons are from Icons8 and flaticon if I ever get around to adding a link to their page like im supposed to-->
       <!--I did have to edit all the flaticons though so idk if that means there mine ?-->
       <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-home-icon.png"></button>
-      <button class="lowerNavButton"><a href="./calendar.html"><img class="lowerNavImage" src="./images/white-calendar-icon.png"></a></button>
-      <button class="lowerNavButton"><a href="./clubsList.html"><img class="lowerNavImage" src="./images/white-people-icon.png"></a></button>
-      <button class="lowerNavButton"><a href="./profile.html"><img class="lowerNavImage" src="./images/white-account-icon.png"></a></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-calendar-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-people-icon.png"></button>
+      <button class="lowerNavButton"><img class="lowerNavImage" src="./images/white-account-icon.png"></button>
     </footer>
   </div>
 
@@ -112,10 +115,7 @@
 
   <!-- Link to scripts of your own -->
   <!-- <script src="./scripts/script.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="./scripts/firebaseAPI_Team16.js"></script>
-  <script src="./scripts/calendar.js"></script>
 
 </body>
 
