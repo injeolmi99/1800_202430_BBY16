@@ -16,6 +16,7 @@ body {
     height: 100%;
     width: 100%;
     grid-template-columns: 25% 25% 25% 25%;
+    /* maybe change to auto */
     grid-template-rows: repeat(10, 1fr);
 }
 
@@ -43,10 +44,44 @@ body {
     /* Centers the circle horizontally */
 }
 
-#username {
+
+#edit-profile {
+    margin-left: 8%;
+    grid-column: 1;
+    grid-row: 6;
+}
+
+#userName {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 0;
+    margin-bottom: 0;
     background-color: orange;
     grid-column: 1 / span 4;
-    grid-row: 6;
+    grid-row: 7;
+    font-size: 14pt;
+}
+
+#displayName {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: pink;
+    grid-column: 1 / span 4;
+    grid-row: 8;
+    font-size: 14pt;
+}
+
+#email {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: purple;
+    grid-column: 1 / span 4;
+    grid-row: 9;
+    font-size: 14pt;
 }
 
 #bottomNav {
