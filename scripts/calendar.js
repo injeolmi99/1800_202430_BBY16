@@ -21,14 +21,14 @@ function displayEvents(collection) {
     .then(allClubs => {
       allClubs.forEach(club => {
         const eventCollection = club.ref.collection("events");
+        // const eventCollection = db.collection("clubs").doc(club).collection("events");
 
         promises.push(
           eventCollection.get()
             .then(clubEvents => {
               clubEvents.forEach(event => {
-                var eventTimestamp = event.data().date.toDate()
+                var eventTimestamp = event.data().date.toDate();
                 var date = formatDate(eventTimestamp);
-                console.log(eventTimestamp);
                 console.log(date);
                 if (!eventDates[date]) {
                   eventDates[date] = [];

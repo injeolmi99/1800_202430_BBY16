@@ -1,9 +1,15 @@
-#welcome-prompt {
-    text-align: center;
-    margin-top: 30vh;
+#loginMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#top-lock {
+#welcome-prompt {
+    text-align: center;
+}
+
+/* #top-lock {
     background-color: #003e6eff;
     overflow: hidden;
     position: fixed;
@@ -11,4 +17,4 @@
     left: 0;
     z-index: 999;
     width: 100%;
-}
+} */

@@ -48,52 +48,26 @@
     <!------------------------------>
 
     <!-- our own navbar goes here -->
-    <nav id="navbarPlaceholder"></nav>
-
-    <nav id="top-lock" class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">BCIT Clubs!</a>
-          <button id="hamburg" class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">FAQ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Support</a>
-              </li>
-            </ul>
-            <!-- <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-primary" type="submit">Search</button>
-            </form> -->
-          </div>
-        </div>
-      </nav>
+    <nav id="navPlaceholder"></nav>
 
     <!-- the body of your page goes here -->
-    <div class="container" id="welcome-prompt">
+    <div class="container" id="loginMenu">
+      <div id="welcome-prompt">
         <h1>Welcome to BCIT Clubs!</h1>
         <h4>Let's get you logged in!</h4>
+      </div>
+      <div id="firebaseui-auth-container"></div>
+      <div id="loader">Loading...</div>
     </div>
-    <div id="firebaseui-auth-container"></div>
-    <div id="loader">Loading...</div>
 
     <!-- our own footer goes here-->
-    <nav id="footerPlaceholder"></nav>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
     <script src="./scripts/firebaseAPI_Team16.js"></script>
     <script src="./scripts/authentication.js"></script>
+    <script src="./scripts/skeleton.js"></script>
 
 </body>
 
