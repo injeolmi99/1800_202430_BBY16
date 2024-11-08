@@ -47,7 +47,7 @@ body {
 }
 
 /* styling for the bottom navbar & buttons */
-.clubToggle, #officialToggle, #unofficialToggle {
+.words {
     display: none;
 }
 

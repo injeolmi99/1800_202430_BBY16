@@ -75,15 +75,12 @@
             <a class="nav-link" href="#">Support</a>
           </li>
         </ul>
-        <div class="d-flex">
-          <a class="btn btn-outline-success" href="../index.html">Logout</a>
-        </div>
       </div>
     </div>
   </nav>
 
 
-  <!--IF IMPLEMENTING AN ACTUAL PROFILE PICTURE IS SEEN TO BE TOO HARD WE COULD HAVE SOME PRESET OPTIONS INSTEAD-->
+  <!--use predetermined avatars instead of uploading personal images-->
   <div id="whole-profile">
     <div id="profile-image" class="container text-center py-4">
       <div class="rounded-circle overflow-hidden">
@@ -102,14 +99,19 @@
 
     <p id="displayName">Display name: <span id="displayName-goes-here"></span></p>
 
+    <!--DO NOT MAKE EMAIL CHANGABLE-->
     <p id="email">Email: <span id="email-goes-here"></span></p>
-    <!--Display more stuff like email and make them all changable-->
 
     <!--Maybe a bio-->
+    <p id="bio"><span id="bio-goes-here">Bio is empty</span></p>
 
-    <!--Friends list and maybe friends code or something-->
+    <!--Friends list and maybe friends code or something do later if time permits-->
 
-    <!--Move loggout button out of the nav to the bottom of the profile-->
+    <!--Logout button-->
+    <div id="Log-out-Button" class="d-flex">
+      <a class="btn btn-outline-success" href="../index.html">Logout</a>
+    </div>
+  </div>
 
   <!--BOTTOM NAVBAR-->
   <div id="bottomNav" class="container justify-content-evenly fixed-bottom">
