@@ -13,11 +13,7 @@
     border: none;
 }
 
-#officialToggle {
-    display: inline-block;
-}
-
-#unofficialToggle {
+#officialToggle, #unofficialToggle {
     display: inline-block;
 }
 
