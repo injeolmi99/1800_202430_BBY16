@@ -22,13 +22,16 @@ content (clubs list) styling
 */
 #clubsList {
     text-align: center;
-    padding-bottom: 8rem;
+    padding-bottom: 5rem;
     /* THESE MAKE THE CLUB GROUPS SCROLLABLE */
     /* overflow: auto; */
     /* height: 500px;; */
 }
 
 .clubGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     margin: 20px 0;
 }

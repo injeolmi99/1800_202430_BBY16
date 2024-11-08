@@ -239,11 +239,3 @@ content (calendar) styling
         }
     }
 }
-
-/* styling for the unofficial / official buttons*/
-.club-toggle {
-    display: flex;
-    flex-direction: row;
-    background-color: #808385;
-    /* border: solid grey 1px; */
-}
