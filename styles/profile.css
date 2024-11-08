@@ -13,11 +13,11 @@ body {
 #whole-profile {
     grid-row: 2;
     display: grid;
+    position: relative;
     height: 100%;
     width: 100%;
     grid-template-columns: 25% 25% 25% 25%;
-    /* maybe change to auto */
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-rows: repeat(11, auto);
 }
 
 #profile-image {
@@ -28,7 +28,7 @@ body {
 #green {
     grid-column: 3 / span 2;
     grid-row: 1 / span 5; 
-    background-color: green;
+    /* background-color: green; */
 }
 
 .responsive {
@@ -49,14 +49,15 @@ body {
     margin-left: 8%;
     grid-column: 1;
     grid-row: 6;
+    border-radius: 10px;
 }
 
 #userName {
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 0;
+    margin-top: 10px;
     margin-bottom: 0;
-    background-color: orange;
+    /* background-color: orange; */
     grid-column: 1 / span 4;
     grid-row: 7;
     font-size: 14pt;
@@ -65,9 +66,9 @@ body {
 #displayName {
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 0;
+    margin-top: 10px;
     margin-bottom: 0;
-    background-color: pink;
+    /* background-color: pink; */
     grid-column: 1 / span 4;
     grid-row: 8;
     font-size: 14pt;
@@ -76,12 +77,34 @@ body {
 #email {
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 0;
+    margin-top: 10px;
     margin-bottom: 0;
-    background-color: purple;
+    /* background-color: purple; */
     grid-column: 1 / span 4;
     grid-row: 9;
     font-size: 14pt;
+}
+
+#bio {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 10px;
+    margin-bottom: 0;
+    grid-column: 1 / span 4;
+    grid-row: 10;
+    font-size: 14pt;
+    border: 1px lightgrey solid;
+}
+
+#Log-out-Button {
+    grid-row: 11;
+    grid-column: 4;
+    /* position: absolute; 
+    bottom: 0; 
+    right: 0; */
+    /* background-color: lightblue; */
+    justify-self: right;
+    padding: 10px;
 }
 
 #bottomNav {

@@ -20,7 +20,9 @@ var uiConfig = {
         db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
           name: user.displayName,                    //"users" collection
           email: user.email,                         //with authenticated user's ID (user.uid)
-          displayName: user.displayName
+          displayName: user.displayName,
+          clubs: [],                                 // I hope this will add an empty list Then need to add friend code (work with later)
+          friends: []
         }).then(function () {
           console.log("New user added to firestore");
           window.location.assign("clubsList.html");       //re-direct to clubsList.html after signup
