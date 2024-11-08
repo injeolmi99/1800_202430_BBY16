@@ -14,7 +14,7 @@
 }
 
 #officialToggle, #unofficialToggle {
-    display: inline-block;
+    display: flex;
 }
 
 #copyright {
