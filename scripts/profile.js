@@ -1,4 +1,5 @@
 // INSERTS THE USERNAME INTO THE PROFILE PAGE
+var currentUser;
 function insertNameFromFirestore() {
     // Check if the user is logged in:
     firebase.auth().onAuthStateChanged(user => {
@@ -13,10 +14,24 @@ function insertNameFromFirestore() {
                 console.log(userEmail);
                 let userDisplayName = userDoc.data().displayName;
                 console.log(userDisplayName);
+                let userDescription = userDoc.data().description;
+                console.log(userDescription);
                 //$("#name-goes-here").text(userName); // jQuery
-                document.getElementById("name-goes-here").innerText = userName;
-                document.getElementById("email-goes-here").innerText = userEmail;
-                document.getElementById("displayName-goes-here").innerText = userDisplayName;
+                if(userName != null){
+                    document.getElementById("nameInput").value = userName;
+                }
+                if(displayNameInput != null){
+                    document.getElementById("displayNameInput").value = userDisplayName;
+                }
+                if(userEmail != null){
+                    document.getElementById("emailInput").value = userEmail;
+                }
+                if(userDescription != null){
+                    document.getElementById("descriptionInput").value = userDescription;
+                }
+                
+                
+                
             })
         } else {
             console.log("No user is logged in."); // Log a message when no user is logged in
@@ -24,3 +39,32 @@ function insertNameFromFirestore() {
     })
 }
 insertNameFromFirestore();
+function editUserInfo() {
+    //Enable the form fields
+    document.getElementById('personalInfoFields').disabled = false;
+ }
+ function saveUserInfo() {
+    //enter code here
+    userName = document.getElementById('nameInput').value;
+    userDisplayName = document.getElementById('displayNameInput').value;
+    userEmail = document.getElementById('emailInput').value;
+    userDescription = document.getElementById('descriptionInput').value;
+
+
+    currentUser.update({
+        name: userName,
+        email: userEmail,
+        displayName: userDisplayName,
+        description: userDescription
+    })
+    .then(() => {
+        console.log("Document successfully updated!");
+    })
+
+    document.getElementById('personalInfoFields').disabled = true;
+    //a) get user entered values
+
+    //b) update user's document in Firestore
+
+    //c) disable edit 
+}
