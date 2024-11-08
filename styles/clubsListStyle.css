@@ -13,6 +13,14 @@
     border: none;
 }
 
+#officialToggle {
+    display: inline-block;
+}
+
+#unofficialToggle {
+    display: inline-block;
+}
+
 #copyright {
     padding: 0 2%;
 }
