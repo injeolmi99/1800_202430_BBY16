@@ -60,12 +60,16 @@ function displayCardsDynamically(collection) {
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true);
                 
-                newcard.querySelector('.clubPage').innerHTML = title;
-                newcard.querySelector('.clubPage').href = "eachClub.html?docID=" + docID;
+                newcard.querySelector('.clubGroupButton').innerHTML = title;
+                newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
+                    sessionStorage.setItem("previousPage", window.location.href);
+                    location.href = "eachClub.html?docID=" + docID;
+                });
                 document.getElementById(collection + "-go-here").appendChild(newcard);
             })
         })
 }
+
 
 // stub, will come back to later
 function toggle(clubType) {
