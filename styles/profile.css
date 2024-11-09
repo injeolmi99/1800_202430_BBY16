@@ -10,6 +10,13 @@ body {
     grid-row: 1;
 }
 
+
+.btn {
+    background-color: #F17C0E;
+    color: white;
+    border: none;
+}
+
 #whole-profile {
     grid-row: 2;
     display: grid;

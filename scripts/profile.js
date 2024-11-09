@@ -47,13 +47,13 @@ function editUserInfo() {
     //enter code here
     userName = document.getElementById('nameInput').value;
     userDisplayName = document.getElementById('displayNameInput').value;
-    userEmail = document.getElementById('emailInput').value;
+    // it is important (at least for now) that the user cannot change their email becuase it is used for authentication purposes
+    // userEmail = document.getElementById('emailInput').value;
     userDescription = document.getElementById('descriptionInput').value;
-
 
     currentUser.update({
         name: userName,
-        email: userEmail,
+        // email: userEmail,
         displayName: userDisplayName,
         description: userDescription
     })
