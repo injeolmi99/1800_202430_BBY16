@@ -57,16 +57,15 @@ function displayCardsDynamically(collection) {
             
             allClubs.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
-                var url = doc.data().URL;
+                var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true);
                 
                 newcard.querySelector('.clubPage').innerHTML = title;
-                newcard.querySelector('.clubPage').href = "clubs/" + url;
+                newcard.querySelector('.clubPage').href = "eachClub.html?docID=" + docID;
                 document.getElementById(collection + "-go-here").appendChild(newcard);
             })
         })
 }
-// displayCardsDynamically("unofficialClubs");  //input param is the name of the collection
 
 // stub, will come back to later
 function toggle(clubType) {

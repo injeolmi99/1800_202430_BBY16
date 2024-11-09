@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Clubs List</title>
+  <title>Calendar</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -35,8 +35,9 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <!-- Link to styles of your own -->
-  <link rel="stylesheet" href="./styles/clubsListStyle.css">
+  <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
+  <link rel="stylesheet" href="./styles/eachClub.css">
 
 </head>
 
@@ -50,18 +51,16 @@
   <!--TOP NAVBAR-->
   <nav id="navPlaceholder"></nav>
 
-  <!--CLUBS WOULD BE PUT IN HERE USING JS-->
-  <div id="clubsList">
-    <div id="clubs-go-here" class="row row-cols-auto"></div>
-  </div>    
+  <!--CONTENT-->
+  <div class="content">
+    <section class="contentSection">
+      <h1 id="boxTitle"><span id="clubName">club name</span></h1>
+      <div class="contentBox">
+        <div id="clubDescription">club description</div>
+      </div>
+    </section>  
+  </div>
 
-  <template id="clubsListTemplate">
-  <!--Dummy club group-->
-    <div class="clubGroup">
-      <button class="clubGroupButton"><a class="clubPage"></a></button>
-    </div>
-  </template>
-  
   <!--BOTTOM NAVBAR-->
   <div id="footerPlaceholder"></div>
 
@@ -70,12 +69,10 @@
   <!---------------------------------------------->
 
   <!-- Link to scripts of your own -->
+  <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
-  <script src="./scripts/clubsList.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script>
-    displayCardsDynamically("clubs");
-  </script>
+  <script src="./scripts/eachClub.js"></script>
 
 </body>
 

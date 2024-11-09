@@ -33,12 +33,8 @@
     border: none;
 }
 
-#officialToggle {
-    display: inline-block;
-}
-
-#unofficialToggle {
-    display: inline-block;
+#officialToggle, #unofficialToggle {
+    display: flex;
 }
 
 #copyright {
