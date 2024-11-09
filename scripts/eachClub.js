@@ -45,59 +45,59 @@ function displayClubInfo() {
 displayClubInfo();
 
 // This is executed when the button is pressed doesnt work perfectly rn
-function leaveOrJoin() {
-    let params = new URL(window.location.href); //get URL of search bar
-    let ID = params.searchParams.get("docID"); //get value for key "id"
+// function leaveOrJoin() {
+//     let params = new URL(window.location.href); //get URL of search bar
+//     let ID = params.searchParams.get("docID"); //get value for key "id"
 
-    let thisClubID = db.collection("clubs").doc(ID);
+//     let thisClubID = db.collection("clubs").doc(ID);
 
-    let thisClub = thisClubID.get().then(doc => {
+//     let thisClub = thisClubID.get().then(doc => {
         
-        let thisClub = doc.data();
+//         let thisClub = doc.data();
 
-        firebase.auth().onAuthStateChanged(user => {
-            // maybe check later to ensure admin does not leave club
-            if (user) {
-                // if user is in club remove them from the club in their club list (in users) and the clubs members list
-                // if the user is not in the club add club to their clubs list and the user to the members list
-                if (thisClub.members.includes(user.uid)) {
-                    //This route if user is in club
-                    console.log("Guess what.... I worked")
-                } else {
-                    //This route if the user is not in club
-                    console.log("starting add route");
+//         firebase.auth().onAuthStateChanged(user => {
+//             // maybe check later to ensure admin does not leave club
+//             if (user) {
+//                 // if user is in club remove them from the club in their club list (in users) and the clubs members list
+//                 // if the user is not in the club add club to their clubs list and the user to the members list
+//                 if (thisClub.members.includes(user.uid)) {
+//                     //This route if user is in club
+//                     console.log("Guess what.... I worked")
+//                 } else {
+//                     //This route if the user is not in club
+//                     console.log("starting add route");
 
-                    // add user to club members list (somewhat works investigate it switching from array to number)
-                    thisClubID.update({
-                        members: thisClub.members.push(user.uid)
-                    })
-                    .then(() => {
-                        console.log("Document successfully updated!");
-                    })
-                    .catch((error) => {
-                        console.error("Error updating document: ", error);
-                    });
+//                     // add user to club members list (somewhat works investigate it switching from array to number)
+//                     thisClubID.update({
+//                         members: thisClub.members.push(user.uid)
+//                     })
+//                     .then(() => {
+//                         console.log("Document successfully updated!");
+//                     })
+//                     .catch((error) => {
+//                         console.error("Error updating document: ", error);
+//                     });
 
-                    //  add club to users club list
-                    user.uid.update({
-                        // got caught here user.clubs might be incorrect pathing
-                        clubs: user.clubs.push(thisClubID)
-                    })
-                    .then(() => {
-                        console.log("Document successfully updated!");
-                    })
-                    .catch((error) => {
-                        console.error("Error updating document: ", error);
-                    });
-                    console.log("I made it to the bottom :)");
-                }
-            } else {
-                // This route if no user is detected
-                console.log("Failed at user check / none logged in?");
-            }
-        })
-    })
-}
+//                     //  add club to users club list
+//                     user.uid.update({
+//                         // got caught here user.clubs might be incorrect pathing
+//                         clubs: user.clubs.push(thisClubID)
+//                     })
+//                     .then(() => {
+//                         console.log("Document successfully updated!");
+//                     })
+//                     .catch((error) => {
+//                         console.error("Error updating document: ", error);
+//                     });
+//                     console.log("I made it to the bottom :)");
+//                 }
+//             } else {
+//                 // This route if no user is detected
+//                 console.log("Failed at user check / none logged in?");
+//             }
+//         })
+//     })
+// }
 
 // function saveClubDocumentIDAndRedirect(){
 //     let params = new URL(window.location.href) //get the url from the search bar
