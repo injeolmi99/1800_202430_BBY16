@@ -23,10 +23,10 @@ function displayClubInfo() {
                     // Searches for the users ID in the club members array and acts accordingly
                     if (clubMembers.includes(user.uid)) {
                         console.log("Here");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave"
+                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave    DO NOT PRESS"
                     } else {
                         console.log("not in club");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Join";
+                        document.getElementById("insertJoinOrLeave").innerHTML = "Join     DO NOT PRESS";
                     }
 
                 } else {
