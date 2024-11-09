@@ -92,37 +92,42 @@
     <div id="green">
       <div class="container">
         <form>
-            <fieldset class="mb-3" id="personalInfoFields" disabled>
-                <div class="form-group">
-                    <label >Name</label>
-                    <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
-                </div>
-                <div class="form-group">
-                    <label >Display name</label>
-                    <input type="text" id="displayNameInput" class="form-control" placeholder="Enter your display name">
-                </div>
-                <div class="form-group">
-                    <label >Email</label>
-                    <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                  <label >Description</label>
-                  <input type="text" id="descriptionInput" class="form-control" placeholder="Enter your description">
-              </div>
-            </fieldset>
-            <div class="d-flex justify-content-end mt-5">
-                <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-                <span style="width: 10px"></span>
-                <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+          <!--Email should not be changable since it is used for authentication-->
+          <!--Just moved it outside of the personalInfoFields so it wouldnt appear editable-->
+          <fieldset class="mb-3" disabled>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
             </div>
+          </fieldset>
+
+          <fieldset class="mb-3" id="personalInfoFields" disabled>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label>Display name</label>
+              <input type="text" id="displayNameInput" class="form-control" placeholder="Enter your display name">
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input type="text" id="descriptionInput" class="form-control" placeholder="Enter your description">
+            </div>
+          </fieldset>
+          <div class="d-flex justify-content-end mt-5">
+            <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+            <span style="width: 10px"></span>
+            <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+          </div>
         </form>
       </div>
     </div>
 
     <!--USE DEMO 10 TO EDIT THE PROFILE-->
     <!--</1><button id="edit-profile">Edit Profile</button>-->
-  
-   <!--<p id="userName">Name: <span id="name-goes-here"></span></p>-->
+
+    <!--<p id="userName">Name: <span id="name-goes-here"></span></p>-->
     <!--Make button to change username or whatever this thing is-->
 
     <!--<p id="displayName">Display name: <span id="displayName-goes-here"></span></p>-->
@@ -141,19 +146,19 @@
     </div>
   </div>
 
-    <!--BOTTOM NAVBAR-->
-    <div id="footerPlaceholder"></div>
+  <!--BOTTOM NAVBAR-->
+  <div id="footerPlaceholder"></div>
 
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
+  <!---------------------------------------------->
+  <!-- Your own JavaScript functions go here    -->
+  <!---------------------------------------------->
 
-    <!-- Link to scripts of your own -->
+  <!-- Link to scripts of your own -->
   </div>
-    <script src="./scripts/firebaseAPI_Team16.js"></script>
-    <script src="./scripts/profile.js"></script>
-    <script src="./scripts/skeleton.js"></script>
-  
+  <script src="./scripts/firebaseAPI_Team16.js"></script>
+  <script src="./scripts/profile.js"></script>
+  <script src="./scripts/skeleton.js"></script>
+
 </body>
 
 </html>

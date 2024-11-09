@@ -22,11 +22,11 @@ function displayClubInfo() {
 
                     // Searches for the users ID in the club members array and acts accordingly
                     if (clubMembers.includes(user.uid)) {
-                        console.log("Here");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave    DO NOT PRESS"
+                        // console.log("Here");
+                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave"
                     } else {
-                        console.log("not in club");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Join     DO NOT PRESS";
+                        // console.log("not in club");
+                        document.getElementById("insertJoinOrLeave").innerHTML = "Join";
                     }
 
                 } else {
@@ -44,60 +44,90 @@ function displayClubInfo() {
 }
 displayClubInfo();
 
-// This is executed when the button is pressed doesnt work perfectly rn
-// function leaveOrJoin() {
-//     let params = new URL(window.location.href); //get URL of search bar
-//     let ID = params.searchParams.get("docID"); //get value for key "id"
+// // This is executed when the button is pressed doesnt work perfectly rn
+function leaveOrJoin() {
+    let params = new URL(window.location.href); // get URL of search bar
+    let ID = params.searchParams.get("docID"); // get value for key "id"
 
-//     let thisClubID = db.collection("clubs").doc(ID);
+    let thisClubID = db.collection("clubs").doc(ID);
 
-//     let thisClub = thisClubID.get().then(doc => {
-        
-//         let thisClub = doc.data();
+    thisClubID.get().then(doc => {
+        if (doc.exists) {
+            let thisClub = doc.data();
 
-//         firebase.auth().onAuthStateChanged(user => {
-//             // maybe check later to ensure admin does not leave club
-//             if (user) {
-//                 // if user is in club remove them from the club in their club list (in users) and the clubs members list
-//                 // if the user is not in the club add club to their clubs list and the user to the members list
-//                 if (thisClub.members.includes(user.uid)) {
-//                     //This route if user is in club
-//                     console.log("Guess what.... I worked")
-//                 } else {
-//                     //This route if the user is not in club
-//                     console.log("starting add route");
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    // Get user document from Firestore (just saving myself typing later)
+                    let userDocRef = db.collection("users").doc(user.uid);
+                    
+                    // needed this beast to get into the users data
+                    userDocRef.get().then(userDoc => {
+                        if (userDoc.exists) {
+                            let userData = userDoc.data();
+                            let userClubs = userData.clubs || []; // Ensure userClubs is an array
 
-//                     // add user to club members list (somewhat works investigate it switching from array to number)
-//                     thisClubID.update({
-//                         members: thisClub.members.push(user.uid)
-//                     })
-//                     .then(() => {
-//                         console.log("Document successfully updated!");
-//                     })
-//                     .catch((error) => {
-//                         console.error("Error updating document: ", error);
-//                     });
+                            // check if the user is in the clubs member array
+                            if (thisClub.members.includes(user.uid)) {
+                                // If they are then we wll remove them
+                                thisClubID.update({
+                                    // This is how you remove a specific value from an array list w/ firestore
+                                    members: firebase.firestore.FieldValue.arrayRemove(user.uid)
+                                }).then(() => {
+                                    console.log("User removed from the club members list.");
 
-//                     //  add club to users club list
-//                     user.uid.update({
-//                         // got caught here user.clubs might be incorrect pathing
-//                         clubs: user.clubs.push(thisClubID)
-//                     })
-//                     .then(() => {
-//                         console.log("Document successfully updated!");
-//                     })
-//                     .catch((error) => {
-//                         console.error("Error updating document: ", error);
-//                     });
-//                     console.log("I made it to the bottom :)");
-//                 }
-//             } else {
-//                 // This route if no user is detected
-//                 console.log("Failed at user check / none logged in?");
-//             }
-//         })
-//     })
-// }
+                                    userDocRef.update({
+                                        // removing the club from the user
+                                        clubs: firebase.firestore.FieldValue.arrayRemove(ID)
+                                    }).then(() => {
+                                        console.log("Club ID removed from user's club list.");
+                                        // change the button to match the users status with club
+                                        document.getElementById("insertJoinOrLeave").innerHTML = "Join";
+                                    }).catch(error => {
+                                        console.error("Error updating user document: ", error);
+                                    });
+                                }).catch(error => {
+                                    console.error("Error updating club document: ", error);
+                                });
+                            } else {
+                                // Else the user is not in the club so we add them
+                                thisClubID.update({
+                                    // This is how to add to array without changing other values (its not .push())
+                                    members: firebase.firestore.FieldValue.arrayUnion(user.uid)
+                                }).then(() => {
+                                    console.log("User added to the club members list.");
+                                    
+                                    userDocRef.update({
+                                        // This is how to add to array without changing other values (its not .push())
+                                        clubs: firebase.firestore.FieldValue.arrayUnion(ID)
+                                    }).then(() => {
+                                        console.log("Club ID added to user's club list.");
+                                        // change the button to match the users status with club
+                                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave"
+                                    }).catch(error => {
+                                        console.error("Error updating user document: ", error);
+                                    });
+                                }).catch(error => {
+                                    console.error("Error updating club document: ", error);
+                                });
+                            }
+                        } else {
+                            console.log("User document not found in Firestore.");
+                        }
+                    }).catch(error => {
+                        console.error("Error getting user document: ", error);
+                    });
+                } else {
+                    console.log("Failed at user check / none logged in?");
+                }
+            });
+        } else {
+            console.log("Club document not found.");
+        }
+    }).catch(error => {
+        console.error("Error getting club document: ", error);
+    });
+}
+
 
 // function saveClubDocumentIDAndRedirect(){
 //     let params = new URL(window.location.href) //get the url from the search bar
