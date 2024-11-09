@@ -7,7 +7,7 @@ function createClub() {
             name: clubName,
             admin: user.uid,
             description: clubDescription,
-            members: []
+            members: [user.uid]
             // optional?
             // timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then(() => {
