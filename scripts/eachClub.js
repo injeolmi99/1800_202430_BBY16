@@ -44,7 +44,7 @@ function displayClubInfo() {
 }
 displayClubInfo();
 
-// // This is executed when the button is pressed doesnt work perfectly rn
+// This is executed when the button is pressed
 function leaveOrJoin() {
     let params = new URL(window.location.href); // get URL of search bar
     let ID = params.searchParams.get("docID"); // get value for key "id"
