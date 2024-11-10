@@ -21,7 +21,6 @@ function displayClubInfo() {
             clubDescription = thisClub.description;
             clubMembers = thisClub.members;
 
-
             //this is for displaying the Join or leave club button since it needs to change based on your status with the club
             // I dont understand why but the shorter method of getting userID isn't working on other pages
             // So I used this machine!

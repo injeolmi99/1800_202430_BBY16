@@ -50,7 +50,9 @@ a bit broken atm because i haven't implemented code to change the swap icon colo
 }
 
 /*
-content (calendar) styling
+calendar styling
+source: https://codepen.io/alvarotrigo/pen/NWyNgoy
+with edits to match our color scheme
 */
 .cal-modal-container {
     font-family: 'Montserrat', sans-serif;

@@ -1,52 +1,57 @@
-// generate events
-// var eventDates = {}
-// let day1 = formatDate(new Date(new Date().setMonth(new Date().getMonth() + 1)))
-// eventDates[day1] = [
-//   'Event 1, Location',
-//   'Event 2, Location 2'
-// ]
-// let day2 = formatDate(new Date(new Date().setDate(new Date().getDate() + 40)))
-// eventDates[day2] = [
-//   'Event 2, Location 3',
-// ]
-
+// create eventDates object
 var eventDates = {}
 const clubCollection = db.collection("clubs")
 var time = {};
 
+// displays all events for each club on their respective date in the calendar object
 function displayEvents(collection) {
+  // create a promise array in order to ensure the calendar object is only initialized once all events are loaded in
   const promises = [];
 
-  clubCollection.get()
+  clubCollection.get() // returns object with all documents in collection
     .then(allClubs => {
       allClubs.forEach(club => {
-        const eventCollection = club.ref.collection("events");
-        // const eventCollection = db.collection("clubs").doc(club).collection("events");
-
+        const eventCollection = clubCollection.doc(club.id).collection("events");
+      
+        // push all async calls into promise array
         promises.push(
           eventCollection.get()
             .then(clubEvents => {
               clubEvents.forEach(event => {
+                // firestore timestamp object returns as seconds, so convert to JS Date object
                 var eventTimestamp = event.data().date.toDate();
+                // only extract the date
                 var date = formatDate(eventTimestamp);
                 console.log(date);
                 if (!eventDates[date]) {
                   eventDates[date] = [];
                 }
-                time[date] = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+                if (!time[date]) {
+                  time[date] = [];
+                }
+                time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
                 eventDates[date].push(club.data().name + ": " + event.data().event + " || " + event.data().location);
                 console.log(eventDates[date]);
               })
+            }).catch(error => {
+              console.error("Failed to fetch events for " + club.data.name().name);
             })
         )
       })
+
+      // after all promises returned, initialize calendar object with events from firestore properly loaded in
       Promise.all(promises).then(() => {
         initializeCalendar();
+        console.log("Calendar successfully loaded!");
+      })
+      .catch(error => {
+        console.error("Failed to initialize calendar.");
       })
     });
 }
 displayEvents("clubs");
 
+// calendar base script source: https://codepen.io/alvarotrigo/pen/NWyNgoy
 function initializeCalendar() {
   // set maxDates
   var maxDate = {
@@ -56,22 +61,29 @@ function initializeCalendar() {
   }
 
   var flatpickr = $('#calendar .placeholder').flatpickr({
+    // calendar always visible
     inline: true,
     minDate: 'today',
     maxDate: maxDate[3]
     ,
     showMonths: 1,
+    // enable only dates with events to be clickable
     enable: Object.keys(eventDates),
     disableMobile: "true",
+    // flatpikr event hook for when user selects a date, passes in selected date(s), date as a string, and the flatpikr instance
     onChange: function (date, str, inst) {
       var contents = '';
       if (date.length) {
         for (i = 0; i < eventDates[str].length; i++) {
-          contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l J F') + " @ " + time[str] + '</div><div class="location">' + eventDates[str][i] + '</div></div>';
+          // l - day of week
+          // F - month
+          // J - day
+          contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l F J') + " @ " + time[str][i] + '</div><div class="location">' + eventDates[str][i] + '</div></div>';
         }
       }
       $('#calendar .calendar-events').html(contents)
     },
+    // can customize abbreviations for each date
     locale: {
       weekdays: {
         shorthand: ["S", "M", "T", "W", "T", "F", "S"],
@@ -88,7 +100,7 @@ function initializeCalendar() {
     }
   })
 
-  // logic for clearing the selection if clicking outside the calendar widget 
+  // logic for clearing the selection if clicking outside the calendar widget
   document.addEventListener("click", function (e) {
     var calendar = document.getElementById("calendar");
     if (!calendar.contains(e.target)) {
@@ -98,10 +110,13 @@ function initializeCalendar() {
   });
 
   eventCalendarResize($(window));
+
+  // event listens for when window is resized and adjusts the calendar's layout; passes in the window object and eventCalendarResizes as a callback function
   $(window).on('resize', function () {
     eventCalendarResize($(this))
   })
 
+  // resizes the calendar based on window size, but we have set it to 1 for all screen sizes
   function eventCalendarResize($el) {
     var width = $el.width()
     if (flatpickr.selectedDates.length) {
@@ -131,6 +146,7 @@ function initializeCalendar() {
   }
 }
 
+// format date to be compatible with flatpickr
 function formatDate(date) {
   let d = date.getDate();
   let m = date.getMonth() + 1; //Month from 0 to 11

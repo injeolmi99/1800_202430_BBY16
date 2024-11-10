@@ -64,22 +64,37 @@ body {
     margin: 0 auto;
 }
 
-.contentBox {
-    padding: 5%;
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0px 0px 8px rgb(236, 236, 236);
-}
-
 .boxTitle {
     
 }
 
-.eventGallery {
+.contentBox {
+    padding: 3rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 8px rgb(216, 215, 215);
+}
+
+#events-go-here {
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
+    flex: 1;
     gap: 0.8rem;
+    overflow-x: scroll;
+    /* makes box shadows visible even with overflow scroll! */
+    margin: -20px -20px;
+    padding: 20px 20px;
+}
+
+#events-go-here .contentBox {
+    padding: 1.8rem;
+    min-width: 15.5rem;
+    max-height: 14rem;
+}
+
+.material-icons {
+    font-size: 14pt;
+    vertical-align: text-top;
 }
 
 #bottomNav {
