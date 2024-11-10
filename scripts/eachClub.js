@@ -5,7 +5,7 @@ function displayClubInfo() {
 
     let collection;
     let previousPage = sessionStorage.getItem("previousPage")
-    
+
     if (previousPage.includes("clubsList.html")) {
         collection = "clubs";
     } else if (previousPage.includes("unofficialClubs.html")) {
@@ -52,6 +52,49 @@ function displayClubInfo() {
 }
 displayClubInfo();
 
+// fetch events of the current club to display in event gallery
+function displayCardsDynamically(collection) {
+    let cardTemplate = document.getElementById("eventCardTemplate");
+    const promises = [];
+
+    let params = new URL(window.location.href); //get URL of search bar
+    let ID = params.searchParams.get("docID"); //get value for key "id"
+    let clubEvents = db.collection("clubs").doc(ID).collection("events");
+    promises.push(
+        clubEvents.get().then(events => {
+            events.forEach(event => {
+                console.log(event.id);
+                let newcard = cardTemplate.content.cloneNode(true);
+                // firestore timestamp object returns as seconds -> convert
+                var eventTimestamp = event.data().date.toDate();
+                // only extract the date
+                var date = formatDate(eventTimestamp);
+                var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+
+                newcard.querySelector('.eventName').innerHTML = event.data().event;
+                newcard.querySelector('.eventLocation').innerHTML += event.data().location;
+                newcard.querySelector('.eventDate').innerHTML += date;
+                newcard.querySelector('.eventTime').innerHTML += time;
+                document.getElementById(collection + "-go-here").appendChild(newcard);
+
+                // can add in page for each event later
+                // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
+                //     sessionStorage.setItem("previousPage", window.location.href);
+                //     location.href = "eachEvent.html?docID=" + docID;
+                // });
+            })
+        }).catch(error => {
+            console.error("Failed to fetch club events");
+        })
+    )
+    Promise.all(promises).then(() => {
+        console.log("User events loaded");
+    }).catch(error => {
+        console.error("Failed to fetch user events");
+    })
+}
+displayCardsDynamically("events");
+
 // // This is executed when the button is pressed doesnt work perfectly rn
 function leaveOrJoin() {
     let params = new URL(window.location.href); // get URL of search bar
@@ -67,7 +110,7 @@ function leaveOrJoin() {
                 if (user) {
                     // Get user document from Firestore (just saving myself typing later)
                     let userDocRef = db.collection("users").doc(user.uid);
-                    
+
                     // needed this beast to get into the users data
                     userDocRef.get().then(userDoc => {
                         if (userDoc.exists) {
@@ -103,7 +146,7 @@ function leaveOrJoin() {
                                     members: firebase.firestore.FieldValue.arrayUnion(user.uid)
                                 }).then(() => {
                                     console.log("User added to the club members list.");
-                                    
+
                                     userDocRef.update({
                                         // This is how to add to array without changing other values (its not .push())
                                         clubs: firebase.firestore.FieldValue.arrayUnion(ID)
@@ -136,6 +179,18 @@ function leaveOrJoin() {
     });
 }
 
+// format date to be displayed on card
+function formatDate(date) {
+    let d = date.getDate();
+    let m = date.getMonth(); //Month from 0 to 11
+    let y = date.getFullYear();
+
+    let day = date.getDay(); //Day from 0 to 6
+
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    return "" + dayNames[day] + ", " + monthNames[m] + " " + d;
+}
 
 // function saveClubDocumentIDAndRedirect(){
 //     let params = new URL(window.location.href) //get the url from the search bar

@@ -59,9 +59,23 @@
         <div id="clubDescription">club description</div>
       </div>
     </section>  
+    <section class="contentSection">
+      <h1 class="boxTitle">Upcoming Events</h1>
+      <div id="events-go-here">
+      </div>
+    </section>
   </div>
-
+  
   <button id="insertJoinOrLeave" onclick="leaveOrJoin()">place holder</button>
+
+  <template id="eventCardTemplate">
+    <div class="contentBox">
+      <h5 class="eventName">event name</h2>
+      <div class="eventLocation"><span class="material-icons location">location_on</span> </div>
+      <div class="eventDate"><span class="material-icons">calendar_today</span> </div>
+      <div class="eventTime"><span class="material-icons">schedule</span> </div>
+    </div>
+  </template>
 
   <!--BOTTOM NAVBAR-->
   <div id="footerPlaceholder"></div>
