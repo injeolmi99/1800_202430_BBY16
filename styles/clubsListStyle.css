@@ -8,23 +8,24 @@
 }
 
 #createClubButton {
-    /* WHY IS THE ALIGNMENT SLIGHTLY OFF (╥﹏╥) */
-    line-height: 0;
-    width: 100px;
-    height: 100px;
+    /* WHY IS THE ALIGNMENT SLIGHTLY OFF (╥﹏╥) 
+    DON'T CRY I FIXED IT!!!!*/
+    width: 75px;
+    height: 75px;
     background-color: lightgrey;
-    border-radius: 50%;
-    display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
-    /* vertical-align: middle; */
-    /* text-align: center; */
-    font-size: 50px;
+    border-radius: 25%;
+    font-size: 36pt;
     font-weight: bold;
     margin: 10px;
-    border: white;
-    justify-self: right;
-} 
+    border: none;
+    position: absolute;
+    right: 0;
+}
+
+#createClubButton div {
+    height: 100%;
+    width: 100%;
+}
 
 
 .btn {
