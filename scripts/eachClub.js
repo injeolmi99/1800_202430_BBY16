@@ -20,6 +20,7 @@ function displayClubInfo() {
             clubName = thisClub.name;
             clubDescription = thisClub.description;
             clubMembers = thisClub.members;
+            clubAdmin = thisClub.admin;
 
             //this is for displaying the Join or leave club button since it needs to change based on your status with the club
             // I dont understand why but the shorter method of getting userID isn't working on other pages
@@ -29,12 +30,17 @@ function displayClubInfo() {
                 if (user) {
 
                     // Searches for the users ID in the club members array and acts accordingly
-                    if (clubMembers.includes(user.uid)) {
+                    if(clubMembers.includes(user.uid) && user.uid == clubAdmin) {
+                        //Line after this can be removed whenever just a place holder to tell JT when it works
+                        document.getElementById("insertJoinOrLeave").innerHTML = "Admin Cannot leave their own club";
+
+                        document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'>Edit Club</button>";
+                    } else if (clubMembers.includes(user.uid)) {
                         // console.log("Here");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave"
+                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
                     } else {
                         // console.log("not in club");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Join";
+                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>";
                     }
 
                 } else {
@@ -132,7 +138,7 @@ function leaveOrJoin() {
                                     }).then(() => {
                                         console.log("Club ID removed from user's club list.");
                                         // change the button to match the users status with club
-                                        document.getElementById("insertJoinOrLeave").innerHTML = "Join";
+                                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>"
                                     }).catch(error => {
                                         console.error("Error updating user document: ", error);
                                     });
@@ -153,7 +159,7 @@ function leaveOrJoin() {
                                     }).then(() => {
                                         console.log("Club ID added to user's club list.");
                                         // change the button to match the users status with club
-                                        document.getElementById("insertJoinOrLeave").innerHTML = "Leave"
+                                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>"
                                     }).catch(error => {
                                         console.error("Error updating user document: ", error);
                                     });
@@ -205,7 +211,7 @@ function leaveOrJoin() {
                                             }).then(() => {
                                                 console.log("Club ID removed from user's club list.");
                                                 // change the button to match the users status with club
-                                                document.getElementById("insertJoinOrLeave").innerHTML = "Join";
+                                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>";
                                             }).catch(error => {
                                                 console.error("Error updating user document: ", error);
                                             });
@@ -226,7 +232,7 @@ function leaveOrJoin() {
                                             }).then(() => {
                                                 console.log("Club ID added to user's club list.");
                                                 // change the button to match the users status with club
-                                                document.getElementById("insertJoinOrLeave").innerHTML = "Leave"
+                                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
                                             }).catch(error => {
                                                 console.error("Error updating user document: ", error);
                                             });
@@ -265,6 +271,13 @@ function formatDate(date) {
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     return "" + dayNames[day] + ", " + monthNames[m] + " " + d;
+}
+
+function editClub() {
+    let params = new URL(window.location.href); // get URL of search bar
+    let clubID = params.searchParams.get("docID"); // get value for key "id"
+    console.log("now edditing club");
+    location.href = "editClub.html?docID=" + clubID;
 }
 
 // function saveClubDocumentIDAndRedirect(){

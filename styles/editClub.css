@@ -1,0 +1,35 @@
+h1 {
+    margin: 10pt;
+}
+
+#editableStuff {
+    width: 80vw;
+    padding: 20px;
+    justify-self: center;
+    background-color: lightgrey;
+    border-radius: 20px;
+}
+
+#clubName {
+    display: block;
+    width: 80%;
+    padding: 10px;
+}
+
+#description {
+    display: block;
+    height: 300pt;
+    width: 100%;
+    padding: 10px;
+}
+
+#cancel {
+    margin: 10px;
+    margin-left: 5px;
+}
+
+#submit {
+    float: right;
+    margin: 10px;
+    margin-right: 5px;
+}
