@@ -48,35 +48,68 @@ function submitNewClubData() {
 
     thisClubID.get().then(doc => {
         if (doc.exists) {
-            newClubName = document.getElementById('clubName').value;
-            newClubDescription = document.getElementById('description').value;
 
-            thisClubID.update({
-                name: newClubName,
-                description: newClubDescription
-            }).then(() => {
-                console.log("documents successfully updateded");
-                location.href = "eachClub.html?docID=" + ID;
+            let clubData = doc.data();
+            let clubAdmin = clubData.admin
 
-            }).catch(error => {
-                console.error("Error updating club data: ", error);
+            //Validate the the current user ID is the admin... noticed it is easy to edit any page as non admin
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    // Get user document from Firestore (just saving myself typing later)
+                    if (user.uid == clubAdmin) {
+                        newClubName = document.getElementById("clubName").value;
+                        newClubDescription = document.getElementById("description").value;
+
+                        thisClubID.update({
+                            name: newClubName,
+                            description: newClubDescription
+                        }).then(() => {
+                            console.log("documents successfully updateded");
+                            location.href = "eachClub.html?docID=" + ID;
+
+                        }).catch(error => {
+                            console.error("Error updating club data: ", error);
+                        })
+                    } else {
+                        // kick user out of the club editting page (not like this does much)
+                        // console.log("you are not the admin of this club")
+                        location.href = "clubsList.html";
+                    }
+                } else {
+                    console.log("no user signed in");
+                }
             })
         } else {
             let thisClubID = db.collection("unofficialClubs").doc(ID);
             thisClubID.get().then(doc => {
                 if (doc.exists) {
-                    newClubName = document.getElementById('clubName').value;
-                    newClubDescription = document.getElementById('description').value;
-        
-                    thisClubID.update({
-                        name: newClubName,
-                        description: newClubDescription
-                    }).then(() => {
-                        console.log("documents successfully updateded");
-                        location.href = "eachClub.html?docID=" + ID;
-        
-                    }).catch(error => {
-                        console.error("Error updating club data: ", error);
+
+                    let clubData = doc.data();
+                    let clubAdmin = clubData.admin
+
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            if (user.uid == clubAdmin) {
+                                newClubName = document.getElementById("clubName").value;
+                                newClubDescription = document.getElementById("description").value;
+
+                                thisClubID.update({
+                                    name: newClubName,
+                                    description: newClubDescription
+                                }).then(() => {
+                                    console.log("documents successfully updateded");
+                                    location.href = "eachClub.html?docID=" + ID;
+
+                                }).catch(error => {
+                                    console.error("Error updating club data: ", error);
+                                })
+                            } else {
+                                // kick user out
+                                location.href = "clubsList.html";
+                            }
+                        } else {
+                            console.log("no user signed in")
+                        }
                     })
                 } else {
                     console.log("COULDNT FIND CLUB!")

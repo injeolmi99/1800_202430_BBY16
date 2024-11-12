@@ -35,6 +35,7 @@ function displayClubInfo() {
                         document.getElementById("insertJoinOrLeave").innerHTML = "Admin Cannot leave their own club";
 
                         document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'>Edit Club</button>";
+                        document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>Add event</button>";
                     } else if (clubMembers.includes(user.uid)) {
                         // console.log("Here");
                         document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
@@ -278,6 +279,10 @@ function editClub() {
     let clubID = params.searchParams.get("docID"); // get value for key "id"
     console.log("now edditing club");
     location.href = "editClub.html?docID=" + clubID;
+}
+
+function addEvent() {
+    console.log("here");
 }
 
 // function saveClubDocumentIDAndRedirect(){
