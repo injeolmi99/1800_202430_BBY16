@@ -1,10 +1,14 @@
 // create eventDates object
-var eventDates = {}
-const clubCollection = db.collection("clubs")
+var eventDates = {};
 var time = {};
 
-// displays all events for each club on their respective date in the calendar object
+// displays all events for ALL CLUBS on their respective date in the calendar object 
 function displayEvents(collection) {
+  // ensure objects are empty (for the filter to work properly without duplicating events)
+  eventDates = {};
+  time = {};
+  const clubCollection = db.collection(collection)
+
   // create a promise array in order to ensure the calendar object is only initialized once all events are loaded in
   const promises = [];
 
@@ -12,7 +16,7 @@ function displayEvents(collection) {
     .then(allClubs => {
       allClubs.forEach(club => {
         const eventCollection = clubCollection.doc(club.id).collection("events");
-      
+
         // push all async calls into promise array
         promises.push(
           eventCollection.get()
@@ -44,15 +48,96 @@ function displayEvents(collection) {
         initializeCalendar();
         console.log("Calendar successfully loaded!");
       })
-      .catch(error => {
-        console.error("Failed to initialize calendar.");
-      })
+        .catch(error => {
+          console.error("Failed to initialize calendar.");
+        })
     });
 }
-displayEvents("clubs");
+// displayEvents("clubs");
+// displayEvents("unofficialClubs");
+
+// display specifically only the user's events
+function displayUserEvents(collection) {
+  eventDates = {};
+  time = {};
+  // create a promise array in order to ensure the calendar object is only initialized once all events are loaded in
+  const promises = [];
+
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      let currentUser = db.collection("users").doc(user.uid);
+      currentUser.get().then(userDoc => {
+        let userClubs = userDoc.data().clubs;
+        userClubs.forEach(club => { //iterate thru each club
+          // NOTE TO SELF: here, because we are fetching club from the array inside of user, it is a String and not a reference. So we cannot call club.data()
+          let clubRef = db.collection(collection).doc(club);
+          let clubEvents = db.collection(collection).doc(club).collection("events");
+          promises.push(
+            clubEvents.get().then(events => {
+              events.forEach(event => {
+                // firestore timestamp object returns as seconds, so convert to JS Date object
+                var eventTimestamp = event.data().date.toDate();
+                // only extract the date
+                var date = formatDate(eventTimestamp);
+                console.log(date);
+                if (!eventDates[date]) {
+                  eventDates[date] = [];
+                }
+                if (!time[date]) {
+                  time[date] = [];
+                }
+
+                promises.push(
+                  clubRef.get()
+                    .then((club) => {
+                      time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
+                      eventDates[date].push(club.data().name + ": " + event.data().event + " || " + event.data().location);
+                      console.log(eventDates[date]);
+                    })
+                )
+              })
+            }).catch(error => {
+              console.error("Failed to fetch club events");
+            })
+          )
+        })
+        
+        // promise has to be INSIDE of the currentUser.get() callback or else it will load too fast. bc of the nature of our method of fetching club ID as a String from clubs array inside of user doc, we need to add in ANOTHER async get call to get the actual club document separately
+        Promise.all(promises).then(() => {
+          initializeCalendar();
+          console.log("User events loaded");
+        }).catch(error => {
+          console.error("Failed to fetch user events and initialize calendar");
+        })
+
+      })
+    } else {
+      console.log("No user is logged in.");
+    }
+  })
+}
+displayUserEvents("clubs");
+displayUserEvents("unofficialClubs");
+
+function dropdownChoice() {
+  if (this.value == "allEvents") {
+    displayEvents("clubs");
+    displayEvents("unofficialClubs");
+  } else if (this.value == "yourEvents") {
+    displayUserEvents("clubs");
+    displayUserEvents("unofficialClubs");
+  }
+}
+document.getElementById("filter").onchange = dropdownChoice;
 
 // calendar base script source: https://codepen.io/alvarotrigo/pen/NWyNgoy
 function initializeCalendar() {
+  // let calTemplate = document.getElementById("calendarObject");
+  // document.querySelector(".cal-modal-container").innerHTML = "";
+
+  // let newCalendar = calTemplate.content.cloneNode(true);
+  // document.querySelector(".cal-modal-container").appendChild(newCalendar);
+
   // set maxDates
   var maxDate = {
     1: new Date(new Date().setMonth(new Date().getMonth() + 11)),

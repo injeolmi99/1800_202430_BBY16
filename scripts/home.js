@@ -29,12 +29,11 @@ function displayCardsDynamically(collection) {
                 let userClubs = userDoc.data().clubs;
                 console.log(userClubs);
                 userClubs.forEach(club => { //iterate thru each club
-                    console.log(club);
-                    let clubEvents = db.collection("clubs").doc(club).collection("events");
+                    let officialClubEvents = db.collection("clubs").doc(club).collection("events");
+                    let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
                     promises.push(
-                        clubEvents.get().then(events => {
+                        officialClubEvents.get().then(events => {
                             events.forEach(event => {
-                                console.log(event.id);
                                 let newcard = cardTemplate.content.cloneNode(true);
                                 // firestore timestamp object returns as seconds -> convert
                                 var eventTimestamp = event.data().date.toDate();
@@ -55,7 +54,27 @@ function displayCardsDynamically(collection) {
                                 // });
                             })
                         }).catch(error => {
-                            console.error("Failed to fetch club events");
+                            console.error("Failed to fetch official club events");
+                        })
+                    )
+                    promises.push(
+                        unofficialClubEvents.get().then(events => {
+                            events.forEach(event => {
+                                let newcard = cardTemplate.content.cloneNode(true);
+                                // firestore timestamp object returns as seconds -> convert
+                                var eventTimestamp = event.data().date.toDate();
+                                // only extract the date
+                                var date = formatDate(eventTimestamp);
+                                var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+
+                                newcard.querySelector('.eventName').innerHTML = event.data().event;
+                                newcard.querySelector('.eventLocation').innerHTML += event.data().location;
+                                newcard.querySelector('.eventDate').innerHTML += date;
+                                newcard.querySelector('.eventTime').innerHTML += time;
+                                document.getElementById(collection + "-go-here").appendChild(newcard);
+                            })
+                        }).catch(error => {
+                            console.error("Failed to fetch unoffical club events");
                         })
                     )
                 })

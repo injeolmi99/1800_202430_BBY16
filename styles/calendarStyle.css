@@ -11,7 +11,7 @@
     border: none;
 }
 
-.swap {
+/* .swap {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,12 +24,12 @@
     position: absolute;
     top: 0;
     right: 0;
-}
+} */
 
 /*
 a bit broken atm because i haven't implemented code to change the swap icon color on hover
 */
-.swap:hover {
+/* .swap:hover {
     color: #F17C0E;
 }
 
@@ -43,6 +43,13 @@ a bit broken atm because i haven't implemented code to change the swap icon colo
 .moveRight {
     display: flex;
     justify-content: right;
+} */
+
+#filter {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 1%;
 }
 
 #copyright {

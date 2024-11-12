@@ -62,21 +62,9 @@ function displayCardsDynamically(collection) {
                 
                 newcard.querySelector('.clubGroupButton').innerHTML = title;
                 newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
-                    sessionStorage.setItem("previousPage", window.location.href);
                     location.href = "eachClub.html?docID=" + docID;
                 });
                 document.getElementById(collection + "-go-here").appendChild(newcard);
             })
         })
-}
-
-
-// stub, will come back to later
-function toggle(clubType) {
-    document.getElementById(clubType).addEventListener("click", () => {
-        if (clubType = "official")
-        {
-            
-        }
-    })   
 }

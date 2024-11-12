@@ -7,27 +7,37 @@ function displayClubData() {
     console.log(ID);
 
     let collection;
-    let previousPage = sessionStorage.getItem("previousPage")
+    let officialClubsList = db.collection("clubs").doc(ID);
+    let unofficialClubsList = db.collection("unofficialClubs").doc(ID);
 
-    if (previousPage.includes("clubsList.html")) {
-        collection = "clubs";
-    } else if (previousPage.includes("unofficialClubs.html")) {
-        collection = "unofficialClubs";
-    }
-
-    db.collection(collection)
-        .doc(ID)
-        .get()
+    // copied over club iterating logic from eachClub.js
+    officialClubsList.get()
         .then(doc => {
-            thisClub = doc.data();
-            clubName = thisClub.name;
-            clubDescription = thisClub.description;
+            if (doc.exists) {
+                collection = "clubs";
+            } else {
+                return unofficialClubsList.get();
+            }
+        })
+        .then(doc => {
+            if (!collection && doc.exists) {
+                collection = "unofficialClubs";
+            } else if (!collection) {
+                console.error("Club doesn't exist!");
+            }
+        })
+        .then(() => {
+            db.collection(collection)
+                .doc(ID)
+                .get()
+                .then(doc => {
+                    thisClub = doc.data();
+                    clubName = thisClub.name;
+                    clubDescription = thisClub.description;
 
-            document.getElementById("insertClubName").innerHTML = "<input type='text' id='clubName' value='" + clubName + "'>";
-            document.getElementById("insertDescription").innerHTML = "<textarea id='description'>" + clubDescription + "</textarea>";
-
-            // let imgEvent = document.querySelector( ".club-img" );
-            // imgEvent.src = "../images/" + [would need some kind of identifier] + ".jpg";
+                    document.getElementById("insertClubName").innerHTML = "<input type='text' id='clubName' value='" + clubName + "'>";
+                    document.getElementById("insertDescription").innerHTML = "<textarea id='description'>" + clubDescription + "</textarea>";
+                })
         });
 }
 displayClubData();
@@ -71,7 +81,7 @@ function submitNewClubData() {
                             console.error("Error updating club data: ", error);
                         })
                     } else {
-                        // kick user out of the club editting page (not like this does much)
+                        // kick user out of the club editing page (not like this does much)
                         // console.log("you are not the admin of this club")
                         location.href = "clubsList.html";
                     }

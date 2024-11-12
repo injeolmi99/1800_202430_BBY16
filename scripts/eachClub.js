@@ -1,62 +1,81 @@
+// checks if club is official or unofficial, then displays its info
 function displayClubInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
     console.log(ID);
 
+    // new and improved way to check club bc storing previousPage url in session storage was unreliable and hack-y
     let collection;
-    let previousPage = sessionStorage.getItem("previousPage")
+    let officialClubsList = db.collection("clubs").doc(ID);
+    let unofficialClubsList = db.collection("unofficialClubs").doc(ID);
 
-    if (previousPage.includes("clubsList.html")) {
-        collection = "clubs";
-    } else if (previousPage.includes("unofficialClubs.html")) {
-        collection = "unofficialClubs";
-    }
-
-    db.collection(collection)
-        .doc(ID)
-        .get()
+    officialClubsList.get()
         .then(doc => {
-            thisClub = doc.data();
-            clubName = thisClub.name;
-            clubDescription = thisClub.description;
-            clubMembers = thisClub.members;
-            clubAdmin = thisClub.admin;
+            if (doc.exists) {
+                // if official club, set collection to "clubs"
+                collection = "clubs";
+            } else {
+                // because this return value is "thenable", next .then() in the chain can handle its result, preserving async handling
+                // otherwise the next then() would execute without waiting to fetch the unofficial club list)
+                return unofficialClubsList.get();
+            }
+        })
+        .then(doc => {
+            // !collection -> collection hasn't been set yet, i.e., isn't an official club
+            if (!collection && doc.exists) {
+                collection = "unofficialClubs";
+            } else if (!collection) {
+                console.error("Club doesn't exist!");
+            }
+        })
+        .then(() => {
+            db.collection(collection)
+                .doc(ID)
+                .get()
+                .then(doc => {
+                    thisClub = doc.data();
+                    clubName = thisClub.name;
+                    clubDescription = thisClub.description;
+                    clubMembers = thisClub.members;
+                    clubAdmin = thisClub.admin;
 
-            //this is for displaying the Join or leave club button since it needs to change based on your status with the club
-            // I dont understand why but the shorter method of getting userID isn't working on other pages
-            // So I used this machine!
-            firebase.auth().onAuthStateChanged(user => {
-                // If a user is logged in then go inside else fail
-                if (user) {
+                    //this is for displaying the Join or leave club button since it needs to change based on your status with the club
+                    // I dont understand why but the shorter method of getting userID isn't working on other pages
+                    // So I used this machine!
+                    firebase.auth().onAuthStateChanged(user => {
+                        // If a user is logged in then go inside else fail
+                        if (user) {
 
-                    // Searches for the users ID in the club members array and acts accordingly
-                    if(clubMembers.includes(user.uid) && user.uid == clubAdmin) {
-                        //Line after this can be removed whenever just a place holder to tell JT when it works
-                        document.getElementById("insertJoinOrLeave").innerHTML = "Admin Cannot leave their own club";
+                            // Searches for the users ID in the club members array and acts accordingly
+                            if (clubMembers.includes(user.uid) && user.uid == clubAdmin) {
+                                //Line after this can be removed whenever just a place holder to tell JT when it works
+                                document.getElementById("insertJoinOrLeave").innerHTML = "Admin Cannot leave their own club";
 
-                        document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'>Edit Club</button>";
-                        document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>Add event</button>";
-                    } else if (clubMembers.includes(user.uid)) {
-                        // console.log("Here");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
-                    } else {
-                        // console.log("not in club");
-                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>";
-                    }
+                                document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'>Edit Club</button>";
+                                document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>Add event</button>";
+                            } else if (clubMembers.includes(user.uid)) {
+                                // console.log("Here");
+                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
+                            } else {
+                                // console.log("not in club");
+                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>";
+                            }
 
-                } else {
-                    console.log("Failed at user check / none logged in?");
-                    document.getElementById("insertJoinOrLeave").innerHTML = "ERROR!!!";
-                }
-            })
+                        } else {
+                            console.log("Failed at user check / none logged in?");
+                            document.getElementById("insertJoinOrLeave").innerHTML = "ERROR!!!";
+                        }
+                    })
 
-            document.getElementById("clubName").innerHTML = clubName;
-            document.getElementById("clubDescription").innerHTML = clubDescription;
+                    document.getElementById("clubName").innerHTML = clubName;
+                    document.getElementById("clubDescription").innerHTML = clubDescription;
+                    displayCardsDynamically(collection);
 
-            // let imgEvent = document.querySelector( ".club-img" );
-            // imgEvent.src = "../images/" + [would need some kind of identifier] + ".jpg";
-        });
-}
+                    // let imgEvent = document.querySelector( ".club-img" );
+                    // imgEvent.src = "../images/" + [would need some kind of identifier] + ".jpg";
+                })
+        })
+};
 displayClubInfo();
 
 // fetch events of the current club to display in event gallery
@@ -66,43 +85,45 @@ function displayCardsDynamically(collection) {
 
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
-    let clubEvents = db.collection("clubs").doc(ID).collection("events");
+
+    let clubEvents = db.collection(collection).doc(ID).collection("events");
     promises.push(
-        clubEvents.get().then(events => {
-            events.forEach(event => {
-                console.log(event.id);
-                let newcard = cardTemplate.content.cloneNode(true);
-                // firestore timestamp object returns as seconds -> convert
-                var eventTimestamp = event.data().date.toDate();
-                // only extract the date
-                var date = formatDate(eventTimestamp);
-                var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+        clubEvents.get()
+            .then(events => {
+                events.forEach(event => {
+                    console.log(event.id);
+                    let newcard = cardTemplate.content.cloneNode(true);
+                    // firestore timestamp object returns as seconds -> convert
+                    var eventTimestamp = event.data().date.toDate();
+                    // only extract the date
+                    var date = formatDate(eventTimestamp);
+                    var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
 
-                newcard.querySelector('.eventName').innerHTML = event.data().event;
-                newcard.querySelector('.eventLocation').innerHTML += event.data().location;
-                newcard.querySelector('.eventDate').innerHTML += date;
-                newcard.querySelector('.eventTime').innerHTML += time;
-                document.getElementById(collection + "-go-here").appendChild(newcard);
+                    newcard.querySelector('.eventName').innerHTML = event.data().event;
+                    newcard.querySelector('.eventLocation').innerHTML += event.data().location;
+                    newcard.querySelector('.eventDate').innerHTML += date;
+                    newcard.querySelector('.eventTime').innerHTML += time;
+                    document.getElementById("events" + "-go-here").appendChild(newcard);
 
-                // can add in page for each event later
-                // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
-                //     sessionStorage.setItem("previousPage", window.location.href);
-                //     location.href = "eachEvent.html?docID=" + docID;
-                // });
+                    // can add in page for each event later
+                    // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
+                    //     sessionStorage.setItem("previousPage", window.location.href);
+                    //     location.href = "eachEvent.html?docID=" + docID;
+                    // });
+                })
+            }).catch(error => {
+                console.error("Failed to fetch club events");
             })
-        }).catch(error => {
-            console.error("Failed to fetch club events");
-        })
     )
     Promise.all(promises).then(() => {
-        console.log("User events loaded");
+        console.log("Club events loaded");
     }).catch(error => {
         console.error("Failed to fetch user events");
     })
 }
-displayCardsDynamically("events");
 
 // // This is executed when the button is pressed doesnt work perfectly rn (I dont remember if I (jt) put that it doensnt work perfectly or if it was a note left for me... I just made it work for the unnofficial clubs as well though)
+// you left the note for yourself i'm pretty sure! it seems to work perfectly now, thank you for your hard work as always :D (ak)
 function leaveOrJoin() {
     let params = new URL(window.location.href); // get URL of search bar
     let ID = params.searchParams.get("docID"); // get value for key "id"
@@ -110,7 +131,7 @@ function leaveOrJoin() {
     let thisClubID = db.collection("clubs").doc(ID);
 
     thisClubID.get().then(doc => {
-        if (doc.exists) {
+        if (`doc.exists`) {
             let thisClub = doc.data();
 
             firebase.auth().onAuthStateChanged(user => {
@@ -277,7 +298,7 @@ function formatDate(date) {
 function editClub() {
     let params = new URL(window.location.href); // get URL of search bar
     let clubID = params.searchParams.get("docID"); // get value for key "id"
-    console.log("now edditing club");
+    console.log("now editing club");
     location.href = "editClub.html?docID=" + clubID;
 }
 

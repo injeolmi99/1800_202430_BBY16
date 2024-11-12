@@ -53,17 +53,21 @@
 
   <!--CALENDAR-->
   <!--source: https://codepen.io/alvarotrigo/pen/NWyNgoy-->
-  <div class="cal-modal-container">  
+  <div class="cal-modal-container">
     <div class="cal-modal">
-      <div class="moveRight">
+      <!-- <div class="moveRight">
         <button class="swap" type="button"><img class="swapButton" src="./images/swapHover.png">Weekly View</button>
-      </div>
+      </div> -->
       <h3>UPCOMING EVENTS</h3>
       <div id="calendar">
         <div class="placeholder"></div>
         <div class="calendar-events">
         </div>
       </div>
+      <select id="filter">
+        <option value="allEvents">All Events</option>
+        <option value="yourEvents">Your Events</option>
+      </select>
     </div>
   </div>
 
