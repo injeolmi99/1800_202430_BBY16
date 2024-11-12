@@ -51,6 +51,9 @@ a bit broken atm because i haven't implemented code to change the swap icon colo
 } */
 
 #filter {
+    background-color: #343F48;
+    border: none;
+    color: white;
     position: absolute;
     top: 20px;
     left: 20px;

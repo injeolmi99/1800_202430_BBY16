@@ -91,6 +91,34 @@ function displayCardsDynamically(collection) {
 }
 displayCardsDynamically("events");
 
+function displayClubsDynamically(collection) {
+    let cardTemplate = document.getElementById("clubsListTemplate");
+    db.collection(collection).get()   
+        .then(allClubs => {
+            
+            allClubs.forEach(doc => { //iterate thru each doc
+                var title = doc.data().name;       // get value of the "name" key
+                var docID = doc.id;
+                var img = doc.data().image;
+                let newcard = cardTemplate.content.cloneNode(true);
+
+                newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/" + img + ".jpg')";
+                newcard.querySelector('.nameTag').innerHTML = title;
+                
+                newcard.querySelector('.nameTag').style.cursor = "pointer";
+                // looks redundant, but because of the hover overlay i think this is needed for it to work on mobile
+                newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
+                    location.href = "eachClub.html?docID=" + docID;
+                });
+                newcard.querySelector(".nameTag").addEventListener("click", () => {
+                    location.href="eachClub.html?docID=" + docID;
+                });
+                document.getElementById("clubs-go-here").appendChild(newcard);
+            })
+        })
+}
+displayClubsDynamically("clubs");
+
 // format date to be displayed on card
 function formatDate(date) {
     let d = date.getDate();

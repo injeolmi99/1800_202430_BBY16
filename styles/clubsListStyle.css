@@ -20,13 +20,13 @@
     border: none;
     position: absolute;
     right: 0;
+    z-index: 999;
 }
 
 #createClubButton div {
     height: 100%;
     width: 100%;
 }
-
 
 .btn {
     background-color: #F17C0E;
@@ -53,31 +53,64 @@ content (clubs list) styling
 }
 
 #clubs-go-here, #unofficialClubs-go-here {
-    padding: 2% 0;
-    gap: 25px;
-}
-
-.clubGroup {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 1.8rem 0;
+    gap: 25px;
+    margin: 0;
+}
+
+.clubGroup {
+    width: 80%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.clubGroup:hover .nameTag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24pt;
+    height: 100%;
     width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.9;
+    transition: .3s ease;
 }
 
 .clubGroupButton {
-    width: 80%;
-    height: 150px;
+    width: 100%;
+    height: 250px;
     border: none;
-    border-radius: 10px;
-    padding: 0 5%;
     font-size: 20pt;
-    background-color: #c1c3c5;
+    object-fit: cover;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
-.clubGroupButton:hover {
+.nameTag {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 2.5% 0;
+    font-size: 16pt;
+    background-color: #d4cdcd;
+    transition: 0.6s ease;
+}
+
+/* .clubGroupButton:hover {
     box-shadow: 0px 0px 12px rgb(81, 81, 81);
     transition: 0.3s;
-}
+} */
 
 /* styling for the unofficial / official buttons*/
 .club-toggle {

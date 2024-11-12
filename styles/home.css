@@ -6,3 +6,64 @@
 #house {
   background-color: #F17C0E;
 }
+
+/*
+content (clubs list) styling copied over from clubsListStyle.css
+*/
+#clubs-go-here, #unofficialClubs-go-here {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.8rem 0;
+  gap: 25px;
+  margin: 0;
+}
+
+.clubGroup {
+  width: 80%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.clubGroup:hover .nameTag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24pt;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.9;
+  transition: .3s ease;
+}
+
+.clubGroupButton {
+  height: 250px;
+  width: 100%;
+  border: none;
+  font-size: 20pt;
+  object-fit: cover;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.nameTag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 2.5% 0;
+  font-size: 16pt;
+  background-color: #d4cdcd;
+  transition: 0.6s ease;
+}

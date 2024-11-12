@@ -58,11 +58,19 @@ function displayCardsDynamically(collection) {
             allClubs.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var docID = doc.id;
+                var img = doc.data().image;
                 let newcard = cardTemplate.content.cloneNode(true);
+
+                newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/" + img + ".jpg')";
+                newcard.querySelector('.nameTag').innerHTML = title;
                 
-                newcard.querySelector('.clubGroupButton').innerHTML = title;
+                newcard.querySelector('.nameTag').style.cursor = "pointer";
+                // looks redundant, but because of the hover overlay i think this is needed for it to work on mobile
                 newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
                     location.href = "eachClub.html?docID=" + docID;
+                });
+                newcard.querySelector(".nameTag").addEventListener("click", () => {
+                    location.href="eachClub.html?docID=" + docID;
                 });
                 document.getElementById(collection + "-go-here").appendChild(newcard);
             })
