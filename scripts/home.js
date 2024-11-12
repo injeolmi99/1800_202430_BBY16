@@ -1,3 +1,5 @@
+var currentUser;
+
 function insertName() {
     // check if the user is logged in:
     firebase.auth().onAuthStateChanged(user => {
@@ -24,7 +26,7 @@ function displayCardsDynamically(collection) {
 
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            let currentUser = db.collection("users").doc(user.uid);
+            currentUser = db.collection("users").doc(user.uid);
             currentUser.get().then(userDoc => {
                 let userClubs = userDoc.data().clubs;
                 console.log(userClubs);
@@ -93,31 +95,42 @@ displayCardsDynamically("events");
 
 function displayClubsDynamically(collection) {
     let cardTemplate = document.getElementById("clubsListTemplate");
-    db.collection(collection).get()   
-        .then(allClubs => {
-            
-            allClubs.forEach(doc => { //iterate thru each doc
-                var title = doc.data().name;       // get value of the "name" key
-                var docID = doc.id;
-                var img = doc.data().image;
-                let newcard = cardTemplate.content.cloneNode(true);
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            currentUser = db.collection("users").doc(user.uid); // go to the Firestore document of the user
+            currentUser.get().then(doc => {
+                userDoc = doc;
+                db.collection(collection).get()
+                    .then(allClubs => {
+                        allClubs.forEach(doc => { //iterate thru each doc
+                            if (userDoc.data().clubs.includes(doc.id)) {
+                                var title = doc.data().name;       // get value of the "name" key
+                                var docID = doc.id;
+                                var img = doc.data().image;
+                                let newcard = cardTemplate.content.cloneNode(true);
 
-                newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/" + img + ".jpg')";
-                newcard.querySelector('.nameTag').innerHTML = title;
-                
-                newcard.querySelector('.nameTag').style.cursor = "pointer";
-                // looks redundant, but because of the hover overlay i think this is needed for it to work on mobile
-                newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
-                    location.href = "eachClub.html?docID=" + docID;
-                });
-                newcard.querySelector(".nameTag").addEventListener("click", () => {
-                    location.href="eachClub.html?docID=" + docID;
-                });
-                document.getElementById("clubs-go-here").appendChild(newcard);
+                                newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/" + img + ".jpg')";
+                                newcard.querySelector('.nameTag').innerHTML = title;
+
+                                newcard.querySelector('.nameTag').style.cursor = "pointer";
+                                // looks redundant, but because of the hover overlay i think this is needed for it to work on mobile
+                                newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
+                                    location.href = "eachClub.html?docID=" + docID;
+                                });
+                                newcard.querySelector(".nameTag").addEventListener("click", () => {
+                                    location.href = "eachClub.html?docID=" + docID;
+                                });
+                                document.getElementById("clubs-go-here").appendChild(newcard);
+                            }
+                        })
+                    })
             })
-        })
+
+        }
+    })
 }
 displayClubsDynamically("clubs");
+displayClubsDynamically("unofficialClubs");
 
 // format date to be displayed on card
 function formatDate(date) {
@@ -130,5 +143,4 @@ function formatDate(date) {
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     return "" + dayNames[day] + ", " + monthNames[m] + " " + d;
-  }
-  
+}

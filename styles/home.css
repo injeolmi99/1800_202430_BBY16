@@ -10,23 +10,22 @@
 /*
 content (clubs list) styling copied over from clubsListStyle.css
 */
-#clubs-go-here, #unofficialClubs-go-here {
+#clubs-go-here {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.8rem 0;
+  flex-direction: row;
   gap: 25px;
   margin: 0;
+  overflow: scroll;
 }
 
 .clubGroup {
-  width: 80%;
+  min-width: 15.5rem;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  border-radius: 10px;
+  border-radius: 1rem;
   overflow: hidden;
 }
 
@@ -34,7 +33,7 @@ content (clubs list) styling copied over from clubsListStyle.css
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24pt;
+  font-size: 18pt;
   height: 100%;
   width: 100%;
   top: 0;
@@ -46,13 +45,14 @@ content (clubs list) styling copied over from clubsListStyle.css
 }
 
 .clubGroupButton {
-  height: 250px;
+  height: 200px;
   width: 100%;
   border: none;
   font-size: 20pt;
   object-fit: cover;
-  background-size: 100%;
+  background-size: auto 100%;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .nameTag {
