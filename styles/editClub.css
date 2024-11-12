@@ -1,13 +1,27 @@
-h1 {
-    margin: 10pt;
-}
-
-#editableStuff {
+/* can incorporate bits of this later! just wanted to make the design consistent for now */
+/* #editableStuff {
     width: 80vw;
     padding: 20px;
     justify-self: center;
     background-color: lightgrey;
     border-radius: 20px;
+} */
+
+label {
+    font-size: 16pt;
+}
+
+small {
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+input[type="text"], textarea {
+    background-color: rgb(246, 245, 244);
+    border-radius: 5px;
+    border: 2px solid rgb(203, 202, 202);
+    border-bottom: 2px solid rgb(171, 171, 171);
+    margin-bottom: 0.6rem;
 }
 
 #clubName {
@@ -18,9 +32,19 @@ h1 {
 
 #description {
     display: block;
-    height: 300pt;
+    height: 300px;
     width: 100%;
     padding: 10px;
+}
+
+input[type="button"] {
+    background-color: #85ac9f;
+    color: white;
+    padding: 0.6rem;
+    font-size: 12pt;
+    border: none;
+    border-radius: 5px;
+    vertical-align: middle;
 }
 
 #cancel {

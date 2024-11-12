@@ -1,0 +1,41 @@
+.content {
+  padding: 2rem 0 4rem;
+  position: relative;
+}
+
+button {
+  /* doesn't have to be this color but orange was starting to make me want to peel my eyes */
+  background-color: #85ac9f;
+  color: white;
+  padding: 0.6rem;
+  font-size: 12pt;
+  border: none;
+  border-radius: 5px;
+  vertical-align: middle;  
+}
+
+#Admin-edit-button-goes-here {
+  top: 0;
+  right: 0;
+  position: absolute;
+}
+
+#Admin-edit-button-goes-here button {
+  margin-top: 0.6rem;
+  margin-right: 0.6rem;
+}
+
+#insert-add-event button {
+  margin-left: 0.6rem;
+}
+
+.contentSection {
+  position: relative;
+}
+
+#insertJoinOrLeave button {
+  width: 10%;
+  background-color: #F17C0E;
+  position: absolute;
+  right: 0;
+}

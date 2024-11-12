@@ -49,10 +49,10 @@ function displayClubInfo() {
                             // Searches for the users ID in the club members array and acts accordingly
                             if (clubMembers.includes(user.uid) && user.uid == clubAdmin) {
                                 //Line after this can be removed whenever just a place holder to tell JT when it works
-                                document.getElementById("insertJoinOrLeave").innerHTML = "Admin Cannot leave their own club";
+                                // document.getElementById("insertJoinOrLeave").innerHTML = "Admin cannot leave their own club";
 
-                                document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'>Edit Club</button>";
-                                document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>Add event</button>";
+                                document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'><span class='material-icons'>settings</span> Edit Club</button>";
+                                document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>+ Add Event</button>";
                             } else if (clubMembers.includes(user.uid)) {
                                 // console.log("Here");
                                 document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
@@ -303,7 +303,10 @@ function editClub() {
 }
 
 function addEvent() {
-    console.log("here");
+    let params = new URL(window.location.href); // get URL of search bar
+    let clubID = params.searchParams.get("docID"); // get value for key "id"
+    console.log("adding event");
+    location.href = "addEvent.html?docID=" + clubID;
 }
 
 // function saveClubDocumentIDAndRedirect(){
