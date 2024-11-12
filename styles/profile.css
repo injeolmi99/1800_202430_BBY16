@@ -116,3 +116,7 @@ body {
 #bottomNav {
     grid-row: 3;
 }
+
+#prof {
+    background-color: #F17C0E;
+}
