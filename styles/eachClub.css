@@ -34,7 +34,7 @@ button {
 }
 
 #insertJoinOrLeave button {
-  width: 10%;
+  width: 6rem;
   background-color: #F17C0E;
   position: absolute;
   right: 0;
