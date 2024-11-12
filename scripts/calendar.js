@@ -132,12 +132,6 @@ document.getElementById("filter").onchange = dropdownChoice;
 
 // calendar base script source: https://codepen.io/alvarotrigo/pen/NWyNgoy
 function initializeCalendar() {
-  // let calTemplate = document.getElementById("calendarObject");
-  // document.querySelector(".cal-modal-container").innerHTML = "";
-
-  // let newCalendar = calTemplate.content.cloneNode(true);
-  // document.querySelector(".cal-modal-container").appendChild(newCalendar);
-
   // set maxDates
   var maxDate = {
     1: new Date(new Date().setMonth(new Date().getMonth() + 11)),
@@ -187,7 +181,7 @@ function initializeCalendar() {
 
   // logic for clearing the selection if clicking outside the calendar widget
   document.addEventListener("click", function (e) {
-    var calendar = document.getElementById("calendar");
+    var calendar = document.querySelector(".cal-modal");
     if (!calendar.contains(e.target)) {
       flatpickr.clear();
       document.querySelector(".calendar-events").innerHTML = "";

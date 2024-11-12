@@ -47,10 +47,14 @@ content (clubs list) styling
 */
 #clubsList {
     text-align: center;
-    padding-bottom: 5rem;
     /* THESE MAKE THE CLUB GROUPS SCROLLABLE */
     /* overflow: auto; */
     /* height: 500px;; */
+}
+
+#clubs-go-here, #unofficialClubs-go-here {
+    padding: 2% 0;
+    gap: 25px;
 }
 
 .clubGroup {
@@ -58,7 +62,6 @@ content (clubs list) styling
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 20px 0;
 }
 
 .clubGroupButton {
@@ -123,4 +126,8 @@ a {
 
 #cl {
     background-color: #F17C0E;
+}
+
+.spacer {
+    height: 118px !important;
 }
