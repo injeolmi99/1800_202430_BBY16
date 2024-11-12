@@ -68,6 +68,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.8rem;
+    overflow: hidden;
 }
 
 .contentSection {
