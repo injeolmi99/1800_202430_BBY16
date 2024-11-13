@@ -76,3 +76,13 @@ function displayCardsDynamically(collection) {
             })
         })
 }
+
+function toggleClubs() {
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        document.getElementById("clubs-go-here").style.display = "flex";
+    }
+
+    if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        document.getElementById("clubs-go-here").style.display = "none";
+    }
+}

@@ -30,9 +30,13 @@
 } */
 
 .btn {
-    background-color: #F17C0E;
+    background-color: #EB7875;
     color: white;
     border: none;
+}
+
+.btn:hover {
+    background-color: #4089C0;
 }
 
 #copyright {

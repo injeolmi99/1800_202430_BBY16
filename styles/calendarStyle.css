@@ -10,12 +10,6 @@ body {
     height: calc(100vh - 56px - 78px);
 }
 
-.btn {
-    background-color: #F17C0E;
-    color: white;
-    border: none;
-}
-
 /* .swap {
     display: flex;
     justify-content: center;
@@ -142,7 +136,7 @@ with edits to match our color scheme
                     width: 46px;
 
                     path {
-                        fill: #F17C0E;
+                        fill: #EB7875;
                     }
                 }
             }
@@ -201,7 +195,7 @@ with edits to match our color scheme
             transition: color .1s, background .1s;
 
             &:hover {
-                background: #F17C0E;
+                background: #EB7875;
                 color: #fff;
             }
 
@@ -213,7 +207,7 @@ with edits to match our color scheme
 
             &.selected:not(.hidden) {
                 &, &:hover, &:focus {
-                    background: #F17C0E;
+                    background: #EB7875;
                     color: #fff;
                 }
             }
@@ -248,7 +242,7 @@ with edits to match our color scheme
             }
 
             .location {
-                color: #F17C0E;
+                color: #EB7875;
                 font-weight: 800;
                 letter-spacing: -.8px;
             }
@@ -257,5 +251,5 @@ with edits to match our color scheme
 }
 
 #cal {
-    background-color: #F17C0E;
+    background-color: #4089C0;
 }
