@@ -76,3 +76,26 @@ function displayCardsDynamically(collection) {
             })
         })
 }
+
+function myFunction() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    //div = document.getElementById("clubsList");
+    div1 = document.getElementById("clubs-go-here");
+    div2 = div1.getElementsByClassName("clubGroup")
+   
+  
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < div2.length; i++) {
+        a = div2[i].getElementsByClassName("nameTag")[0];
+      txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        div2[i].style.display = "";
+      } else {
+        div2[i].style.display = "none";
+      }
+    }
+  }
