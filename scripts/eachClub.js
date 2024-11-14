@@ -46,10 +46,11 @@ function displayClubInfo() {
                 .get()
                 .then(doc => {
                     thisClub = doc.data();
-                    clubName = thisClub.name;
-                    clubDescription = thisClub.description;
-                    clubMembers = thisClub.members;
-                    clubAdmin = thisClub.admin;
+                    let clubImage = thisClub.image;
+                    let clubName = thisClub.name;
+                    let clubDescription = thisClub.description;
+                    let clubMembers = thisClub.members;
+                    let clubAdmin = thisClub.admin;
 
                     //this is for displaying the Join or leave club button since it needs to change based on your status with the club
                     // Getting user ID
@@ -78,6 +79,7 @@ function displayClubInfo() {
                         }
                     })
 
+                    document.getElementById("clubImage").style.backgroundImage = "url('./images/" + clubImage + ".jpg')"
                     document.getElementById("clubName").innerHTML = clubName;
                     document.getElementById("clubDescription").innerHTML = clubDescription;
                     displayCardsDynamically(collection);

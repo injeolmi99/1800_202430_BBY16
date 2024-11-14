@@ -64,9 +64,9 @@ removeUnloggedinUsers();
 
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("clubsListTemplate");
-    db.collection(collection).get()   
+    db.collection(collection).get()
         .then(allClubs => {
-            
+
             allClubs.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var docID = doc.id;
@@ -75,39 +75,75 @@ function displayCardsDynamically(collection) {
 
                 newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/" + img + ".jpg')";
                 newcard.querySelector('.nameTag').innerHTML = title;
-                
+
                 newcard.querySelector('.nameTag').style.cursor = "pointer";
                 // looks redundant, but because of the hover overlay i think this is needed for it to work on mobile
                 newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
                     location.href = "eachClub.html?docID=" + docID;
                 });
                 newcard.querySelector(".nameTag").addEventListener("click", () => {
-                    location.href="eachClub.html?docID=" + docID;
+                    location.href = "eachClub.html?docID=" + docID;
                 });
                 document.getElementById(collection + "-go-here").appendChild(newcard);
             })
         })
 }
 
-function myFunction() {
+function toggleClubs() {
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        document.getElementById("clubs-go-here").style.display = "flex";
+        document.getElementById("unofficialClubs-go-here").style.display = "none";
+        document.getElementById("createClubButton").style.display = "none";
+    }
+
+    if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        document.getElementById("unofficialClubs-go-here").style.display = "flex";
+        document.getElementById("clubs-go-here").style.display = "none";
+        document.getElementById("createClubButton").style.display = "block";
+    }
+
+    // just to update search results
+    searchClubs();
+}
+
+function searchClubs() {
     // Declare variables
 
     var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById('myInput');
+    input = document.getElementById('searchInput');
     filter = input.value.toUpperCase();
     //div = document.getElementById("clubsList");
-    div1 = document.getElementById("clubs-go-here");
+
+    let div1;
+    let div2;
+
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        div1 = document.getElementById("clubs-go-here");
+    } else if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        div1 = document.getElementById("unofficialClubs-go-here");
+    }
+
     div2 = div1.getElementsByClassName("clubGroup")
-   
-  
+    div2 = div1.getElementsByClassName("clubGroup")
+
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < div2.length; i++) {
         a = div2[i].getElementsByClassName("nameTag")[0];
-      txtValue = a.textContent || a.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        div2[i].style.display = "";
-      } else {
-        div2[i].style.display = "none";
-      }
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            div2[i].style.display = "";
+        } else {
+            div2[i].style.display = "none";
+        }
     }
-  }
+}
+
+function loadClubs() {
+    window.onload = (e) => {
+        displayCardsDynamically("clubs");
+        displayCardsDynamically("unofficialClubs");
+        // since our page always toggles to official on load by default
+        document.getElementById("unofficialClubs-go-here").style.display = "none";
+        document.getElementById("createClubButton").style.display = "none";
+    }
+} loadClubs();

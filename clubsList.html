@@ -35,6 +35,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
   <!-- Link to styles of your own -->
+  <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
   <link rel="stylesheet" href="./styles/clubsListStyle.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
 
@@ -50,19 +51,37 @@
   <!--TOP NAVBAR-->
   <nav id="navPlaceholder"></nav>
 
+  <div id="searchBox">
+    <div class="input-group rounded">
+      <input type="search" id="searchInput" class="form-control rounded" onkeyup="searchClubs()" placeholder="Search"
+        aria-label="Search" aria-describedby="search-addon" />
+      <span class="input-group-text border-0">
+        <span class="material-icons">
+          search
+        </span>
+      </span>
+    </div>
+  </div>
+
   <!--CLUBS WOULD BE PUT IN HERE USING JS-->
   <div id="clubsList">
     <div id="clubs-go-here" class="row row-cols-auto"></div>
-  </div>    
+  </div>
+
+  <div id="clubsList">
+    <div id="unofficialClubs-go-here" class="row row-cols-auto"></div>
+  </div>
 
   <template id="clubsListTemplate">
-  <!--Dummy club group-->
+    <!--Dummy club group-->
     <div class="clubGroup">
       <button class="clubGroupButton"></button>
       <div class="nameTag"></div>
     </div>
   </template>
-  
+
+  <button id="createClubButton" onclick="location.href='createAClub.html'">+</button>
+
   <!--BOTTOM NAVBAR-->
   <div id="footerPlaceholder"></div>
 
@@ -74,10 +93,6 @@
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/clubsList.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script>
-    displayCardsDynamically("clubs");
-
-  </script>
 
 </body>
 
