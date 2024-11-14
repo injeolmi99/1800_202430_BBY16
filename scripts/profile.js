@@ -71,7 +71,7 @@ function editUserInfo() {
     document.getElementById('personalInfoFields').disabled = false;
     // thow in edit profile pic button
     // Change inner text to a pencil image eventually
-    document.getElementById('insert-edit-pic-button').innerHTML = "<button id='change-profile-pic-button' onclick='openAvailablePics()'>Change picture</button>";
+    document.getElementById('insert-edit-pic-button').innerHTML = "<button id='change-profile-pic-button' onclick='openAvailablePics()'><span class='material-icons'>edit</span></button>";
  }
 
  function saveUserInfo() {

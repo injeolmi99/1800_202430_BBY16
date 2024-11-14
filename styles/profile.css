@@ -28,6 +28,9 @@ body {
 }
 
 #profile-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-column: 2 / span 2;
     grid-row: 1 / span 5;
 }
@@ -46,10 +49,25 @@ body {
     aspect-ratio: 1 / 1;
     width: 90%;
     max-width: 300px;
+    padding: 10px;
     margin: 0 auto;
     /* Centers the circle horizontally */
 }
 
+#pfp-box {
+    width: max-content;
+    position: relative;
+}
+
+#change-profile-pic-button {
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px 9px 16px;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    bottom: 5%;
+    right: 15%;
+}
 
 #edit-profile {
     margin-left: 8%;
@@ -122,17 +140,30 @@ body {
 }
 
 /* Styling for inputs is from stack overflow */
+#insert-profile-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
 input[type="radio"] {
     display: none;
-    margin: 1px;
+    /* margin: 1px; */
 }
 
 input[type="radio"]:checked + label {
+    max-width: 75px;
+    max-height: 75px;
     border: 1px solid red;
     border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .icons-image {
-    max-width: 75px;
     max-height: 75px;
 }
