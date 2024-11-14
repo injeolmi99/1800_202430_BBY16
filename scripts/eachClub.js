@@ -79,6 +79,16 @@ function displayClubInfo() {
                         }
                     })
 
+                    // JT WORKING HERE ( PLEASE REMOVE IF I PUSH THIS COMMENT )
+                    for (let i = 0; i < 10; i++) {
+                        if (clubMembers[i] != null) {
+                            db.collection("users").doc(clubMembers[i]).get().then(clubMemberData => {
+                                let thisMemberData = clubMemberData.data();
+                                document.getElementById("insert-members").innerHTML += '<p><img id="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.name + '</span></p>'
+                            })
+                        }
+                    }
+
                     document.getElementById("clubImage").style.backgroundImage = "url('./images/" + clubImage + ".jpg')"
                     document.getElementById("clubName").innerHTML = clubName;
                     document.getElementById("clubDescription").innerHTML = clubDescription;

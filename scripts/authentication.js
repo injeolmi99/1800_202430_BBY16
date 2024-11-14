@@ -17,7 +17,7 @@ var uiConfig = {
       //------------------------------------------------------------------------------------------
       var user = authResult.user;                            // get the user object from the Firebase authentication database
       if (authResult.additionalUserInfo.isNewUser) {         //if new user
-        let pfpNum = Math.floor(Math.random() * 30) + 1;
+        let pfpNum = Math.floor(Math.random() * 30) + 1;  // gets a random number from 1 to 30 inclusive
         db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
           name: user.displayName,                    //"users" collection
           email: user.email,                         //with authenticated user's ID (user.uid)
