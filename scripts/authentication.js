@@ -17,12 +17,14 @@ var uiConfig = {
       //------------------------------------------------------------------------------------------
       var user = authResult.user;                            // get the user object from the Firebase authentication database
       if (authResult.additionalUserInfo.isNewUser) {         //if new user
+        let pfpNum = Math.floor(Math.random() * 30) + 1;
         db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
           name: user.displayName,                    //"users" collection
           email: user.email,                         //with authenticated user's ID (user.uid)
           displayName: user.displayName,
           clubs: [],                                 // I hope this will add an empty list Then need to add friend code (work with later)
-          friends: []
+          friends: [],                               // This array is empty cause they have no friends.
+          profilePicture: "./images/icons/pfp" + pfpNum + ".png" // gives the user a random profile picture to start
         }).then(function () {
           console.log("New user added to firestore");
           window.location.assign("clubsList.html");       //re-direct to clubsList.html after signup

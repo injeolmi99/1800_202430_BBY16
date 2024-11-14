@@ -120,3 +120,19 @@ body {
 #prof {
     background-color: #4089C0;
 }
+
+/* Styling for inputs is from stack overflow */
+input[type="radio"] {
+    display: none;
+    margin: 1px;
+}
+
+input[type="radio"]:checked + label {
+    border: 1px solid red;
+    border-radius: 50%;
+}
+
+.icons-image {
+    max-width: 75px;
+    max-height: 75px;
+}

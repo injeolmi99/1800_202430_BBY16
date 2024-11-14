@@ -83,10 +83,7 @@
   <!--use predetermined avatars instead of uploading personal images-->
   <div id="whole-profile">
     <div id="profile-image" class="container text-center py-4">
-      <div class="rounded-circle overflow-hidden">
-        <!--USING A DEMO PROFILE IMAGE CHANGE THIS LATER-->
-        <img class="responsive" src="https://www.profilebakery.com/wp-content/uploads/2023/04/Profile-Image-AI.jpg" alt="">
-      </div>
+      <div id="insert-pfp" class="rounded-circle overflow-hidden"></div>
       <!--Insert a pencil icon eventually for -->
       <div id="insert-edit-pic-button"></div>
     </div>
@@ -94,6 +91,7 @@
     <div id="green">
       <div class="container">
         <form>
+          <div id="insert-profile-options"></div>
           <!--Email should not be changable since it is used for authentication-->
           <!--Just moved it outside of the personalInfoFields so it wouldnt appear editable-->
           <fieldset class="mb-3" disabled>
