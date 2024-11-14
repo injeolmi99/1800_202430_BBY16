@@ -151,7 +151,7 @@ function initializeCalendar() {
     3: new Date(new Date().setMonth(new Date().getMonth() + 9))
   }
 
-  var flatpickr = $('#calendar .placeholder').flatpickr({
+  flatpickr = $('#calendar .placeholder').flatpickr({
     // calendar always visible
     inline: true,
     minDate: 'today',
@@ -161,7 +161,7 @@ function initializeCalendar() {
     // enable only dates with events to be clickable
     enable: Object.keys(eventDates),
     disableMobile: "true",
-    // flatpikr event hook for when user selects a date, passes in selected date(s), date as a string, and the flatpikr instance
+    // flatpickr event hook for when user selects a date, passes in selected date(s), date as a string, and the flatpickr instance
     onChange: function (date, str, inst) {
       var contents = '';
       if (date.length) {
@@ -215,7 +215,7 @@ function initializeCalendar() {
     }
 
     // display one month regardless of screen size
-    if (flatpickr.config.showMonths !== 1) {
+    if (flatpickr.showMonths !== 1) {
       flatpickr.set('showMonths', 1)
       flatpickr.set('maxDate', maxDate[1])
       $('.flatpickr-calendar').css('width', '')
