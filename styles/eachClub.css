@@ -1,6 +1,18 @@
+#clubImage {
+  height: 275px;
+  width: 100vw;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  object-fit: contain;
+}
+
 .content {
-  padding: 2rem 0 4rem;
+  padding: 0rem 0 4rem; /* note to self (ak): maybe change bottom padding, come back once whole page is set up */
   position: relative;
+}
+
+.contentSection:first-of-type {
+  padding-top: 0;
 }
 
 button {
