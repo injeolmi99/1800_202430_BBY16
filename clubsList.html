@@ -51,10 +51,24 @@
   <!--TOP NAVBAR-->
   <nav id="navPlaceholder"></nav>
 
+  <div class="input-group rounded">
+    <input type="search" id="searchInput" class="form-control rounded" onkeyup="searchClubs()" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    <span class="input-group-text border-0">
+      <span class="material-icons">
+        search
+      </span>
+    </span>
+  </div>
+
+
   <!--CLUBS WOULD BE PUT IN HERE USING JS-->
   <div id="clubsList">
     <div id="clubs-go-here" class="row row-cols-auto"></div>
   </div>    
+
+  <div id="clubsList">
+    <div id="unofficialClubs-go-here" class="row row-cols-auto"></div>
+  </div>
 
   <template id="clubsListTemplate">
   <!--Dummy club group-->
@@ -75,10 +89,7 @@
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/clubsList.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script>
-    displayCardsDynamically("clubs");
-  </script>
-
+  
 </body>
 
 </html>

@@ -40,8 +40,7 @@ function displayClubInfo() {
                     clubAdmin = thisClub.admin;
 
                     //this is for displaying the Join or leave club button since it needs to change based on your status with the club
-                    // I dont understand why but the shorter method of getting userID isn't working on other pages
-                    // So I used this machine!
+                    // Getting user ID
                     firebase.auth().onAuthStateChanged(user => {
                         // If a user is logged in then go inside else fail
                         if (user) {
@@ -122,7 +121,6 @@ function displayCardsDynamically(collection) {
     })
 }
 
-// // This is executed when the button is pressed doesnt work perfectly rn (I dont remember if I (jt) put that it doensnt work perfectly or if it was a note left for me... I just made it work for the unnofficial clubs as well though)
 // you left the note for yourself i'm pretty sure! it seems to work perfectly now, thank you for your hard work as always :D (ak)
 function leaveOrJoin() {
     let params = new URL(window.location.href); // get URL of search bar
@@ -131,13 +129,14 @@ function leaveOrJoin() {
     let thisClubID = db.collection("clubs").doc(ID);
 
     thisClubID.get().then(doc => {
-        if (`doc.exists`) {
+        if (doc.exists) {
             let thisClub = doc.data();
 
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     // Get user document from Firestore (just saving myself typing later)
                     let userDocRef = db.collection("users").doc(user.uid);
+                    console.log("Here: " + user.uid);
 
                     // needed this beast to get into the users data
                     userDocRef.get().then(userDoc => {
