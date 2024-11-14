@@ -12,6 +12,11 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
+    padding-right: 0;
+    background-color: #d4cdcd;
+}
+
+.input-group-text {
     background-color: #d4cdcd;
 }
 
@@ -19,8 +24,8 @@
     /* WHY IS THE ALIGNMENT SLIGHTLY OFF (╥﹏╥) 
     DON'T CRY I FIXED IT!!!!
     ok i lied its still slightly off center*/
-    width: 60px;
     height: 60px;
+    aspect-ratio: 1/1;
     font-size: 24pt;
     background-color: #4089C0;
     color: white;
@@ -31,6 +36,7 @@
     bottom: 128px;
     right: 0;
     z-index: 999;
+    padding-bottom:3px;
 }
 
 #copyright {
