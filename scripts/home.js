@@ -1,5 +1,17 @@
 var currentUser;
 
+function removeUnloggedinUsers() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            console.log("user detected");
+        } else {
+            alert("You must be logged in to have access to this page.");
+            location.href = "login.html";
+        }
+    })
+}
+removeUnloggedinUsers();
+
 function insertName() {
     // check if the user is logged in:
     firebase.auth().onAuthStateChanged(user => {

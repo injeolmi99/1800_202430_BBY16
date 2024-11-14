@@ -1,3 +1,15 @@
+function removeUnloggedinUsers() {
+  firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+          console.log("user detected");
+      } else {
+          alert("You must be logged in to have access to this page.");
+          location.href = "login.html";
+      }
+  })
+}
+removeUnloggedinUsers();
+
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("clubsListTemplate");
     db.collection(collection).get()   

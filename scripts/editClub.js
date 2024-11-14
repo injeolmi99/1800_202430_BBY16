@@ -1,3 +1,52 @@
+function removeNonAdmins() {
+    let params = new URL(window.location.href); //get URL of search bar
+    let ID = params.searchParams.get("docID"); //get value for key "id"
+    console.log(ID);
+
+    let thisClubID = db.collection("clubs").doc(ID);
+
+    thisClubID.get().then(doc => {
+        if (doc.exists) {
+            let clubData = doc.data();
+            let clubAdmin = clubData.admin;
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    userID = user.uid;
+                    if (userID != clubAdmin) {
+                        alert("You are not the club admin.")
+                        location.href = "home.html";
+                    }
+                } else {
+                    alert("No user signed in. Please sign in first.")
+                    location.href = "login.html";
+                }
+            })
+        } else {
+            let thisClubID = db.collection("unofficialClubs").doc(ID);
+
+            thisClubID.get().then(doc => {
+                if (doc.exists) {
+                    let clubData = doc.data();
+                    let clubAdmin = clubData.admin;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            userID = user.uid;
+                            if (userID != clubAdmin) {
+                                alert("You are not the club admin.")
+                                location.href = "home.html";
+                            }
+                        } else {
+                            alert("No user signed in. Please sign in first.")
+                            location.href = "login.html";
+                        }
+                    })
+                }
+            })
+        }    
+    })
+}
+removeNonAdmins();
+
 // use url to get club id then use id to get docs data then input data into text fields to be editted
 // include a finish and cancel button
 

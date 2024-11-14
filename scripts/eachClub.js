@@ -1,3 +1,15 @@
+function removeUnloggedinUsers() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            console.log("user detected");
+        } else {
+            alert("You must be logged in to have access to this page.");
+            location.href = "login.html";
+        }
+    })
+}
+removeUnloggedinUsers();
+
 // checks if club is official or unofficial, then displays its info
 function displayClubInfo() {
     let params = new URL(window.location.href); //get URL of search bar

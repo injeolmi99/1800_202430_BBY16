@@ -1,3 +1,15 @@
+function removeUnloggedinUsers() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            console.log("user detected");
+        } else {
+            alert("You must be logged in to have access to this page.");
+            location.href = "login.html";
+        }
+    })
+}
+removeUnloggedinUsers();
+
 // INSERTS THE USERNAME INTO THE PROFILE PAGE
 var currentUser;
 function insertNameFromFirestore() {
@@ -29,9 +41,6 @@ function insertNameFromFirestore() {
                 if(userDescription != null){
                     document.getElementById("descriptionInput").value = userDescription;
                 }
-                
-                
-                
             })
         } else {
             console.log("No user is logged in."); // Log a message when no user is logged in
@@ -39,10 +48,15 @@ function insertNameFromFirestore() {
     })
 }
 insertNameFromFirestore();
+
 function editUserInfo() {
     //Enable the form fields
     document.getElementById('personalInfoFields').disabled = false;
+    // thow in edit profile pic button
+    // Change inner text to a pencil image eventually
+    document.getElementById('insert-edit-pic-button').innerHTML = "<button id='change-profile-pic-button' onclick='openAvailablePics()'>Change picture</button>";
  }
+
  function saveUserInfo() {
     //enter code here
     userName = document.getElementById('nameInput').value;
@@ -67,4 +81,8 @@ function editUserInfo() {
     //b) update user's document in Firestore
 
     //c) disable edit 
+}
+
+function openAvailablePics() {
+    console.log("here");
 }
