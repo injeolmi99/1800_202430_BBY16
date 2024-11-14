@@ -81,11 +81,13 @@ function toggleClubs() {
     if (document.getElementById("officialToggle").classList.contains("active")) {
         document.getElementById("clubs-go-here").style.display = "flex";
         document.getElementById("unofficialClubs-go-here").style.display = "none";
+        document.getElementById("createClubButton").style.display = "none";
     }
 
     if (document.getElementById("unofficialToggle").classList.contains("active")) {
         document.getElementById("unofficialClubs-go-here").style.display = "flex";
         document.getElementById("clubs-go-here").style.display = "none";
+        document.getElementById("createClubButton").style.display = "block";
     }
 
     // just to update search results
@@ -130,5 +132,6 @@ function loadClubs() {
         displayCardsDynamically("unofficialClubs");
         // since our page always toggles to official on load by default
         document.getElementById("unofficialClubs-go-here").style.display = "none";
+        document.getElementById("createClubButton").style.display = "none";
     }
 } loadClubs();

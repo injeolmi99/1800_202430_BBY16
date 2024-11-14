@@ -7,25 +7,30 @@
     max-width: 100vw;
 }
 
-#createClubButton {
-    /* WHY IS THE ALIGNMENT SLIGHTLY OFF (╥﹏╥) 
-    DON'T CRY I FIXED IT!!!!*/
-    width: 75px;
-    height: 75px;
-    background-color: lightgrey;
-    border-radius: 25%;
-    font-size: 36pt;
-    font-weight: bold;
-    margin: 10px;
-    border: none;
-    position: absolute;
-    right: 0;
-    z-index: 999;
+#searchBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #d4cdcd;
 }
 
-#createClubButton div {
-    height: 100%;
-    width: 100%;
+#createClubButton {
+    /* WHY IS THE ALIGNMENT SLIGHTLY OFF (╥﹏╥) 
+    DON'T CRY I FIXED IT!!!!
+    ok i lied its still slightly off center*/
+    width: 60px;
+    height: 60px;
+    font-size: 24pt;
+    background-color: #4089C0;
+    color: white;
+    border-radius: 50%;
+    margin: 10px;
+    border: none;
+    position: fixed;
+    bottom: 128px;
+    right: 0;
+    z-index: 999;
 }
 
 #copyright {
