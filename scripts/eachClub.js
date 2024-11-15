@@ -89,13 +89,18 @@ function displayClubInfo() {
                         }
                     })
 
-                    // JT WORKING HERE ( PLEASE REMOVE IF I PUSH THIS COMMENT )
-                    for (let i = 0; i < 10; i++) {
+                    // for loop to display 10 members in the members list
+                    let displayTen = 10;
+                    for (let i = 0; i < displayTen; i++) {
                         if (clubMembers[i] != null && clubMembers[i] != clubAdmin) {
                             db.collection("users").doc(clubMembers[i]).get().then(clubMemberData => {
                                 let thisMemberData = clubMemberData.data();
                                 document.getElementById("insert-members").innerHTML += '<p><img id="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.displayName + '</span></p>'
                             })
+                        } else if (clubMembers[i] != null && clubMembers[i] == clubAdmin) {
+                            // this is just to ensure that if the admin's card comes up that it will still display 10 users
+                            // just becuase 10 is a better number than 9 :)
+                            displayTen++;
                         }
                     }
 
