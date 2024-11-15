@@ -51,6 +51,16 @@ function displayClubInfo() {
                     let clubDescription = thisClub.description;
                     let clubMembers = thisClub.members;
                     let clubAdmin = thisClub.admin;
+                    
+                    db.collection("users").doc(clubAdmin).get().then(adminRef => {
+                        if (adminRef.exists) {
+                            let adminPFP = adminRef.data().profilePicture
+                            let adminDisplay = adminRef.data().displayName
+                            document.getElementById("insert-admin").innerHTML += '<img id="pfp" src="' + adminPFP + '" alt=""><span>' + adminDisplay + '</span>'
+                        } else {
+                            document.getElementById("insert-admin").innerHTML = "This club has no admin";
+                        }
+                    })
 
                     //this is for displaying the Join or leave club button since it needs to change based on your status with the club
                     // Getting user ID
@@ -81,10 +91,10 @@ function displayClubInfo() {
 
                     // JT WORKING HERE ( PLEASE REMOVE IF I PUSH THIS COMMENT )
                     for (let i = 0; i < 10; i++) {
-                        if (clubMembers[i] != null) {
+                        if (clubMembers[i] != null && clubMembers[i] != clubAdmin) {
                             db.collection("users").doc(clubMembers[i]).get().then(clubMemberData => {
                                 let thisMemberData = clubMemberData.data();
-                                document.getElementById("insert-members").innerHTML += '<p><img id="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.name + '</span></p>'
+                                document.getElementById("insert-members").innerHTML += '<p><img id="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.displayName + '</span></p>'
                             })
                         }
                     }
