@@ -147,3 +147,17 @@ function loadClubs() {
         document.getElementById("createClubButton").style.display = "none";
     }
 } loadClubs();
+
+function createClubCheck() {
+    firebase.auth().onAuthStateChanged(user => {
+        currentUser = db.collection("users").doc(user.uid);
+        currentUser.get().then(userDoc => {
+            let userData = userDoc.data()
+            if (userData.clubsMade != null && userData.clubsMade >= 2) {
+                alert("You have made the maximum number of clubs per user (2)")
+            } else {
+                location.href = 'createAClub.html'
+            }
+        })
+    })
+}

@@ -15,16 +15,17 @@ var uiConfig = {
       // Before this works, you must enable "Firestore" from the firebase console.
       // The Firestore rules must allow the user to write. 
       //------------------------------------------------------------------------------------------
-      var user = authResult.user;                            // get the user object from the Firebase authentication database
+      var user = authResult.user;                             // get the user object from the Firebase authentication database
       if (authResult.additionalUserInfo.isNewUser) {         //if new user
-        let pfpNum = Math.floor(Math.random() * 30) + 1;  // gets a random number from 1 to 30 inclusive
+        let pfpNum = Math.floor(Math.random() * 30) + 1;    // gets a random number from 1 to 30 inclusive
         db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
-          name: user.displayName,                    //"users" collection
-          email: user.email,                         //with authenticated user's ID (user.uid)
+          name: user.displayName,                     //"users" collection
+          email: user.email,                          //with authenticated user's ID (user.uid)
           displayName: user.displayName,
-          clubs: [],                                 // I hope this will add an empty list Then need to add friend code (work with later)
-          friends: [],                               // This array is empty cause they have no friends.
-          profilePicture: "./images/icons/pfp" + pfpNum + ".png" // gives the user a random profile picture to start
+          clubs: [],                                  // I hope this will add an empty list Then need to add friend code (work with later)
+          friends: [],                                // This array is empty cause they have no friends.
+          profilePicture: "./images/icons/pfp" + pfpNum + ".png", // gives the user a random profile picture to start
+          clubsMade: 0                              // just creating the field now so it can be seen on firestore or is not null when we need it
         }).then(function () {
           console.log("New user added to firestore");
           window.location.assign("clubsList.html");       //re-direct to clubsList.html after signup
