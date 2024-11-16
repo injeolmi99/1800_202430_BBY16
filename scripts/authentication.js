@@ -63,3 +63,5 @@ var uiConfig = {
 };
 
 ui.start('#firebaseui-auth-container', uiConfig);
+
+// It would be awsome to limit the inputs by users for name part of authentication but idk how to do that and its not a priority

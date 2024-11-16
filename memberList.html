@@ -37,7 +37,7 @@
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
-  <link rel="stylesheet" href="./styles/eachClub.css">
+  <link rel="stylesheet" href="./styles/memberList.css">
 
 </head>
 
@@ -55,17 +55,8 @@
   <div class="content">
     <div id="clubImage">
     </div>
-    <div id="Admin-edit-button-goes-here"></div>
     <section class="contentSection">
       <h1 id="boxTitle"><span id="clubName">club name</span></h1>
-      <div class="contentBox">
-        <div id="clubDescription">club description</div>
-      </div>
-    </section>
-    <section class="contentSection">
-      <h1 class="boxTitle">Upcoming Events <span id="insert-add-event"></span></h1>
-      <div id="events-go-here">
-      </div>
     </section>
     <section class="contentSection">
       <h1 class="boxTitle">Admin</h1>
@@ -75,23 +66,18 @@
     </section>
     <section class="contentSection">
       <h1 class="boxTitle">Members</h1>
-      <div class="contentBox">
-        <div id="insert-members"></div>
-        <button id="see-all" onclick="allMembersList()">full list</button>
-      </div>
-    </section>
-    <section class="contentSection">
-      <div id="insertJoinOrLeave"></div>
-      <!-- <button onclick="leaveOrJoin()">place holder</button> -->    
+      <div id="insert-members"></div>
     </section>
   </div>
   
-  <template id="eventCardTemplate">
+  <template id="memberCardTemplate">
     <div class="contentBox">
-      <h5 class="eventName">event name</h5>
-      <div class="eventLocation"><span class="material-icons location">location_on</span> </div>
-      <div class="eventDate"><span class="material-icons">calendar_today</span> </div>
-      <div class="eventTime"><span class="material-icons">schedule</span> </div>
+      <div class="topBar">profilePicture displayname (name)</div>
+      <div class="userDescription">description</div>
+      <!--an admin kick button would appear in this bottom bar if the user is not admin should be blank-->
+      <!--Subject to change though cause I know someone is far better than me at styling-->
+      <!--Im kinda looking at the style of this thing like a hamburger... maybe im hungry and should get dinner-->
+      <div class="adminKickButton greyBottom">admin kick button goes here</div>
     </div>
   </template>
 
@@ -106,7 +92,7 @@
   <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script src="./scripts/eachClub.js"></script>
+  <script src="./scripts/memberList.js"></script>
 
 </body>
 
