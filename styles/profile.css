@@ -140,6 +140,7 @@ body {
 }
 
 /* Styling for inputs is from stack overflow */
+/* I think majority of the stuff from stack got changed */
 #insert-profile-options {
     display: flex;
     flex-wrap: wrap;
@@ -166,4 +167,8 @@ input[type="radio"]:checked + label {
 
 .icons-image {
     max-height: 75px;
+}
+
+#descriptionInput {
+    height: 200px;
 }

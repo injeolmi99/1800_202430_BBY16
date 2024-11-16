@@ -84,8 +84,22 @@ function displayClubData() {
                     clubName = thisClub.name;
                     clubDescription = thisClub.description;
 
-                    document.getElementById("insertClubName").innerHTML = "<input type='text' id='clubName' value='" + clubName + "'>";
-                    document.getElementById("insertDescription").innerHTML = "<textarea id='description'>" + clubDescription + "</textarea>";
+                    document.getElementById("insertClubName").innerHTML = '<input type="text" id="clubName" value="' + clubName + '" maxlength="25">';
+                    // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
+                    document.getElementById('clubName').addEventListener('input', function() {
+                        // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
+                        this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
+                    });
+                    document.getElementById("insertDescription").innerHTML = "<textarea id='description' maxlength='800' pattern='[a-zA-Z0-9 ]'>" + clubDescription + "</textarea>";
+                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
+                     document.getElementById('description').addEventListener('input', function() {
+                        // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
+                        this.value = this.value.replace(/[<>{}\\]/g, '');
+                        if (this.value.includes("$(")) {
+                            console.log("here")
+                            this.value = this.value.replace("$(", "$ (")
+                        }
+                    });
                 })
         });
 }
@@ -130,8 +144,8 @@ function submitNewClubData() {
                             console.error("Error updating club data: ", error);
                         })
                     } else {
-                        // kick user out of the club editing page (not like this does much)
-                        // console.log("you are not the admin of this club")
+                        // This one is a little redundent since non admin users should have been removed by now
+                        // but just incase
                         location.href = "clubsList.html";
                     }
                 } else {

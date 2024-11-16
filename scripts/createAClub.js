@@ -62,6 +62,22 @@ function createClub() {
     })
 }
 
+// mentioned in edit club that the idea for this code was from microsoft copilot
+document.getElementById('clubName').addEventListener('input', function() {
+    // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
+    this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
+});
+
+document.getElementById('description').addEventListener('input', function() {
+    // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
+    this.value = this.value.replace(/[<>{}\\]/g, '');
+    // if users input $( a space gets added between the $ and ( to prevent some possible insertions
+    if (this.value.includes("$(")) {
+        console.log("here")
+        this.value = this.value.replace("$(", "$ (")
+    }
+});
+
 // HERE JUST FOR REFERENCE
 // function stuff() {
 //     db.collection("hello").doc("world").collection("events").add({
