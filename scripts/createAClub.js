@@ -30,7 +30,10 @@ function removeUnloggedinUsersandClubOwners() {
 removeUnloggedinUsersandClubOwners();
 
 function onPageLoad() {
-    document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
+    // injects the options into the image-selection placeholder 
+    $('#image-selection').load('./text/club_image_options.html')
+    // couldnt get current image so I forced it to default cause thats the one that shows up when the page is first loaded
+    document.getElementById("displayImage").src = "./images/clubImages/default.jpg"
 }
 onPageLoad();
 

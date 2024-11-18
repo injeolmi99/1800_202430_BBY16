@@ -59,6 +59,9 @@ function displayClubData() {
     let officialClubsList = db.collection("clubs").doc(ID);
     let unofficialClubsList = db.collection("unofficialClubs").doc(ID);
 
+    // injects the options into the image-selection placeholder 
+    console.log($('#image-selection').load('./text/club_image_options.html'));
+
     // copied over club iterating logic from eachClub.js
     officialClubsList.get()
         .then(doc => {
@@ -83,6 +86,7 @@ function displayClubData() {
                     thisClub = doc.data();
                     clubName = thisClub.name;
                     clubDescription = thisClub.description;
+                    clubImage = thisClub.image
 
                     document.getElementById("insertClubName").innerHTML = '<input type="text" id="clubName" value="' + clubName + '" maxlength="25">';
                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
@@ -100,6 +104,20 @@ function displayClubData() {
                             this.value = this.value.replace("$(", "$ (")
                         }
                     });
+
+                    // displays the image that is currently in use for the club
+                    document.getElementById("displayImage").src = "./images/clubImages/" + clubImage
+
+                    let dropdown = document.getElementById("image");
+                    let options = dropdown.options;
+
+                    // displays which image is currently selected on page load
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value == clubImage) {
+                            dropdown.selectedIndex = i;
+                            break;
+                        }
+                    }
                 })
         });
 }
@@ -132,10 +150,12 @@ function submitNewClubData() {
                     if (user.uid == clubAdmin) {
                         newClubName = document.getElementById("clubName").value;
                         newClubDescription = document.getElementById("description").value;
+                        let newClubImage = document.getElementById("image").value;
 
                         thisClubID.update({
                             name: newClubName,
-                            description: newClubDescription
+                            description: newClubDescription,
+                            image: newClubImage
                         }).then(() => {
                             console.log("documents successfully updateded");
                             location.href = "eachClub.html?docID=" + ID;
@@ -165,10 +185,12 @@ function submitNewClubData() {
                             if (user.uid == clubAdmin) {
                                 newClubName = document.getElementById("clubName").value;
                                 newClubDescription = document.getElementById("description").value;
+                                let newClubImage = document.getElementById("image").value;
 
                                 thisClubID.update({
                                     name: newClubName,
-                                    description: newClubDescription
+                                    description: newClubDescription,
+                                    image: newClubImage
                                 }).then(() => {
                                     console.log("documents successfully updateded");
                                     location.href = "eachClub.html?docID=" + ID;
@@ -190,4 +212,8 @@ function submitNewClubData() {
             })
         }
     })
+}
+
+function showImage() {
+    document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
 }
