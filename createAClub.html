@@ -67,6 +67,21 @@
             Who should join you, and why?</small>
           <textarea id="description" maxlength="800"></textarea>
           <div id="insertDescription"></div>
+
+          <!--appologies for not doing this a smarter way-->
+          <div id="image-selection">
+            <label for="images">Select an image:</label>
+            <select name="images" id="image" onclick="showImage()">
+              <option value="default.jpg">Default</option>
+              <option value="SP1.jpg">Sports 1</option>
+              <option value="SP2.jpg">Sports 2</option>
+              <option value="CC01.jpg">Chess 1</option>
+              <option value="CC02.jpg">Computing 1</option>
+              <option value="GC01.jpg">Gaming 1</option>
+            </select>
+          </div>
+          <img id="displayImage" scr="" alt="">
+
           <input type="button" id="cancel" value="Cancel" onclick="javascript:history.back()">
           <input type="button" id="submit" value="Submit" onclick="createClub()">
         </form>

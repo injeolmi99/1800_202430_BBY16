@@ -29,17 +29,24 @@ function removeUnloggedinUsersandClubOwners() {
 }
 removeUnloggedinUsersandClubOwners();
 
+function onPageLoad() {
+    document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
+}
+onPageLoad();
+
 function createClub() {
     var user = firebase.auth().currentUser;
     // console.log(user)
     let clubName = document.getElementById("clubName").value;
     let clubDescription = document.getElementById("description").value;
+    let clubImage = document.getElementById("image").value;
     // note to self to remember later: .add returns a promise in this case it is the reference to the club 
     db.collection("unofficialClubs").add({
         name: clubName,
         admin: user.uid,
         description: clubDescription,
-        members: [user.uid]
+        members: [user.uid],
+        image: clubImage
         // optional?
         // timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(clubRef => {
@@ -60,6 +67,10 @@ function createClub() {
             })
         })
     })
+}
+
+function showImage() {
+    document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
 }
 
 // mentioned in edit club that the idea for this code was from microsoft copilot

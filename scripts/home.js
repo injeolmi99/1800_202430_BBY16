@@ -121,7 +121,7 @@ function displayClubsDynamically(collection) {
                                 var img = doc.data().image;
                                 let newcard = cardTemplate.content.cloneNode(true);
 
-                                newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/" + img + ".jpg')";
+                                newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/clubImages/" + img + "')";
                                 newcard.querySelector('.nameTag').innerHTML = title;
 
                                 newcard.querySelector('.nameTag').style.cursor = "pointer";

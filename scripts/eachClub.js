@@ -104,7 +104,7 @@ function displayClubInfo() {
                         }
                     }
 
-                    document.getElementById("clubImage").style.backgroundImage = "url('./images/" + clubImage + ".jpg')"
+                    document.getElementById("clubImage").style.backgroundImage = "url('./images/clubImages/" + clubImage + "')"
                     document.getElementById("clubName").innerHTML = clubName;
                     document.getElementById("clubDescription").innerHTML = clubDescription;
                     displayCardsDynamically(collection);
