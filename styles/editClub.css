@@ -48,6 +48,7 @@ input[type="button"] {
 }
 
 #cancel {
+    background-color: #EB7875;
     margin: 10px;
     margin-left: 5px;
 }

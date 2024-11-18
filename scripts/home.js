@@ -43,61 +43,90 @@ function displayCardsDynamically(collection) {
                 let userClubs = userDoc.data().clubs;
                 console.log(userClubs);
                 userClubs.forEach(club => { //iterate thru each club
-                    let officialClubEvents = db.collection("clubs").doc(club).collection("events");
+                    let officialClubEvents = db.collection("clubs").doc(club).collection("events"); // because club is simply a String containing the ID of the club, from the user's clubs array
                     let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
-                    promises.push(
-                        officialClubEvents.get().then(events => {
-                            events.forEach(event => {
-                                let newcard = cardTemplate.content.cloneNode(true);
-                                // firestore timestamp object returns as seconds -> convert
-                                var eventTimestamp = event.data().date.toDate();
-                                // only extract the date
-                                var date = formatDate(eventTimestamp);
-                                var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+                    let clubData = db.collection("clubs").doc(club);
+                    let unofficialClubData = db.collection("unofficialClubs").doc(club);
+                    let clubName;
+                    let clubID;
+                    clubData.get().then(doc => {
+                        if (doc.exists) {
+                            clubName = doc.data().name;
+                            clubID = doc.id;
+                        } else {
+                            return unofficialClubData.get();
+                        }
+                    }).then(doc => {
+                        if (doc != null) {
+                            clubName = doc.data().name;
+                            clubID = doc.id;
+                        }
+                    })
+                        .then(() => {
+                            promises.push(
+                                officialClubEvents.get().then(events => {
+                                    events.forEach(event => {
+                                        let newcard = cardTemplate.content.cloneNode(true);
+                                        // firestore timestamp object returns as seconds -> convert
+                                        var eventTimestamp = event.data().date.toDate();
+                                        // only extract the date
+                                        var date = formatDate(eventTimestamp);
+                                        var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+                                        
+                                        newcard.querySelector('.nameOfHostingClub').innerHTML = clubName;
+                                        newcard.querySelector(".nameOfHostingClub").addEventListener("click", () => {
+                                            location.href = "eachClub.html?docID=" + clubID;
+                                        });
+                                        newcard.querySelector('.eventName').innerHTML = event.data().event;
+                                        newcard.querySelector('.eventLocation').innerHTML += event.data().location;
+                                        newcard.querySelector('.eventDate').innerHTML += date;
+                                        newcard.querySelector('.eventTime').innerHTML += time;
+                                        document.getElementById(collection + "-go-here").appendChild(newcard);
 
-                                newcard.querySelector('.eventName').innerHTML = event.data().event;
-                                newcard.querySelector('.eventLocation').innerHTML += event.data().location;
-                                newcard.querySelector('.eventDate').innerHTML += date;
-                                newcard.querySelector('.eventTime').innerHTML += time;
-                                document.getElementById(collection + "-go-here").appendChild(newcard);
+                                        // can add in page for each event later
+                                        // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
+                                        //     sessionStorage.setItem("previousPage", window.location.href);
+                                        //     location.href = "eachEvent.html?docID=" + docID;
+                                        // });
+                                    })
+                                }).catch(error => {
+                                    console.error("Failed to fetch official club events");
+                                })
+                            )
+                            promises.push(
+                                unofficialClubEvents.get().then(events => {
+                                    events.forEach(event => {
+                                        let newcard = cardTemplate.content.cloneNode(true);
+                                        // firestore timestamp object returns as seconds -> convert
+                                        var eventTimestamp = event.data().date.toDate();
+                                        // only extract the date
+                                        var date = formatDate(eventTimestamp);
+                                        var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
 
-                                // can add in page for each event later
-                                // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
-                                //     sessionStorage.setItem("previousPage", window.location.href);
-                                //     location.href = "eachEvent.html?docID=" + docID;
-                                // });
-                            })
-                        }).catch(error => {
-                            console.error("Failed to fetch official club events");
+                                        newcard.querySelector('.nameOfHostingClub').innerHTML = clubName;
+                                        newcard.querySelector(".nameOfHostingClub").addEventListener("click", () => {
+                                            location.href = "eachClub.html?docID=" + clubID;
+                                        });
+                                        newcard.querySelector('.eventName').innerHTML = event.data().event;
+                                        newcard.querySelector('.eventLocation').innerHTML += event.data().location;
+                                        newcard.querySelector('.eventDate').innerHTML += date;
+                                        newcard.querySelector('.eventTime').innerHTML += time;
+                                        document.getElementById(collection + "-go-here").appendChild(newcard);
+                                    })
+                                }).catch(error => {
+                                    console.error("Failed to fetch unoffical club events");
+                                })
+                            )
                         })
-                    )
-                    promises.push(
-                        unofficialClubEvents.get().then(events => {
-                            events.forEach(event => {
-                                let newcard = cardTemplate.content.cloneNode(true);
-                                // firestore timestamp object returns as seconds -> convert
-                                var eventTimestamp = event.data().date.toDate();
-                                // only extract the date
-                                var date = formatDate(eventTimestamp);
-                                var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
-
-                                newcard.querySelector('.eventName').innerHTML = event.data().event;
-                                newcard.querySelector('.eventLocation').innerHTML += event.data().location;
-                                newcard.querySelector('.eventDate').innerHTML += date;
-                                newcard.querySelector('.eventTime').innerHTML += time;
-                                document.getElementById(collection + "-go-here").appendChild(newcard);
-                            })
-                        }).catch(error => {
-                            console.error("Failed to fetch unoffical club events");
-                        })
-                    )
                 })
+
             })
             Promise.all(promises).then(() => {
                 console.log("User events loaded");
             }).catch(error => {
                 console.error("Failed to fetch user events");
             })
+
         } else {
             console.log("No user is logged in.");
         }

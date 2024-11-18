@@ -7,6 +7,10 @@
   background-color: #4089C0;
 }
 
+#events-go-here {
+  padding-top: 35px;
+}
+
 /*
 content (clubs list) styling copied over from clubsListStyle.css
 */
@@ -68,6 +72,7 @@ content (clubs list) styling copied over from clubsListStyle.css
   width: 100%;
   padding: 2.5% 0;
   font-size: 16pt;
-  background-color: #d4cdcd;
+  background-color: #003d6bff;
+  color: white;
   transition: 0.6s ease;
 }

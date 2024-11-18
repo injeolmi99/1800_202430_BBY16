@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>BCIT Clubs</title>
+  <title>BCIT Clubs!</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -37,7 +37,6 @@
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
-  <link rel="stylesheet" href="./styles/home.css"
 
 </head>
 
@@ -53,38 +52,25 @@
 
   <!--CONTENT-->
   <div class="content">
-    <div class="welcomeBanner">
-      <h1>Welcome back, <span id="name-goes-here">friend</span>!</h1>
-    </div>
-
+    <div id="Admin-edit-button-goes-here"></div>
     <section class="contentSection">
-      <h1 class="boxTitle">Upcoming Events</h1>
-      <div id="events-go-here">
+      <h1 id="boxTitle"><span id="clubName">event name</span></h1>
+      <div class="contentBox">
+        <div id="clubDescription">event description</div>
       </div>
     </section>
     <section class="contentSection">
-      <h1 class="boxTitle">Your Clubs</h1>
-      <div id="clubs-go-here">
+      <h1 class="boxTitle">Attendees</h1>
+      <div class="contentBox">
+        <div id="insert-members"></div>
+        <a href=""> full list </a>
       </div>
+    </section>
+    <section class="contentSection">
+      <div id="insertGoingButton"></div>
+      <!-- <button onclick="goingToEvent()">Going</button> -->
     </section>
   </div>
-
-  <template id="eventCardTemplate">
-    <div class="contentBox">
-      <div class="nameOfHostingClub">club name</div>
-      <h5 class="eventName">event name</h5>
-      <div class="eventLocation"><span class="material-icons location">location_on</span> </div>
-      <div class="eventDate"><span class="material-icons">calendar_today</span> </div>
-      <div class="eventTime"><span class="material-icons">schedule</span> </div>
-    </div>
-  </template>
-
-  <template id="clubsListTemplate">
-      <div class="clubGroup">
-        <button class="clubGroupButton"></button>
-        <div class="nameTag"></div>
-      </div>
-    </template>
 
   <!--BOTTOM NAVBAR-->
   <div id="footerPlaceholder"></div>
@@ -97,7 +83,6 @@
   <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script src="./scripts/home.js"></script>
 
 </body>
 
