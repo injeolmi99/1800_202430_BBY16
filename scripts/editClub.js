@@ -59,6 +59,9 @@ function displayClubData() {
     let officialClubsList = db.collection("clubs").doc(ID);
     let unofficialClubsList = db.collection("unofficialClubs").doc(ID);
 
+    // injects the options into the image-selection placeholder 
+    console.log($('#image-selection').load('./text/club_image_options.html'));
+
     // copied over club iterating logic from eachClub.js
     officialClubsList.get()
         .then(doc => {
@@ -83,9 +86,38 @@ function displayClubData() {
                     thisClub = doc.data();
                     clubName = thisClub.name;
                     clubDescription = thisClub.description;
+                    clubImage = thisClub.image
 
-                    document.getElementById("insertClubName").innerHTML = "<input type='text' id='clubName' value='" + clubName + "'>";
-                    document.getElementById("insertDescription").innerHTML = "<textarea id='description'>" + clubDescription + "</textarea>";
+                    document.getElementById("insertClubName").innerHTML = '<input type="text" id="clubName" value="' + clubName + '" maxlength="25">';
+                    // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
+                    document.getElementById('clubName').addEventListener('input', function() {
+                        // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
+                        this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
+                    });
+                    document.getElementById("insertDescription").innerHTML = "<textarea id='description' maxlength='800' pattern='[a-zA-Z0-9 ]'>" + clubDescription + "</textarea>";
+                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
+                     document.getElementById('description').addEventListener('input', function() {
+                        // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
+                        this.value = this.value.replace(/[<>{}\\]/g, '');
+                        if (this.value.includes("$(")) {
+                            console.log("here")
+                            this.value = this.value.replace("$(", "$ (")
+                        }
+                    });
+
+                    // displays the image that is currently in use for the club
+                    document.getElementById("displayImage").src = "./images/clubImages/" + clubImage
+
+                    let dropdown = document.getElementById("image");
+                    let options = dropdown.options;
+
+                    // displays which image is currently selected on page load
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value == clubImage) {
+                            dropdown.selectedIndex = i;
+                            break;
+                        }
+                    }
                 })
         });
 }
@@ -118,10 +150,12 @@ function submitNewClubData() {
                     if (user.uid == clubAdmin) {
                         newClubName = document.getElementById("clubName").value;
                         newClubDescription = document.getElementById("description").value;
+                        let newClubImage = document.getElementById("image").value;
 
                         thisClubID.update({
                             name: newClubName,
-                            description: newClubDescription
+                            description: newClubDescription,
+                            image: newClubImage
                         }).then(() => {
                             console.log("documents successfully updateded");
                             location.href = "eachClub.html?docID=" + ID;
@@ -130,8 +164,8 @@ function submitNewClubData() {
                             console.error("Error updating club data: ", error);
                         })
                     } else {
-                        // kick user out of the club editing page (not like this does much)
-                        // console.log("you are not the admin of this club")
+                        // This one is a little redundent since non admin users should have been removed by now
+                        // but just incase
                         location.href = "clubsList.html";
                     }
                 } else {
@@ -151,10 +185,12 @@ function submitNewClubData() {
                             if (user.uid == clubAdmin) {
                                 newClubName = document.getElementById("clubName").value;
                                 newClubDescription = document.getElementById("description").value;
+                                let newClubImage = document.getElementById("image").value;
 
                                 thisClubID.update({
                                     name: newClubName,
-                                    description: newClubDescription
+                                    description: newClubDescription,
+                                    image: newClubImage
                                 }).then(() => {
                                     console.log("documents successfully updateded");
                                     location.href = "eachClub.html?docID=" + ID;
@@ -176,4 +212,8 @@ function submitNewClubData() {
             })
         }
     })
+}
+
+function showImage() {
+    document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
 }

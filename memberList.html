@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Create a Club</title>
+  <title>BCIT Clubs</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -37,7 +37,7 @@
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
   <link rel="stylesheet" href="./styles/generalStyle.css">
-  <link rel="stylesheet" href="./styles/createAClub.css">
+  <link rel="stylesheet" href="./styles/memberList.css">
 
 </head>
 
@@ -52,32 +52,34 @@
   <nav id="navPlaceholder"></nav>
 
   <!--CONTENT-->
-  <div>
-    <div class="content">
-      <section class="contentSection">
-        <h1 class="boxTitle">Create a Club</h1>
-        <form id="editableStuff" class="contentBox">
-          <!--May need to deny use of special character and quotes and stuff I have messed up the js with that already-->
-          <label for="clubName">Club Name: </label>
-          <input type="text" id="clubName" maxlength="25"> 
-          <div id="insertClubName"></div>
-
-          <label for="description">Description: </label>
-          <small>Write a short, descriptive blurb about your club and what it has to offer. What makes you stand out?
-            Who should join you, and why?</small>
-          <textarea id="description" maxlength="800"></textarea>
-          <div id="insertDescription"></div>
-
-          <!--displays options for image and currently selected image-->
-          <div id="image-selection"></div>
-          <img id="displayImage" scr="" alt="">
-
-          <input type="button" id="cancel" value="Cancel" onclick="javascript:history.back()">
-          <input type="button" id="submit" value="Submit" onclick="createClub()">
-        </form>
-      </section>
+  <div class="content">
+    <div id="clubImage">
     </div>
+    <section class="contentSection">
+      <h1 id="boxTitle"><span id="clubName">club name</span></h1>
+    </section>
+    <section class="contentSection">
+      <h1 class="boxTitle">Admin</h1>
+      <div class="contentBox">
+        <div id="insert-admin"></div>
+      </div>
+    </section>
+    <section class="contentSection">
+      <h1 class="boxTitle">Members</h1>
+      <div id="insert-members"></div>
+    </section>
   </div>
+  
+  <template id="memberCardTemplate">
+    <div class="contentBox">
+      <div class="topBar">profilePicture displayname (name)</div>
+      <div class="userDescription">description</div>
+      <!--an admin kick button would appear in this bottom bar if the user is not admin should be blank-->
+      <!--Subject to change though cause I know someone is far better than me at styling-->
+      <!--Im kinda looking at the style of this thing like a hamburger... maybe im hungry and should get dinner-->
+      <div class="adminKickButton greyBottom">admin kick button goes here</div>
+    </div>
+  </template>
 
   <!--BOTTOM NAVBAR-->
   <div id="footerPlaceholder"></div>
@@ -90,7 +92,7 @@
   <!-- <script src="./scripts/script.js"></script> -->
   <script src="./scripts/firebaseAPI_Team16.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script src="./scripts/createAClub.js"></script>
+  <script src="./scripts/memberList.js"></script>
 
 </body>
 

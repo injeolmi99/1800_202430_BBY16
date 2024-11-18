@@ -55,3 +55,15 @@ input[type="button"] {
   margin: 10px;
   margin-right: 5px;
 }
+
+#displayImage {
+  max-width: 100%;
+  height: 200pt;
+  object-fit: contain;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#displayImage {
+  display: block;
+}

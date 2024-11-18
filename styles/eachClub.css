@@ -17,6 +17,7 @@
 
 button {
   /* doesn't have to be this color but orange was starting to make me want to peel my eyes */
+  /* wow I have been quoted -- my life is complete */
   background-color: #85ac9f;
   color: white;
   padding: 0.6rem;
@@ -52,8 +53,15 @@ button {
   right: 0;
 }
 
-#pfp {
+.pfp {
   max-width: 50px;
   max-height: 50px;
   margin-right: 10px;
+}
+
+#see-all {
+  background-color: transparent;
+  border: none;
+  color: grey;
+  text-decoration: underline;
 }

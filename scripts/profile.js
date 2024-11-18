@@ -135,3 +135,24 @@ function openAvailablePics() {
 function liveUpdatePFP(pfp) {
     document.getElementById('insert-pfp').innerHTML = '<img class="responsive" src="' + pfp + '" alt="">'
 }
+
+// These next three methods restrict the input on Name, display name, and description
+document.getElementById('nameInput').addEventListener('input', function() {
+    // replaces any user input that is not A-Za-z -' with an empty space (appears nothing is happneing)
+    this.value = this.value.replace(/[^A-Za-z -']/g, '');
+});
+
+
+document.getElementById('displayNameInput').addEventListener('input', function() {
+    // replaces any user input that is <>{}\$ with an empty space (appears nothing is happneing)
+    this.value = this.value.replace(/[<>{}\\$]/g, '');
+});
+
+document.getElementById('descriptionInput').addEventListener('input', function() {
+    // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
+    this.value = this.value.replace(/[<>{}\\]/g, '');
+    // if users input $( a space gets added between the $ and ( to prevent some possible insertions
+    if (this.value.includes("$(")) {
+        this.value = this.value.replace("$(", "$ (")
+    }
+});

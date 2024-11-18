@@ -56,7 +56,7 @@ function displayClubInfo() {
                         if (adminRef.exists) {
                             let adminPFP = adminRef.data().profilePicture
                             let adminDisplay = adminRef.data().displayName
-                            document.getElementById("insert-admin").innerHTML += '<img id="pfp" src="' + adminPFP + '" alt=""><span>' + adminDisplay + '</span>'
+                            document.getElementById("insert-admin").innerHTML += '<img class="pfp" src="' + adminPFP + '" alt=""><span>' + adminDisplay + '</span>'
                         } else {
                             document.getElementById("insert-admin").innerHTML = "This club has no admin";
                         }
@@ -70,7 +70,7 @@ function displayClubInfo() {
 
                             // Searches for the users ID in the club members array and acts accordingly
                             if (clubMembers.includes(user.uid) && user.uid == clubAdmin) {
-                                //Line after this can be removed whenever just a place holder to tell JT when it works
+                                //Line after this can be removed whenever just a place holder to tell JT when it works // Thank you sometimes im just forgetful to remove stuff
                                 // document.getElementById("insertJoinOrLeave").innerHTML = "Admin cannot leave their own club";
 
                                 document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'><span class='material-icons'>settings</span> Edit Club</button>";
@@ -95,7 +95,7 @@ function displayClubInfo() {
                         if (clubMembers[i] != null && clubMembers[i] != clubAdmin) {
                             db.collection("users").doc(clubMembers[i]).get().then(clubMemberData => {
                                 let thisMemberData = clubMemberData.data();
-                                document.getElementById("insert-members").innerHTML += '<p><img id="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.displayName + '</span></p>'
+                                document.getElementById("insert-members").innerHTML += '<p><img class="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.displayName + '</span></p>'
                             })
                         } else if (clubMembers[i] != null && clubMembers[i] == clubAdmin) {
                             // this is just to ensure that if the admin's card comes up that it will still display 10 users
@@ -104,7 +104,7 @@ function displayClubInfo() {
                         }
                     }
 
-                    document.getElementById("clubImage").style.backgroundImage = "url('./images/" + clubImage + ".jpg')"
+                    document.getElementById("clubImage").style.backgroundImage = "url('./images/clubImages/" + clubImage + "')"
                     document.getElementById("clubName").innerHTML = clubName;
                     document.getElementById("clubDescription").innerHTML = clubDescription;
                     displayCardsDynamically(collection);
@@ -336,15 +336,19 @@ function formatDate(date) {
 function editClub() {
     let params = new URL(window.location.href); // get URL of search bar
     let clubID = params.searchParams.get("docID"); // get value for key "id"
-    console.log("now editing club");
     location.href = "editClub.html?docID=" + clubID;
 }
 
 function addEvent() {
     let params = new URL(window.location.href); // get URL of search bar
     let clubID = params.searchParams.get("docID"); // get value for key "id"
-    console.log("adding event");
     location.href = "addEvent.html?docID=" + clubID;
+}
+
+function allMembersList() {
+    let params = new URL(window.location.href); // get URL of search bar
+    let clubID = params.searchParams.get("docID"); // get value for key "id"
+    location.href = "memberList.html?docID=" + clubID;
 }
 
 // function saveClubDocumentIDAndRedirect(){

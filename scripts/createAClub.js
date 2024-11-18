@@ -29,17 +29,27 @@ function removeUnloggedinUsersandClubOwners() {
 }
 removeUnloggedinUsersandClubOwners();
 
+function onPageLoad() {
+    // injects the options into the image-selection placeholder 
+    $('#image-selection').load('./text/club_image_options.html')
+    // couldnt get current image so I forced it to default cause thats the one that shows up when the page is first loaded
+    document.getElementById("displayImage").src = "./images/clubImages/default.jpg"
+}
+onPageLoad();
+
 function createClub() {
     var user = firebase.auth().currentUser;
     // console.log(user)
     let clubName = document.getElementById("clubName").value;
     let clubDescription = document.getElementById("description").value;
+    let clubImage = document.getElementById("image").value;
     // note to self to remember later: .add returns a promise in this case it is the reference to the club 
     db.collection("unofficialClubs").add({
         name: clubName,
         admin: user.uid,
         description: clubDescription,
-        members: [user.uid]
+        members: [user.uid],
+        image: clubImage
         // optional?
         // timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(clubRef => {
@@ -61,6 +71,26 @@ function createClub() {
         })
     })
 }
+
+function showImage() {
+    document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
+}
+
+// mentioned in edit club that the idea for this code was from microsoft copilot
+document.getElementById('clubName').addEventListener('input', function() {
+    // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
+    this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
+});
+
+document.getElementById('description').addEventListener('input', function() {
+    // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
+    this.value = this.value.replace(/[<>{}\\]/g, '');
+    // if users input $( a space gets added between the $ and ( to prevent some possible insertions
+    if (this.value.includes("$(")) {
+        console.log("here")
+        this.value = this.value.replace("$(", "$ (")
+    }
+});
 
 // HERE JUST FOR REFERENCE
 // function stuff() {
