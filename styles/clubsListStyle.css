@@ -12,7 +12,6 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    padding-right: 0;
     background-color: #d4cdcd;
 }
 
@@ -222,5 +221,6 @@ a {
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {display: block;}
   
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+  /* Change the background color of the dropdown button when the dropdown content is shown 
+  AK: got rid of this because i moved the filter into the search box*/
+  /* .dropdown:hover .dropbtn {background-color: #4089C0;} */

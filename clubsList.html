@@ -52,6 +52,17 @@
   <nav id="navPlaceholder"></nav>
 
   <div id="searchBox">
+    <div class="dropdown">
+      <button class="dropbtn"><span class="material-icons" onclick="document.querySelector('.dropdown-content').style.display = 'block';">filter_alt</span></button>
+      <div class="dropdown-content">
+        <a href="#" id="all" onclick="filterBy('all')">All</a>
+        <a href="#" id="tech" onclick="filterBy('tech')">Tech</a>
+        <a href="#" id="games" onclick="filterBy('games')">Games</a>
+        <a href="#" id="art" onclick="filterBy('art')">Art</a>
+        <a href="#" id="sports" onclick="filterBy('sports')">Sports</a>
+        <a href="#" id="other" onclick="filterBy('other')">Other</a>
+      </div>
+    </div>
     <div class="input-group rounded">
       <input type="search" id="searchInput" class="form-control rounded" onkeyup="searchClubs()" placeholder="Search"
         aria-label="Search" aria-describedby="search-addon" />
@@ -62,16 +73,7 @@
       </span>
     </div>
   </div>
-  <div class="dropdown">
-    <button class="dropbtn">Filters</button>
-    <div class="dropdown-content">
-      <a href="#" id="all" onclick="filterAll()">All</a>
-      <a href="#" id="games" onclick="filterGames()">Games</a>
-      <a href="#" id="art" onclick="filterArt()">Art</a>
-      <a href="#" id="sport" onclick="filterSport()">Sport</a>
-      <a href="#" id="other" onclick="filterOther()">Other</a>
-    </div>
-  </div>
+
   <!--CLUBS WOULD BE PUT IN HERE USING JS-->
   <div id="clubsList">
     <div id="clubs-go-here" class="row row-cols-auto"></div>
