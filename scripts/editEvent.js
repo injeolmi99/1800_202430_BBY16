@@ -173,8 +173,8 @@ function updateEvent() {
                     thisEvent.update({
                         event: document.getElementById("eventName").value,
                         description: document.getElementById("description").value,
-                        location: eventDateTime,
-                        date: document.getElementById("eventDate").value
+                        date: eventDateTime,
+                        location: document.getElementById("eventLocation").value,
                     }).then(() => {
                         alert("Your event was updated successfully!");
                         history.back();
