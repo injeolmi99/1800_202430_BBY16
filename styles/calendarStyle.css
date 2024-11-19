@@ -3,11 +3,12 @@
     padding: 0;
     box-sizing: border-box;
     vertical-align: baseline;
-
 }
 
 body {
-    height: calc(100vh - 56px - 78px);
+    /* height: calc(100vh - 56px - 78px); */
+    /* might code out later, just to save my eyes for now */
+    background-color: #1D252C !important; 
 }
 
 /* .swap {
@@ -223,13 +224,14 @@ with edits to match our color scheme
     }
 }
 .calendar-events {
+    text-align: center;
     background-color: #1D252C;
     display: flex;
-    width: 100%;
+    width: 427.875px;
     flex-direction: column;
     justify-content: space-around;
-    margin-top: 30px;
     min-height: 36px;
+    padding: 0 35px 35px;
 
     /* @media screen and (min-width: 992px) {
         display: flex;
@@ -240,13 +242,13 @@ with edits to match our color scheme
         font-size: 16pt;
 
         .date {
-            color: #fff;
-            font-weight: 600;
+            color: #EB7875;
+            font-weight: 800;
         }
 
         .location {
-            color: #EB7875;
-            font-weight: 800;
+            color: white;
+            font-weight: 600;
             letter-spacing: -.8px;
         }
     }

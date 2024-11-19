@@ -46,7 +46,7 @@ function displayEvents(collection) {
                   time[date] = [];
                 }
                 time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
-                eventDates[date].push(club.data().name + ": " + event.data().event + " || " + event.data().location);
+                eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);
                 console.log(eventDates[date]);
               })
             }).catch(error => {
@@ -103,7 +103,7 @@ function displayUserEvents(collection) {
                   clubRef.get()
                     .then((club) => {
                       time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
-                      eventDates[date].push(club.data().name + ": " + event.data().event + " || " + event.data().location);
+                      eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);
                       console.log(eventDates[date]);
                     })
                 )
@@ -196,7 +196,6 @@ function initializeCalendar() {
     var calendar = document.querySelector(".cal-modal");
     if (!calendar.contains(e.target)) {
       flatpickr.clear();
-      document.querySelector(".calendar-events").innerHTML = "hehe";
     }
   });
 
@@ -205,6 +204,10 @@ function initializeCalendar() {
   // event listens for when window is resized and adjusts the calendar's layout; passes in the window object and eventCalendarResizes as a callback function
   $(window).on('resize', function () {
     eventCalendarResize($(this))
+
+    $(".calendar-events").css({
+      'width': ($(".cal-modal").outerWidth() + 'px')
+    });
   })
 
   // resizes the calendar based on window size, but we have set it to 1 for all screen sizes

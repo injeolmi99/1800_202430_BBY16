@@ -18,6 +18,8 @@ function displayEventInfo() {
 
     // new and improved way to check club bc storing previousPage url in session storage was unreliable and hack-y
     let collection;
+    let clubMembers;
+    let admin;
     let officialClubsList = db.collection("clubs").doc(clubID);
     let unofficialClubsList = db.collection("unofficialClubs").doc(clubID);
 
@@ -26,6 +28,8 @@ function displayEventInfo() {
             if (doc.exists) {
                 // if official club, set collection to "clubs"
                 collection = "clubs";
+                clubMembers = doc.data().members;
+                admin = doc.data().admin;
             } else {
                 // because this return value is "thenable", next .then() in the chain can handle its result, preserving async handling
                 // otherwise the next then() would execute without waiting to fetch the unofficial club list)
@@ -36,9 +40,25 @@ function displayEventInfo() {
             // !collection -> collection hasn't been set yet, i.e., isn't an official club
             if (!collection && doc.exists) {
                 collection = "unofficialClubs";
+                clubMembers = doc.data().members;
+                admin = doc.data().admin;
             } else if (!collection) {
                 console.error("Club doesn't exist!");
             }
+
+            firebase.auth().onAuthStateChanged(user => {
+                // If a user is logged in then go inside else fail
+                if (user) {
+
+                    // Searches for the users ID in the club members array and acts accordingly
+                    if (clubMembers.includes(user.uid) && user.uid == admin) {
+                        document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editEvent()'><span class='material-icons'>settings</span> Edit Event</button>";
+                    }
+
+                } else {
+                    console.log("Failed at user check / none logged in?");
+                }
+            })
         })
         .then(() => {
             db.collection(collection).doc(clubID).collection("events").doc(eventID)
