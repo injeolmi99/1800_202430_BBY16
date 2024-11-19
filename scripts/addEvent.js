@@ -13,7 +13,7 @@ removeUnloggedinUsers();
 function addEvent() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
-    console.log(ID);
+    console.log("adding event for " + ID);
 
     let collection;
     let officialClubsList = db.collection("clubs").doc(ID);
@@ -41,7 +41,6 @@ function addEvent() {
             let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
             let eventLocation = document.getElementById("eventLocation").value;
             let eventDescription = document.getElementById("description").value;
-            console.log(eventName);
 
             db.collection(collection)
                 .doc(ID)
