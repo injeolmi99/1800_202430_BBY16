@@ -86,14 +86,14 @@ function displayCardsDynamically(collection) {
                                         newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                                         newcard.querySelector('.eventDate').innerHTML += date;
                                         newcard.querySelector('.eventTime').innerHTML += time;
-                                        newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + 'Check" type="checkbox" name="going" value="' + clubID + '">'
+                                        newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + event.id + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + event.id + 'Check" type="checkbox" name="going" value="' + clubID + '">'
 
-                                        newcard.querySelector('#' + clubID + 'Check').onclick = () => updateGoing(clubID, event.id);
+                                        newcard.querySelector('#' + clubID + event.id + 'Check').onclick = () => updateGoing(clubID, event.id);
                                         document.getElementById(collection + "-go-here").appendChild(newcard);
 
                                         // had to move this down below cause asyncronousness is messing with me :(
                                         if (event.data().attendees.includes(currentUser.id)) {
-                                            document.getElementById(clubID + "Check").checked = true
+                                            document.getElementById(clubID + event.id + "Check").checked = true
                                         }
 
                                         // can add in page for each event later
@@ -127,13 +127,13 @@ function displayCardsDynamically(collection) {
                                         newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                                         newcard.querySelector('.eventDate').innerHTML += date;
                                         newcard.querySelector('.eventTime').innerHTML += time;
-                                        newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + 'Check" type="checkbox" name="going" value="' + clubID + '">'
-                                        newcard.querySelector('#' + clubID + 'Check').onclick = () => updateGoing(clubID, event.id);
+                                        newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + event.id + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + event.id + 'Check" type="checkbox" name="going" value="' + clubID + '">'
+                                        newcard.querySelector('#' + clubID + event.id + 'Check').onclick = () => updateGoing(clubID, event.id);
                                         document.getElementById(collection + "-go-here").appendChild(newcard);
 
                                         // had to move this down below cause asyncronousness is messing with me :(
                                         if (event.data().attendees.includes(currentUser.id)) {
-                                            document.getElementById(clubID + "Check").checked = true
+                                            document.getElementById(clubID + event.id + "Check").checked = true
                                         }
                                     })
                                 }).catch(error => {
@@ -279,6 +279,6 @@ function updateLabel(clubId, clubType, eventID) {
     eventRef.get().then(doc => {
         let membersGoing = doc.data().attendees;
 
-        document.getElementById(clubId + 'Label').innerHTML = membersGoing.length + (membersGoing.length == 1 ? ' person is' : ' people are') + ' going. Are you?'
+        document.getElementById(clubId + eventID + 'Label').innerHTML = membersGoing.length + (membersGoing.length == 1 ? ' person is' : ' people are') + ' going. Are you?'
     })
 }
