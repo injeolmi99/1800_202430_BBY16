@@ -72,10 +72,10 @@ function displayCardsDynamically(collection) {
                 var docID = doc.id;
                 var img = doc.data().image;
                 let newcard = cardTemplate.content.cloneNode(true);
-
+                var type = doc.data().category;
                 newcard.querySelector('.clubGroupButton').style.backgroundImage = "url('./images/clubImages/" + img + "')";
                 newcard.querySelector('.nameTag').innerHTML = title;
-
+                newcard.querySelector('.category').innerHTML = type;
                 newcard.querySelector('.nameTag').style.cursor = "pointer";
                 // looks redundant, but because of the hover overlay i think this is needed for it to work on mobile
                 newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
@@ -104,6 +104,11 @@ function toggleClubs() {
 
     // just to update search results
     searchClubs();
+    filterSport();
+    filterGames();
+    filterAll();
+    filterOther();
+    filterArt();
 }
 
 function searchClubs() {
@@ -136,6 +141,7 @@ function searchClubs() {
             div2[i].style.display = "none";
         }
     }
+    
 }
 
 function loadClubs() {
@@ -160,4 +166,156 @@ function createClubCheck() {
             }
         })
     })
+}
+function filterSport() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('sport');
+    filter = input.innerHTML.toUpperCase();
+    //div = document.getElementById("clubsList");
+
+    let div1;
+    let div2;
+
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        div1 = document.getElementById("clubs-go-here");
+    } else if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        div1 = document.getElementById("unofficialClubs-go-here");
+    }
+
+    div2 = div1.getElementsByClassName("clubGroup")
+    div2 = div1.getElementsByClassName("clubGroup")
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < div2.length; i++) {
+        a = div2[i].getElementsByClassName("category")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            div2[i].style.display = "";
+        } else {
+            div2[i].style.display = "none";
+        }
+    }
+}
+
+function filterArt() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('art');
+    filter = input.innerHTML.toUpperCase();
+    //div = document.getElementById("clubsList");
+
+    let div1;
+    let div2;
+
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        div1 = document.getElementById("clubs-go-here");
+    } else if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        div1 = document.getElementById("unofficialClubs-go-here");
+    }
+
+    div2 = div1.getElementsByClassName("clubGroup")
+    div2 = div1.getElementsByClassName("clubGroup")
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < div2.length; i++) {
+        a = div2[i].getElementsByClassName("category")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            div2[i].style.display = "";
+        } else {
+            div2[i].style.display = "none";
+        }
+    }
+}
+
+function filterGames() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('games');
+    filter = input.innerHTML.toUpperCase();
+    //div = document.getElementById("clubsList");
+
+    let div1;
+    let div2;
+
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        div1 = document.getElementById("clubs-go-here");
+    } else if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        div1 = document.getElementById("unofficialClubs-go-here");
+    }
+
+    div2 = div1.getElementsByClassName("clubGroup")
+    div2 = div1.getElementsByClassName("clubGroup")
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < div2.length; i++) {
+        a = div2[i].getElementsByClassName("category")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            div2[i].style.display = "";
+        } else {
+            div2[i].style.display = "none";
+        }
+    }
+}
+
+function filterOther() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('other');
+    filter = input.innerHTML.toUpperCase();
+    //div = document.getElementById("clubsList");
+
+    let div1;
+    let div2;
+
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        div1 = document.getElementById("clubs-go-here");
+    } else if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        div1 = document.getElementById("unofficialClubs-go-here");
+    }
+
+    div2 = div1.getElementsByClassName("clubGroup")
+    div2 = div1.getElementsByClassName("clubGroup")
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < div2.length; i++) {
+        a = div2[i].getElementsByClassName("category")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            div2[i].style.display = "";
+        } else {
+            div2[i].style.display = "none";
+        }
+    }
+}
+function filterAll() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('sport');
+    filter = input.innerHTML.toUpperCase();
+    //div = document.getElementById("clubsList");
+
+    let div1;
+    let div2;
+
+    if (document.getElementById("officialToggle").classList.contains("active")) {
+        div1 = document.getElementById("clubs-go-here");
+    } else if (document.getElementById("unofficialToggle").classList.contains("active")) {
+        div1 = document.getElementById("unofficialClubs-go-here");
+    }
+
+    div2 = div1.getElementsByClassName("clubGroup")
+    div2 = div1.getElementsByClassName("clubGroup")
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < div2.length; i++) {
+        div2[i].style.display = "";
+    }
 }

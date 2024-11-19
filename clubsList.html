@@ -62,7 +62,16 @@
       </span>
     </div>
   </div>
-
+  <div class="dropdown">
+    <button class="dropbtn">Filters</button>
+    <div class="dropdown-content">
+      <a href="#" id="all" onclick="filterAll()">All</a>
+      <a href="#" id="games" onclick="filterGames()">Games</a>
+      <a href="#" id="art" onclick="filterArt()">Art</a>
+      <a href="#" id="sport" onclick="filterSport()">Sport</a>
+      <a href="#" id="other" onclick="filterOther()">Other</a>
+    </div>
+  </div>
   <!--CLUBS WOULD BE PUT IN HERE USING JS-->
   <div id="clubsList">
     <div id="clubs-go-here" class="row row-cols-auto"></div>
@@ -77,6 +86,7 @@
     <div class="clubGroup">
       <button class="clubGroupButton"></button>
       <div class="nameTag"></div>
+      <abbr class="category"></abbr>
     </div>
   </template>
 
