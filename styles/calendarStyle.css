@@ -71,6 +71,7 @@ with edits to match our color scheme
     justify-content: center;
     align-items: center;
     height: 100%;    
+    flex-direction: column;
 }
 
 .cal-modal {
@@ -220,32 +221,33 @@ with edits to match our color scheme
             }
         }
     }
+}
+.calendar-events {
+    background-color: #1D252C;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 30px;
+    min-height: 36px;
 
-    .calendar-events {
+    /* @media screen and (min-width: 992px) {
         display: flex;
-        flex-direction: column;
         justify-content: space-around;
-        margin-top: 30px;
-        min-height: 36px;
+    } */
 
-        /* @media screen and (min-width: 992px) {
-            display: flex;
-            justify-content: space-around;
-        } */
+    .event {
+        font-size: 16pt;
 
-        .event {
-            font-size: 16pt;
+        .date {
+            color: #fff;
+            font-weight: 600;
+        }
 
-            .date {
-                color: #fff;
-                font-weight: 600;
-            }
-
-            .location {
-                color: #EB7875;
-                font-weight: 800;
-                letter-spacing: -.8px;
-            }
+        .location {
+            color: #EB7875;
+            font-weight: 800;
+            letter-spacing: -.8px;
         }
     }
 }

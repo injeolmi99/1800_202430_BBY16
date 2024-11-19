@@ -172,7 +172,7 @@ function initializeCalendar() {
           contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l F J') + " @ " + time[str][i] + '</div><div class="location">' + eventDates[str][i] + '</div></div>';
         }
       }
-      $('#calendar .calendar-events').html(contents)
+      $('.calendar-events').html(contents)
     },
     // can customize abbreviations for each date
     locale: {
@@ -196,7 +196,7 @@ function initializeCalendar() {
     var calendar = document.querySelector(".cal-modal");
     if (!calendar.contains(e.target)) {
       flatpickr.clear();
-      document.querySelector(".calendar-events").innerHTML = "";
+      document.querySelector(".calendar-events").innerHTML = "hehe";
     }
   });
 

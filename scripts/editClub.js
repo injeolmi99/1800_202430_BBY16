@@ -88,13 +88,13 @@ function displayClubData() {
                     clubDescription = thisClub.description;
                     clubImage = thisClub.image
 
-                    document.getElementById("insertClubName").innerHTML = '<input type="text" id="clubName" value="' + clubName + '" maxlength="25">';
+                    document.getElementById("insertClubName").innerHTML = '<input type="text" name="clubName" id="clubName" value="' + clubName + '" maxlength="25" required="required">';
                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
                     document.getElementById('clubName').addEventListener('input', function() {
                         // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
                         this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
                     });
-                    document.getElementById("insertDescription").innerHTML = "<textarea id='description' maxlength='800' pattern='[a-zA-Z0-9 ]'>" + clubDescription + "</textarea>";
+                    document.getElementById("insertDescription").innerHTML = "<textarea name='description' id='description' maxlength='800' pattern='[a-zA-Z0-9 ]' required='required'>" + clubDescription + "</textarea>";
                      // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
                      document.getElementById('description').addEventListener('input', function() {
                         // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
