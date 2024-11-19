@@ -235,3 +235,6 @@ body {
     object-fit: contain;
     margin: 0;
 }
+abbr {
+    display:none;
+}

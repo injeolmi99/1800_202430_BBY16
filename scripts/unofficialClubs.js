@@ -59,3 +59,36 @@ function myFunction() {
       }
     }
   }
+
+  function filterSport() {
+    // Declare variables
+
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('sport');
+    filter = input.value.toUpperCase();
+    //div = document.getElementById("clubsList");
+    div1 = document.getElementById("unofficialClubs-go-here");
+    div2 = div1.getElementsByClassName("clubGroup")
+   
+  
+    // Loop through all list items, and hide those who don't match the search query
+    db.collection(collection).get()   
+    .then(allClubs => {
+        
+        allClubs.forEach(doc => {
+          var type = doc.data().category;
+          document.getElementById("sport").addEventListener("click", function (e) {
+            for (i = 0; i < div2.length; i++) {
+              a = div2[i].getElementsByClassName("nameTag")[0];
+              txtValue = type;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  div2[i].style.display = "";
+              } else {
+                  div2[i].style.display = "none";
+              }
+          }
+        });
+             
+          })
+      })
+  }

@@ -57,7 +57,7 @@ function displayCardsDynamically(collection) {
                             return unofficialClubData.get();
                         }
                     }).then(doc => {
-                        if (doc != null) {
+                        if (!clubName && doc.exists) {
                             clubName = doc.data().name;
                             clubID = doc.id;
                         }

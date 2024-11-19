@@ -55,7 +55,7 @@
     <div class="content">
         <section class="contentSection">
             <h1 class="boxTitle">Edit Club</h1>
-            <form id="editableStuff" class="contentBox">
+            <form id="editableStuff" class="contentBox" onsubmit="submitNewClubData();return false">
                 <label for="clubName">Club Name: </label>
                 <div id="insertClubName"></div>
 
@@ -69,7 +69,7 @@
                 <img id="displayImage" scr="" alt="">
 
                 <input type="button" id="cancel" value="Cancel" onclick="goBack()">
-                <input type="button" id="submit" value="Submit" onclick="submitNewClubData()">
+                <input type="submit" id="submit" value="Submit">
             </form>
         </section>
     </div>
