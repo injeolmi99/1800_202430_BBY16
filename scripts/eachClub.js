@@ -122,9 +122,9 @@ function displayCardsDynamically(collection) {
     const promises = [];
 
     let params = new URL(window.location.href); //get URL of search bar
-    let ID = params.searchParams.get("docID"); //get value for key "id"
+    let clubID = params.searchParams.get("docID"); //get value for key "id"
 
-    let clubEvents = db.collection(collection).doc(ID).collection("events");
+    let clubEvents = db.collection(collection).doc(clubID).collection("events");
     promises.push(
         clubEvents.get()
             .then(events => {
@@ -141,13 +141,11 @@ function displayCardsDynamically(collection) {
                     newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                     newcard.querySelector('.eventDate').innerHTML += date;
                     newcard.querySelector('.eventTime').innerHTML += time;
-                    document.getElementById("events" + "-go-here").appendChild(newcard);
 
-                    // can add in page for each event later
-                    // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
-                    //     sessionStorage.setItem("previousPage", window.location.href);
-                    //     location.href = "eachEvent.html?docID=" + docID;
-                    // });
+                    newcard.querySelector(".eventCard").addEventListener("click", () => {
+                        location.href = "eachEvent.html?docID=" + clubID + "&eventID=" + event.id;
+                    });
+                    document.getElementById("events" + "-go-here").appendChild(newcard);
                 })
             }).catch(error => {
                 console.error("Failed to fetch club events");
