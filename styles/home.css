@@ -11,6 +11,10 @@
   padding-top: 35px;
 }
 
+.eventCard {
+  padding-top: 32px !important;
+}
+
 .eventName {
   cursor: pointer;
   width: max-content;
@@ -82,8 +86,18 @@ content (clubs list) styling copied over from clubsListStyle.css
   transition: 0.6s ease;
 }
 
+input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-left: 6px;
+  padding: 50px;
+  cursor: pointer;
+}
+
 #goingCheck {
   float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 label {
