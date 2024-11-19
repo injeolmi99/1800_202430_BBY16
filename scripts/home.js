@@ -16,12 +16,12 @@ function insertName() {
     // check if the user is logged in:
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            console.log(user.uid); // log UID of the logged-in user
+            // console.log(user.uid); // log UID of the logged-in user
             currentUser = db.collection("users").doc(user.uid); // go to the Firestore document of the user
             currentUser.get().then(userDoc => {
                 // get the user name
                 let userName = userDoc.data().name;
-                console.log(userName);
+                // console.log(userName);
                 document.getElementById("name-goes-here").innerText = userName;
             })
         } else {
@@ -41,7 +41,7 @@ function displayCardsDynamically(collection) {
             currentUser = db.collection("users").doc(user.uid);
             currentUser.get().then(userDoc => {
                 let userClubs = userDoc.data().clubs;
-                console.log(userClubs);
+                // console.log(userClubs);
                 userClubs.forEach(club => { //iterate thru each club
                     let officialClubEvents = db.collection("clubs").doc(club).collection("events"); // because club is simply a String containing the ID of the club, from the user's clubs array
                     let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
@@ -66,13 +66,15 @@ function displayCardsDynamically(collection) {
                             promises.push(
                                 officialClubEvents.get().then(events => {
                                     events.forEach(event => {
+                                        // console.log("event")
+                                        // console.log(event.data())
                                         let newcard = cardTemplate.content.cloneNode(true);
                                         // firestore timestamp object returns as seconds -> convert
                                         var eventTimestamp = event.data().date.toDate();
                                         // only extract the date
                                         var date = formatDate(eventTimestamp);
                                         var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
-                                        
+
                                         newcard.querySelector('.nameOfHostingClub').innerHTML = clubName;
                                         newcard.querySelector(".nameOfHostingClub").addEventListener("click", () => {
                                             location.href = "eachClub.html?docID=" + clubID;
@@ -81,7 +83,15 @@ function displayCardsDynamically(collection) {
                                         newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                                         newcard.querySelector('.eventDate').innerHTML += date;
                                         newcard.querySelector('.eventTime').innerHTML += time;
+                                        newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + 'Check" type="checkbox" name="going" value="' + clubID + '">'
+
+                                        newcard.querySelector('#' + clubID + 'Check').onclick = () => updateGoing(clubID, event.id);
                                         document.getElementById(collection + "-go-here").appendChild(newcard);
+
+                                        // had to move this down below cause asyncronousness is messing with me :(
+                                        if (event.data().attendees.includes(currentUser.id)) {
+                                            document.getElementById(clubID + "Check").checked = true
+                                        }
 
                                         // can add in page for each event later
                                         // newcard.querySelector(".clubGroupButton").addEventListener("click", () => {
@@ -90,7 +100,7 @@ function displayCardsDynamically(collection) {
                                         // });
                                     })
                                 }).catch(error => {
-                                    console.error("Failed to fetch official club events");
+                                    console.error("Failed to fetch official club events" + error);
                                 })
                             )
                             promises.push(
@@ -111,10 +121,17 @@ function displayCardsDynamically(collection) {
                                         newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                                         newcard.querySelector('.eventDate').innerHTML += date;
                                         newcard.querySelector('.eventTime').innerHTML += time;
+                                        newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + 'Check" type="checkbox" name="going" value="' + clubID + '">'
+                                        newcard.querySelector('#' + clubID + 'Check').onclick = () => updateGoing(clubID, event.id);
                                         document.getElementById(collection + "-go-here").appendChild(newcard);
+
+                                        // had to move this down below cause asyncronousness is messing with me :(
+                                        if (event.data().attendees.includes(currentUser.id)) {
+                                            document.getElementById(clubID + "Check").checked = true
+                                        }
                                     })
                                 }).catch(error => {
-                                    console.error("Failed to fetch unoffical club events");
+                                    console.error("Failed to fetch unoffical club events: " + error);
                                 })
                             )
                         })
@@ -184,4 +201,78 @@ function formatDate(date) {
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     return "" + dayNames[day] + ", " + monthNames[m] + " " + d;
+}
+
+function updateGoing(clubId, eventID) {
+    // console.log(clubId)
+
+    let thisClubRef = db.collection("clubs").doc(clubId);
+
+    // console.log(currentUser.id)
+
+    thisClubRef.get().then(doc => {
+        if (doc.exists) {
+            // this path for official clubs
+            eventRef = thisClubRef.collection("events").doc(eventID);
+            eventRef.get().then(eventDoc => {
+                let peopleGoing = eventDoc.data().attendees;
+                if (peopleGoing.includes(currentUser.id)) {
+                    // remove user from event attendess
+                    eventRef.update({
+                        attendees: firebase.firestore.FieldValue.arrayRemove(currentUser.id)
+                    })
+                    console.log("removed from list")
+                    updateLabel(clubId, "clubs", eventID);
+                } else {
+                    // add user to attendees
+                    eventRef.update({
+                        attendees: firebase.firestore.FieldValue.arrayUnion(currentUser.id)
+                    })
+                    console.log("added to list")
+                    updateLabel(clubId, "clubs", eventID);
+                }
+
+            })
+        } else {
+            // start over here for unnoficial clubs
+            thisClubRef = db.collection("unofficialClubs").doc(clubId);
+            thisClubRef.get().then(doc => {
+                if (doc.exists) {
+                    eventRef = thisClubRef.collection("events").doc(eventID);
+                    eventRef.get().then(eventDoc => {
+                        let peopleGoing = eventDoc.data().attendees;
+                        if (peopleGoing.includes(currentUser.id)) {
+                            // remove user from event attendess
+                            eventRef.update({
+                                attendees: firebase.firestore.FieldValue.arrayRemove(currentUser.id)
+                            })
+                            console.log("removed from list")
+                            updateLabel(clubId, "unofficialClubs", eventID);
+                        } else {
+                            // add user to attendees
+                            eventRef.update({
+                                attendees: firebase.firestore.FieldValue.arrayUnion(currentUser.id)
+                            })
+                            console.log("added to list")
+                            updateLabel(clubId, "unofficialClubs", eventID);
+                        }
+                    })
+                } else {
+                    console.log("club does not exist")
+                }
+            })
+        }
+    })
+}
+
+// suppport function to update the label of the club template
+function updateLabel(clubId, clubType, eventID) {
+    // clubType refers to it being official (clubs) or unnoficial (unnoficail clubs)
+    let eventRef = db.collection(clubType).doc(clubId).collection("events").doc(eventID);
+
+    eventRef.get().then(doc => {
+        let membersGoing = doc.data().attendees;
+
+        document.getElementById(clubId + 'Label').innerHTML = membersGoing.length + (membersGoing.length == 1 ? ' person is' : ' people are') + ' going. Are you?'
+    })
 }
