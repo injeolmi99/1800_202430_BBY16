@@ -76,3 +76,11 @@ content (clubs list) styling copied over from clubsListStyle.css
   color: white;
   transition: 0.6s ease;
 }
+
+#goingCheck {
+  float: right;
+}
+
+label {
+  font-size: 10pt;
+}
