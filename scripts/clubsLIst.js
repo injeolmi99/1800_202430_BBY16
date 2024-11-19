@@ -51,7 +51,7 @@
 //====================================================================
 
 // default to show all clubs
-var currentFilter = "all";
+var currentFilter = "ALL";
 
 function removeUnloggedinUsers() {
     firebase.auth().onAuthStateChanged(user => {
@@ -107,7 +107,6 @@ function toggleClubs() {
 
     // just to update search results
     searchClubs();
-    console.log(currentFilter);
     filterBy(currentFilter);
 }
 
@@ -187,7 +186,7 @@ function filterBy(category) {
 
     div2 = div1.getElementsByClassName("clubGroup")
 
-    if (category == "all") {
+    if (currentFilter == "ALL") {
         for (i = 0; i < div2.length; i++) {
             div2[i].style.display = "";
         }
