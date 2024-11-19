@@ -56,24 +56,24 @@
     <div class="content">
       <section class="contentSection">
         <h1 class="boxTitle">Create a Club</h1>
-        <form id="editableStuff" class="contentBox">
+        <form id="editableStuff" class="contentBox" onsubmit="createClub();return false">
           <!--May need to deny use of special character and quotes and stuff I have messed up the js with that already-->
           <label for="clubName">Club Name: </label>
-          <input type="text" id="clubName" maxlength="25"> 
-          <div id="insertClubName"></div>
+          <input type="text" id="clubName" maxlength="25" required="required"> 
+          <!-- <div id="insertClubName"></div> -->
 
           <label for="description">Description: </label>
           <small>Write a short, descriptive blurb about your club and what it has to offer. What makes you stand out?
             Who should join you, and why?</small>
-          <textarea id="description" maxlength="800"></textarea>
-          <div id="insertDescription"></div>
+          <textarea id="description" maxlength="800" required="required"></textarea>
+          <!-- <div id="insertDescription"></div> -->
 
           <!--displays options for image and currently selected image-->
           <div id="image-selection"></div>
           <img id="displayImage" scr="" alt="">
 
           <input type="button" id="cancel" value="Cancel" onclick="javascript:history.back()">
-          <input type="button" id="submit" value="Submit" onclick="createClub()">
+          <input type="submit" id="submit" value="Submit">
         </form>
       </section>
     </div>
