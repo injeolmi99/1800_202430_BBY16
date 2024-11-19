@@ -63,8 +63,7 @@ function displayEventInfo() {
                     eventAttendees.forEach((attendee => {
                         db.collection("users").doc(attendee).get()
                             .then(doc => {
-                                document.querySelector('#insert-members').innerHTML += "<img class='pfp' src='" + doc.data().profilePicture + "'>";
-                                document.querySelector('#insert-members').innerHTML += doc.data().displayName + "<br>";
+                                document.querySelector('#insert-members').innerHTML += "<div class='attendee'><img class='pfp' src='" + doc.data().profilePicture + "'>" + doc.data().displayName + "</div>";
                             })
                     }))
                 })

@@ -80,12 +80,12 @@ function displayCardsDynamically(collection) {
                                             location.href = "eachClub.html?docID=" + clubID;
                                         });
                                         newcard.querySelector('.eventName').innerHTML = event.data().event;
+                                        newcard.querySelector(".eventName").addEventListener("click", () => {
+                                            location.href = "eachEvent.html?docID=" + clubID + "&eventID=" + event.id;
+                                        });
                                         newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                                         newcard.querySelector('.eventDate').innerHTML += date;
                                         newcard.querySelector('.eventTime').innerHTML += time;
-                                        newcard.querySelector(".eventCard").addEventListener("click", () => {
-                                            location.href = "eachEvent.html?docID=" + clubID + "&eventID=" + event.id;
-                                        });
                                         newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + 'Check" type="checkbox" name="going" value="' + clubID + '">'
 
                                         newcard.querySelector('#' + clubID + 'Check').onclick = () => updateGoing(clubID, event.id);
@@ -121,12 +121,12 @@ function displayCardsDynamically(collection) {
                                             location.href = "eachClub.html?docID=" + clubID;
                                         });
                                         newcard.querySelector('.eventName').innerHTML = event.data().event;
+                                        newcard.querySelector(".eventName").addEventListener("click", () => {
+                                            location.href = "eachEvent.html?docID=" + clubID + "&eventID=" + event.id;
+                                        });
                                         newcard.querySelector('.eventLocation').innerHTML += event.data().location;
                                         newcard.querySelector('.eventDate').innerHTML += date;
                                         newcard.querySelector('.eventTime').innerHTML += time;
-                                        newcard.querySelector(".eventCard").addEventListener("click", () => {
-                                            location.href = "eachEvent.html?docID=" + clubID + "&eventID=" + event.id;
-                                        });
                                         newcard.querySelector('#goingCheck').innerHTML += '<label id="' + clubID + 'Label" for="going">'+ event.data().attendees.length + (event.data().attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + clubID + 'Check" type="checkbox" name="going" value="' + clubID + '">'
                                         newcard.querySelector('#' + clubID + 'Check').onclick = () => updateGoing(clubID, event.id);
                                         document.getElementById(collection + "-go-here").appendChild(newcard);

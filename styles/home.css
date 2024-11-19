@@ -11,6 +11,11 @@
   padding-top: 35px;
 }
 
+.eventName {
+  cursor: pointer;
+  width: max-content;
+}
+
 /*
 content (clubs list) styling copied over from clubsListStyle.css
 */

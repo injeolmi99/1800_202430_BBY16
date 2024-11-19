@@ -93,6 +93,7 @@ function displayCardsDynamically(collection) {
 }
 
 function toggleClubs() {
+    // the toggles are implemented with bootstrap, so the logic works by checking which tab has the "active" class and displaying the appropriate div and hiding the opposite. create club button only appears when unofficial tab is toggled
     if (document.getElementById("officialToggle").classList.contains("active")) {
         document.getElementById("clubs-go-here").style.display = "flex";
         document.getElementById("unofficialClubs-go-here").style.display = "none";
@@ -106,8 +107,8 @@ function toggleClubs() {
     }
 
     // just to update search results
-    searchClubs();
     filterBy(currentFilter);
+    searchClubs();
 }
 
 function searchClubs() {
@@ -131,9 +132,16 @@ function searchClubs() {
 
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < div2.length; i++) {
-        a = div2[i].getElementsByClassName("nameTag")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        categoryFilter = div2[i].getElementsByClassName("category")[0];
+        filterText = categoryFilter.textContent || categoryFilter.innerText;
+
+        search = div2[i].getElementsByClassName("nameTag")[0];
+        searchInput = search.textContent || search.innerText;
+
+        // implements separate logic to check for if the current filter is ALL or else all clubs will disappear on toggle due to the second if statement checking if the the club has the category (and all isn't a category)
+        if (currentFilter == "ALL" && searchInput.toUpperCase().indexOf(filter) > -1) {
+            div2[i].style.display = "";
+        } else if (filterText.toUpperCase().indexOf(currentFilter) > -1 && searchInput.toUpperCase().indexOf(filter) > -1) {
             div2[i].style.display = "";
         } else {
             div2[i].style.display = "none";
@@ -202,6 +210,8 @@ function filterBy(category) {
             }
         }
     }
+
+    searchClubs();
 
     // to hide the menu after a selection is made
     document.querySelector(".dropdown-content").style.display = "none";

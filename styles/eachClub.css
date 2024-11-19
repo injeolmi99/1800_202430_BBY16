@@ -18,6 +18,7 @@
 button {
   /* doesn't have to be this color but orange was starting to make me want to peel my eyes */
   /* wow I have been quoted -- my life is complete */
+  /* c: */
   background-color: #85ac9f;
   color: white;
   padding: 0.6rem;
@@ -40,6 +41,10 @@ button {
 
 #insert-add-event button {
   margin-left: 0.6rem;
+}
+
+.eventCard {
+  cursor: pointer;
 }
 
 .contentSection {

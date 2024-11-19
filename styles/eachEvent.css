@@ -3,3 +3,9 @@
   max-height: 50px;
   margin-right: 10px;
 }
+
+.attendee {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
