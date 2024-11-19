@@ -158,6 +158,14 @@ function loadClubs() {
         document.getElementById("unofficialClubs-go-here").style.display = "none";
         document.getElementById("createClubButton").style.display = "none";
     }
+
+    document.querySelector(".dropbtn").addEventListener("mouseenter", () => {
+        document.querySelector(".dropdown-content").style.display = "block";
+    })
+
+    document.querySelector(".dropdown").addEventListener("mouseleave", () => {
+        document.querySelector(".dropdown-content").style.display = "none";
+    })
 } loadClubs();
 
 function createClubCheck() {
@@ -211,6 +219,7 @@ function filterBy(category) {
         }
     }
 
+    // in order to apply current searchbar input to the filtered list of clubs
     searchClubs();
 
     // to hide the menu after a selection is made
