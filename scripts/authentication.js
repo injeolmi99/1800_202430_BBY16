@@ -46,7 +46,7 @@ var uiConfig = {
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
   signInFlow: 'popup',
   // THIS IS FOR WHEN YOU SIGN IN AFTER THE FIRST TIME IT WORKS
-  signInSuccessUrl: 'clubsList.html',
+  signInSuccessUrl: 'home.html',
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     //   firebase.auth.GoogleAuthProvider.PROVIDER_ID,
