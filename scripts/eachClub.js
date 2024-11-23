@@ -130,17 +130,21 @@ function displayCardsDynamically(collection) {
             .then(events => {
                 events.forEach(event => {
                     console.log(event.id);
+
+                    eventD = event.data();
+
                     let newcard = cardTemplate.content.cloneNode(true);
                     // firestore timestamp object returns as seconds -> convert
-                    var eventTimestamp = event.data().date.toDate();
+                    var eventTimestamp = eventD.date.toDate();
                     // only extract the date
                     var date = formatDate(eventTimestamp);
                     var time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
 
-                    newcard.querySelector('.eventName').innerHTML = event.data().event;
-                    newcard.querySelector('.eventLocation').innerHTML += event.data().location;
+                    newcard.querySelector('.eventName').innerHTML = eventD.event;
+                    newcard.querySelector('.eventLocation').innerHTML += eventD.location;
                     newcard.querySelector('.eventDate').innerHTML += date;
                     newcard.querySelector('.eventTime').innerHTML += time;
+                    newcard.querySelector('.goingCheck').innerHTML += '<p>' + eventD.attendees.length + (eventD.attendees.length == 1 ? ' person is' : ' people are') + ' going.<p>'
 
                     newcard.querySelector(".eventCard").addEventListener("click", () => {
                         location.href = "eachEvent.html?docID=" + clubID + "&eventID=" + event.id;
@@ -148,7 +152,7 @@ function displayCardsDynamically(collection) {
                     document.getElementById("events" + "-go-here").appendChild(newcard);
                 })
             }).catch(error => {
-                console.error("Failed to fetch club events");
+                console.error("Failed to fetch club events: " + error);
             })
     )
     Promise.all(promises).then(() => {
