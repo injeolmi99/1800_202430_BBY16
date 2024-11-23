@@ -69,7 +69,8 @@
     <section class="contentSection">
       <div id="attendeesBrick">
         <h1 id="attendees" class="boxTitle">Attendees</h1>
-        <span id="going" onclick="changeGoing()">Are you planning on going? <span id="insert-status" class='material-icons'></span></span> <!--cancel for no check_circle yes-->
+        <!--notes for following line: cancel for no, check_circle yes, also notice I used an inline style which will be overwritten if the user is a member of the club -->
+        <span id="going" style="display: none;" onclick="changeGoing()">Are you planning on going? <span id="insert-status" class='material-icons'></span></span>
       </div>
       <div class="contentBox">
         <div id="insert-members"></div>

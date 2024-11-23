@@ -58,6 +58,10 @@ function displayEventInfo() {
                         document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editEvent()'><span class='material-icons'>settings</span> Edit Event</button>";
                     }
 
+                    // only shows the ability to join the event if the user is a member of the club (anyone else can see the events data so this doesnt do much)
+                    if (clubMembers.includes(user.uid)) {
+                        document.getElementById("going").style.display = "inline";
+                    }
                 } else {
                     console.log("Failed at user check / none logged in?");
                 }
