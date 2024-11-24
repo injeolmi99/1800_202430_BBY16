@@ -51,7 +51,7 @@ function displayClubInfo() {
                     let clubDescription = thisClub.description;
                     let clubMembers = thisClub.members;
                     let clubAdmin = thisClub.admin;
-                    
+
                     db.collection("users").doc(clubAdmin).get().then(adminRef => {
                         if (adminRef.exists) {
                             let adminPFP = adminRef.data().profilePicture
@@ -167,74 +167,19 @@ function leaveOrJoin() {
     let params = new URL(window.location.href); // get URL of search bar
     let ID = params.searchParams.get("docID"); // get value for key "id"
 
+    // looking back on this I think I should have named this thisClubRef but dont bully me I made it so early into the journey
+    // and was barely understanding
     let thisClubID = db.collection("clubs").doc(ID);
 
     thisClubID.get().then(doc => {
+        // this check is commonly found in our code as it determines if the document is in the clubs collection or the unofficial clubs collection
         if (doc.exists) {
             let thisClub = doc.data();
-
+            // should have used a global var to store user on most pages, wish I learned that sooner
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
-                    // Get user document from Firestore (just saving myself typing later)
-                    let userDocRef = db.collection("users").doc(user.uid);
-                    console.log("Here: " + user.uid);
-
-                    // needed this beast to get into the users data
-                    userDocRef.get().then(userDoc => {
-                        if (userDoc.exists) {
-                            let userData = userDoc.data();
-                            let userClubs = userData.clubs || []; // Ensure userClubs is an array
-
-                            // check if the user is in the clubs member array
-                            if (thisClub.members.includes(user.uid)) {
-                                // If they are then we wll remove them
-                                thisClubID.update({
-                                    // This is how you remove a specific value from an array list w/ firestore
-                                    members: firebase.firestore.FieldValue.arrayRemove(user.uid)
-                                }).then(() => {
-                                    console.log("User removed from the club members list.");
-
-                                    userDocRef.update({
-                                        // removing the club from the user
-                                        clubs: firebase.firestore.FieldValue.arrayRemove(ID)
-                                    }).then(() => {
-                                        console.log("Club ID removed from user's club list.");
-                                        // change the button to match the users status with club
-                                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>"
-                                    }).catch(error => {
-                                        console.error("Error updating user document: ", error);
-                                    });
-                                }).catch(error => {
-                                    console.error("Error updating club document: ", error);
-                                });
-                            } else {
-                                // Else the user is not in the club so we add them
-                                thisClubID.update({
-                                    // This is how to add to array without changing other values (its not .push())
-                                    members: firebase.firestore.FieldValue.arrayUnion(user.uid)
-                                }).then(() => {
-                                    console.log("User added to the club members list.");
-
-                                    userDocRef.update({
-                                        // This is how to add to array without changing other values (its not .push())
-                                        clubs: firebase.firestore.FieldValue.arrayUnion(ID)
-                                    }).then(() => {
-                                        console.log("Club ID added to user's club list.");
-                                        // change the button to match the users status with club
-                                        document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>"
-                                    }).catch(error => {
-                                        console.error("Error updating user document: ", error);
-                                    });
-                                }).catch(error => {
-                                    console.error("Error updating club document: ", error);
-                                });
-                            }
-                        } else {
-                            console.log("User document not found in Firestore.");
-                        }
-                    }).catch(error => {
-                        console.error("Error getting user document: ", error);
-                    });
+                    // passed off to another function which will pass off to another function
+                    checkInClubOrNot(thisClub, thisClubID, user)
                 } else {
                     console.log("Failed at user check / none logged in?");
                 }
@@ -249,65 +194,7 @@ function leaveOrJoin() {
 
                     firebase.auth().onAuthStateChanged(user => {
                         if (user) {
-                            // Get user document from Firestore (just saving myself typing later)
-                            let userDocRef = db.collection("users").doc(user.uid);
-
-                            // needed this beast to get into the users data
-                            userDocRef.get().then(userDoc => {
-                                if (userDoc.exists) {
-                                    let userData = userDoc.data();
-                                    let userClubs = userData.clubs || []; // Ensure userClubs is an array
-
-                                    // check if the user is in the clubs member array
-                                    if (thisClub.members.includes(user.uid)) {
-                                        // If they are then we wll remove them
-                                        thisClubID.update({
-                                            // This is how you remove a specific value from an array list w/ firestore
-                                            members: firebase.firestore.FieldValue.arrayRemove(user.uid)
-                                        }).then(() => {
-                                            console.log("User removed from the club members list.");
-
-                                            userDocRef.update({
-                                                // removing the club from the user
-                                                clubs: firebase.firestore.FieldValue.arrayRemove(ID)
-                                            }).then(() => {
-                                                console.log("Club ID removed from user's club list.");
-                                                // change the button to match the users status with club
-                                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>";
-                                            }).catch(error => {
-                                                console.error("Error updating user document: ", error);
-                                            });
-                                        }).catch(error => {
-                                            console.error("Error updating club document: ", error);
-                                        });
-                                    } else {
-                                        // Else the user is not in the club so we add them
-                                        thisClubID.update({
-                                            // This is how to add to array without changing other values (its not .push())
-                                            members: firebase.firestore.FieldValue.arrayUnion(user.uid)
-                                        }).then(() => {
-                                            console.log("User added to the club members list.");
-
-                                            userDocRef.update({
-                                                // This is how to add to array without changing other values (its not .push())
-                                                clubs: firebase.firestore.FieldValue.arrayUnion(ID)
-                                            }).then(() => {
-                                                console.log("Club ID added to user's club list.");
-                                                // change the button to match the users status with club
-                                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
-                                            }).catch(error => {
-                                                console.error("Error updating user document: ", error);
-                                            });
-                                        }).catch(error => {
-                                            console.error("Error updating club document: ", error);
-                                        });
-                                    }
-                                } else {
-                                    console.log("User document not found in Firestore.");
-                                }
-                            }).catch(error => {
-                                console.error("Error getting user document: ", error);
-                            });
+                            checkInClubOrNot(thisClub, thisClubID, user)
                         } else {
                             console.log("Failed at user check / none logged in?");
                         }
@@ -319,6 +206,84 @@ function leaveOrJoin() {
         }
     }).catch(error => {
         console.error("Error getting club document: ", error);
+    });
+}
+
+function checkInClubOrNot(thisClub, thisClubID, user) {
+    // Get user document from Firestore (just saving myself typing later)
+    let userDocRef = db.collection("users").doc(user.uid);
+
+    // needed this beast to get into the users data -> to update their clubs array
+    userDocRef.get().then(userDoc => {
+        if (userDoc.exists) {
+
+            // check if the user is in the clubs member array
+            if (thisClub.members.includes(user.uid)) {
+                // If they are then we wll remove them
+                removeUserFromClub(thisClubID, userDocRef, user)
+            } else {
+                // Else the user is not in the club so we add them
+                addUserToClub(thisClubID, userDocRef, user)
+            }
+        } else {
+            console.log("User document not found in Firestore.");
+        }
+    }).catch(error => {
+        console.error("Error getting user document: ", error);
+    });
+}
+
+function removeUserFromClub(thisClubID, userDocRef, user) {
+    let params = new URL(window.location.href); // get URL of search bar
+    let ID = params.searchParams.get("docID"); // get value for key "id"
+
+    // remember thisClubID is a reference and not an ID bad naming I know
+    thisClubID.update({
+        // This is how you remove a specific value from an array list w/ firestore
+        members: firebase.firestore.FieldValue.arrayRemove(user.uid)
+    }).then(() => {
+        console.log("User removed from the club members list.");
+
+        userDocRef.update({
+            // removing the club from the user
+            clubs: firebase.firestore.FieldValue.arrayRemove(ID)
+        }).then(() => {
+            console.log("Club ID removed from user's club list.");
+            // change the button to match the users status with club
+            document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>"
+            console.log("success")
+        }).catch(error => {
+            console.error("Error updating user document: ", error);
+        });
+    }).catch(error => {
+        console.error("Error updating club document: ", error);
+    });
+}
+
+function addUserToClub(thisClubID, userDocRef, user) {
+    let params = new URL(window.location.href); // get URL of search bar
+    let ID = params.searchParams.get("docID"); // get value for key "id"
+
+    // remember thisClubID is a reference and not an ID bad naming I know
+    thisClubID.update({
+        // This is how to add to array without changing other values (its not .push())
+        members: firebase.firestore.FieldValue.arrayUnion(user.uid)
+    }).then(() => {
+        console.log("User added to the club members list.");
+
+        userDocRef.update({
+            // This is how to add to array without changing other values (its not .push())
+            clubs: firebase.firestore.FieldValue.arrayUnion(ID)
+        }).then(() => {
+            console.log("Club ID added to user's club list.");
+            // change the button to match the users status with club
+            document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>"
+            console.log("it is done")
+        }).catch(error => {
+            console.error("Error updating user document: ", error);
+        });
+    }).catch(error => {
+        console.error("Error updating club document: ", error);
     });
 }
 
