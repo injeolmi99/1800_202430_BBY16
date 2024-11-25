@@ -34,3 +34,29 @@ button {
   margin-top: 0.6rem;
   margin-right: 0.6rem;
 }
+
+#attendeesBrick {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+#attendees {
+  display: inline-block;
+}
+
+#going {
+  float: right;
+  align-self: center;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+  font-size: 20pt;
+}
+
+.red {
+  color: red;
+  font-size: 20pt;
+}

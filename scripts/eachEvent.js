@@ -1,7 +1,10 @@
+var currentUser;
+
 function removeUnloggedinUsers() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             console.log("user detected");
+            currentUser = user;
         } else {
             alert("You must be logged in to have access to this page.");
             location.href = "login.html";
@@ -55,6 +58,10 @@ function displayEventInfo() {
                         document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editEvent()'><span class='material-icons'>settings</span> Edit Event</button>";
                     }
 
+                    // only shows the ability to join the event if the user is a member of the club (anyone else can see the events data so this doesnt do much)
+                    if (clubMembers.includes(user.uid)) {
+                        document.getElementById("going").style.display = "inline";
+                    }
                 } else {
                     console.log("Failed at user check / none logged in?");
                 }
@@ -79,6 +86,16 @@ function displayEventInfo() {
                     document.querySelector('.numberGoing').innerHTML += thisEvent.attendees.length + " going";
                     document.querySelector('.eventDate').innerHTML += date;
                     document.querySelector('.eventTime').innerHTML += time;
+
+                    // Sets the status of if the user is going or not
+                    if (thisEvent.attendees.includes(currentUser.uid)) {
+                        document.querySelector('#insert-status').innerHTML = "check_circle";
+                        // overwrites the classes of the element by id insert-status
+                        document.querySelector('#insert-status').className = "material-icons green";
+                    } else {
+                        document.querySelector('#insert-status').innerHTML = "cancel";
+                        document.querySelector('#insert-status').className = "material-icons red";
+                    }
 
                     eventAttendees.forEach((attendee => {
                         db.collection("users").doc(attendee).get()
@@ -109,4 +126,86 @@ function editEvent() {
     let clubID = params.searchParams.get("docID"); //get value for club id
     let eventID = params.searchParams.get("eventID"); //get value for event id
     location.href = "editEvent.html?docID=" + clubID + "&eventID=" + eventID;
+}
+
+function changeGoing() {
+    let params = new URL(window.location.href); //get URL of search bar
+    let clubID = params.searchParams.get("docID"); //get value for club id
+    let eventID = params.searchParams.get("eventID"); //get value for event id
+
+    let thisClubRef = db.collection("clubs").doc(clubID);
+
+    thisClubRef.get().then(doc => {
+        if (doc.exists) {
+            // official clubs route
+            eventRef = thisClubRef.collection("events").doc(eventID);
+            eventRef.get().then(eventDoc => {
+                let peopleGoing = eventDoc.data().attendees;
+
+                if (peopleGoing.includes(currentUser.uid)) {
+                    eventRef.update({
+                        attendees: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)
+                    })
+                    console.log("removed from list")
+                    document.querySelector('#insert-status').innerHTML = "cancel";
+                    document.querySelector('#insert-status').className = "material-icons red";
+                    updateGoingList(eventRef)
+                } else {
+                    eventRef.update({
+                        attendees: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)
+                    })
+                    console.log("added to list")
+                    document.querySelector('#insert-status').innerHTML = "check_circle";
+                    document.querySelector('#insert-status').className = "material-icons green";
+                    updateGoingList(eventRef)
+                }
+            })
+        } else {
+            // unnofficial clubs route
+            let thisClubRef = db.collection("unofficialClubs").doc(clubID);
+            thisClubRef.get().then(doc => {
+                if (doc.exists) {
+                    // official clubs route
+                    eventRef = thisClubRef.collection("events").doc(eventID);
+                    eventRef.get().then(eventDoc => {
+                        let peopleGoing = eventDoc.data().attendees;
+
+                        if (peopleGoing.includes(currentUser.uid)) {
+                            eventRef.update({
+                                attendees: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)
+                            })
+                            console.log("removed from list")
+                            document.querySelector('#insert-status').innerHTML = "cancel";
+                            document.querySelector('#insert-status').className = "material-icons red";
+                            updateGoingList(eventRef)
+                        } else {
+                            eventRef.update({
+                                attendees: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)
+                            })
+                            console.log("added to list")
+                            document.querySelector('#insert-status').innerHTML = "check_circle";
+                            document.querySelector('#insert-status').className = "material-icons green";
+                            updateGoingList(eventRef)
+                        }
+                    })
+                } else {
+                    console.log("club does not exist")
+                }
+            })
+        }
+    })
+}
+
+function updateGoingList(eventRef) {
+    eventRef.get().then(eventDoc => {
+        let peopleGoing = eventDoc.data().attendees;
+        document.querySelector('.numberGoing').innerHTML = peopleGoing.length + " going";
+        document.querySelector('#insert-members').innerHTML = "";
+        peopleGoing.forEach((attendee => {
+            db.collection("users").doc(attendee).get()
+                .then(doc => {
+                    document.querySelector('#insert-members').innerHTML += "<div class='attendee'><img class='pfp' src='" + doc.data().profilePicture + "'>" + doc.data().displayName + "</div>";
+                })
+        }))
+    })
 }
