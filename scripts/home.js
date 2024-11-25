@@ -143,7 +143,7 @@ function displayCardsDynamically(collection) {
                         newcard.querySelector(".eventName").addEventListener("click", () => {
                             location.href = "eachEvent.html?docID=" + eventCard.clubID + "&eventID=" + eventCard.ID;
                         });
-                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;
+                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;  
                         newcard.querySelector('.eventDate').innerHTML += date;
                         newcard.querySelector('.eventTime').innerHTML += time;
                         newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'
