@@ -22,8 +22,16 @@ function insertName() {
             currentUser.get().then(userDoc => {
                 // get the user name
                 let userName = userDoc.data().name;
+                let clubs = userDoc.data().clubs;
+
+                if(clubs == ""){
+                    document.getElementById("home_show").style.display = "none";
+                    document.getElementById("name-goes-here-").innerText = userName;
+                } else{
                 // console.log(userName);
-                document.getElementById("name-goes-here").innerText = userName;
+                    document.getElementById("home_show1").style.display = "none";
+                    document.getElementById("name-goes-here").innerText = userName;
+                }
             })
         } else {
             console.log("No user is logged in.");
@@ -54,6 +62,8 @@ function displayCardsDynamically(collection) {
                         let unofficialClubData = db.collection("unofficialClubs").doc(club);
                         let clubName;
                         let clubID;
+
+                        
 
                         clubData.get().then(doc => { // check official clubs list for doc
                             if (doc.exists) {
