@@ -1,11 +1,11 @@
 function removeUnloggedinUsers() {
   firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-          console.log("user detected");
-      } else {
-          alert("You must be logged in to have access to this page.");
-          location.href = "login.html";
-      }
+    if (user) {
+      console.log("user detected");
+    } else {
+      alert("You must be logged in to have access to this page.");
+      location.href = "login.html";
+    }
   })
 }
 removeUnloggedinUsers();
@@ -113,7 +113,7 @@ function displayUserEvents(collection) {
             })
           )
         })
-        
+
         // promise has to be INSIDE of the currentUser.get() callback or else it will load too fast. bc of the nature of our method of fetching club ID as a String from clubs array inside of user doc, we need to add in ANOTHER async get call to get the actual club document separately
         Promise.all(promises).then(() => {
           initializeCalendar();
@@ -204,10 +204,6 @@ function initializeCalendar() {
   // event listens for when window is resized and adjusts the calendar's layout; passes in the window object and eventCalendarResizes as a callback function
   $(window).on('resize', function () {
     eventCalendarResize($(this))
-
-    $(".calendar-events").css({
-      'width': ($(".cal-modal").outerWidth() + 'px')
-    });
   })
 
   // resizes the calendar based on window size, but we have set it to 1 for all screen sizes
@@ -247,3 +243,10 @@ function formatDate(date) {
   let y = date.getFullYear();
   return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
 }
+
+function matchCalendarWidth() {
+  $(".calendar-events").css({
+    'width': ($(".cal-modal").outerWidth() + 'px')
+  });
+}
+matchCalendarWidth();

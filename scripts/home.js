@@ -43,11 +43,11 @@ function displayCardsDynamically(collection) {
                 let userClubs = userDoc.data().clubs;
                 // console.log(userClubs);
 
-                let promises = [];
+                let promise;
 
                 userClubs.forEach(club => { //iterate thru each club
                     // create promise so that the array isn't accessed before it is fully populated, then chain .then()
-                    let promise = new Promise((resolve, reject) => {
+                    promise = new Promise((resolve, reject) => {
                         let officialClubEvents = db.collection("clubs").doc(club).collection("events"); // NOT club.id because club is simply a String containing the ID of the club, from the user's clubs array
                         let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
                         let clubData = db.collection("clubs").doc(club);
@@ -110,11 +110,10 @@ function displayCardsDynamically(collection) {
                             reject(error);
                         });
                     });
-                    promises.push(promise);
                 });
 
                 // once promise resolves, then we sort the allEvents array and display the cards
-                Promise.all(promises).then(() => {
+                promise.then(() => {
                     allEvents.sort((event1, event2) => {
                         return event1.date.getTime() - event2.date.getTime();
                     }); // sort by date - getTime() returns milliseconds

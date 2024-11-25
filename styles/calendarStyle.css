@@ -6,9 +6,9 @@
 }
 
 body {
-    /* height: calc(100vh - 56px - 78px); */
+    height: calc(100vh - 56px - 78px);
     /* might code out later, just to save my eyes for now */
-    background-color: #1D252C !important; 
+    /* background-color: black; */
 }
 
 /* .swap {
@@ -20,7 +20,7 @@ body {
     margin: 1.5rem 1.5rem 0 0;
     border: none;
     background-color: transparent;
-    color: white;
+    color: black;
     position: absolute;
     top: 0;
     right: 0;
@@ -46,9 +46,9 @@ a bit broken atm because i haven't implemented code to change the swap icon colo
 } */
 
 #filter {
-    background-color: #343F48;
+    background-color: hsl(204, 9%, 89%);
     border: none;
-    color: white;
+    color: black;
     position: absolute;
     top: 20px;
     left: 20px;
@@ -76,8 +76,8 @@ with edits to match our color scheme
 }
 
 .cal-modal {
-    background: #1D252C;
-    color: #fff;
+    background: white;
+    color: black;
     padding: 75px 60px 40px 60px;
     text-align: center;
     position: relative;
@@ -105,7 +105,7 @@ with edits to match our color scheme
         border: 0;
         border-radius: 0;
         box-shadow: none;
-        color: #fff;
+        color: black;
         top: 0;
 
         .flatpickr-innerContainer {
@@ -173,7 +173,7 @@ with edits to match our color scheme
                 }
 
                 .flatpickr-weekday {
-                    color: #fff;
+                    color: black;
                     font-weight: 700;
                 }
             }
@@ -190,33 +190,33 @@ with edits to match our color scheme
         }
 
         .flatpickr-day {
-            background: #fff;
-            border: 0;
-            color: #1D252C;
+            background: rgb(230, 232, 234);
+            border: none;
+            color: black;
             font-weight: 500;
             transition: color .1s, background .1s;
 
             &:hover {
                 background: #EB7875;
-                color: #fff;
+                color: black;
             }
 
             &.flatpickr-disabled, &.flatpickr-disabled:hover {
                 background: none;
-                color: #fff;
+                color: black;
                 cursor: default;
             }
 
             &.selected:not(.hidden) {
                 &, &:hover, &:focus {
                     background: #EB7875;
-                    color: #fff;
+                    color: white;
                 }
             }
 
             &.nextMonthDay, &.prevMonthDay {
                 background: none;
-                color: rgba(207, 210, 211, 0.1) !important;
+                color: rgba(0, 0, 0, 0.1) !important;
                 cursor: default;
                 visibility: visible;
             }
@@ -224,10 +224,10 @@ with edits to match our color scheme
     }
 }
 .calendar-events {
+    overflow-y: scroll !important;
     text-align: center;
-    background-color: #1D252C;
+    background-color: white;
     display: flex;
-    width: 427.875px;
     flex-direction: column;
     justify-content: space-around;
     min-height: 36px;
@@ -247,7 +247,7 @@ with edits to match our color scheme
         }
 
         .location {
-            color: white;
+            color: black;
             font-weight: 600;
             letter-spacing: -.8px;
         }
