@@ -67,7 +67,7 @@ removeUnloggedinUsers();
 
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("clubsListTemplate");
-    db.collection(collection).get()
+    db.collection(collection).orderBy("membersCount", "desc").get()
         .then(allClubs => {
 
             allClubs.forEach(doc => { //iterate thru each doc

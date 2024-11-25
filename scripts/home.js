@@ -187,7 +187,12 @@ function displayClubsDynamically(collection) {
                                 newcard.querySelector(".nameTag").addEventListener("click", () => {
                                     location.href = "eachClub.html?docID=" + docID;
                                 });
-                                document.getElementById("clubs-go-here").appendChild(newcard);
+                                if (user.uid == doc.data().admin) {
+                                    document.getElementById("owned-clubs-go-here").appendChild(newcard);
+                                } else {
+                                    document.getElementById("clubs-go-here").appendChild(newcard);
+                                }
+                                
                             }
                         })
                     })

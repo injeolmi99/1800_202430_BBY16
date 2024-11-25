@@ -34,6 +34,17 @@ content (clubs list) styling copied over from clubsListStyle.css
   padding: 20px 20px;
 }
 
+#owned-clubs-go-here {
+  display: flex;
+  width: 100vw;
+  flex-direction: row;
+  gap: 25px;
+  margin: 0;
+  overflow: scroll;
+  margin: -20px -20px;
+  padding: 20px 20px;
+}
+
 .clubGroup {
   min-width: 15.5rem;
   padding: 0;

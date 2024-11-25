@@ -251,7 +251,7 @@ function removeUserFromClub(thisClubID, userDocRef, user) {
             console.log("Club ID removed from user's club list.");
             // change the button to match the users status with club
             document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>"
-            console.log("success")
+            updateCount(thisClubID)
         }).catch(error => {
             console.error("Error updating user document: ", error);
         });
@@ -270,7 +270,6 @@ function addUserToClub(thisClubID, userDocRef, user) {
         members: firebase.firestore.FieldValue.arrayUnion(user.uid)
     }).then(() => {
         console.log("User added to the club members list.");
-
         userDocRef.update({
             // This is how to add to array without changing other values (its not .push())
             clubs: firebase.firestore.FieldValue.arrayUnion(ID)
@@ -278,13 +277,23 @@ function addUserToClub(thisClubID, userDocRef, user) {
             console.log("Club ID added to user's club list.");
             // change the button to match the users status with club
             document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>"
-            console.log("it is done")
+            updateCount(thisClubID)
         }).catch(error => {
             console.error("Error updating user document: ", error);
         });
     }).catch(error => {
         console.error("Error updating club document: ", error);
     });
+}
+
+// little function junior to update the membersCount field when someone leaves or joins the club
+function updateCount(thisClubID) {
+    thisClubID.get().then(doc => {
+        thisClubID.update({
+            membersCount: doc.data().members.length
+        })
+        console.log("it is done")
+    })
 }
 
 // format date to be displayed on card
