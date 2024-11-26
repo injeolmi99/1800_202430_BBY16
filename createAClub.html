@@ -59,7 +59,7 @@
         <form id="editableStuff" class="contentBox" onsubmit="createClub();return false">
           <!--May need to deny use of special character and quotes and stuff I have messed up the js with that already-->
           <label for="clubName">Club Name: </label>
-          <input type="text" id="clubName" maxlength="25" required="required"> 
+          <input type="text" id="clubName" maxlength="25" required="required">
           <!-- <div id="insertClubName"></div> -->
 
           <label for="description">Description: </label>
@@ -71,6 +71,17 @@
           <!--displays options for image and currently selected image-->
           <div id="image-selection"></div>
           <img id="displayImage" scr="" alt="">
+
+          <div>
+            <label for="clubType">Type of club:</label>
+            <select name="clubType" id="clubType">
+              <option value="Other">Other</option>
+              <option value="Tech">Tech</option>
+              <option value="Games">Games</option>
+              <option value="Art">Art</option>
+              <option value="Sports">Sports</option>
+            </select>
+          </div>
 
           <input type="button" id="cancel" value="Cancel" onclick="javascript:history.back()">
           <input type="submit" id="submit" value="Submit">

@@ -42,7 +42,7 @@ function removeNonAdmins() {
                     })
                 }
             })
-        }    
+        }
     })
 }
 removeNonAdmins();
@@ -86,17 +86,18 @@ function displayClubData() {
                     thisClub = doc.data();
                     clubName = thisClub.name;
                     clubDescription = thisClub.description;
-                    clubImage = thisClub.image
+                    clubImage = thisClub.image;
+                    clubType = thisClub.category;
 
                     document.getElementById("insertClubName").innerHTML = '<input type="text" name="clubName" id="clubName" value="' + clubName + '" maxlength="25" required="required">';
                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
-                    document.getElementById('clubName').addEventListener('input', function() {
+                    document.getElementById('clubName').addEventListener('input', function () {
                         // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
                         this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
                     });
                     document.getElementById("insertDescription").innerHTML = "<textarea name='description' id='description' maxlength='800' pattern='[a-zA-Z0-9 ]' required='required'>" + clubDescription + "</textarea>";
-                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
-                     document.getElementById('description').addEventListener('input', function() {
+                    // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
+                    document.getElementById('description').addEventListener('input', function () {
                         // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
                         this.value = this.value.replace(/[<>{}\\]/g, '');
                         if (this.value.includes("$(")) {
@@ -108,6 +109,7 @@ function displayClubData() {
                     // displays the image that is currently in use for the club
                     document.getElementById("displayImage").src = "./images/clubImages/" + clubImage
 
+                    // getting info on what club images we have works even if we add more
                     let dropdown = document.getElementById("image");
                     let options = dropdown.options;
 
@@ -115,6 +117,18 @@ function displayClubData() {
                     for (let i = 0; i < options.length; i++) {
                         if (options[i].value == clubImage) {
                             dropdown.selectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    // getting info on what club categories we have works even if we add more
+                    let dropdown2 = document.getElementById("clubType");
+                    let options2 = dropdown2.options;
+                    
+                    // displays what the current club type is (category)
+                    for (let i = 0; i < options2.length; i++) {
+                        if (options2[i].value == clubType) {
+                            dropdown2.selectedIndex = i;
                             break;
                         }
                     }
@@ -151,11 +165,13 @@ function submitNewClubData() {
                         newClubName = document.getElementById("clubName").value;
                         newClubDescription = document.getElementById("description").value;
                         let newClubImage = document.getElementById("image").value;
+                        let newClubType = document.getElementById("clubType").value;
 
                         thisClubID.update({
                             name: newClubName,
                             description: newClubDescription,
-                            image: newClubImage
+                            image: newClubImage,
+                            category: newClubType
                         }).then(() => {
                             console.log("documents successfully updateded");
                             location.href = "eachClub.html?docID=" + ID;
