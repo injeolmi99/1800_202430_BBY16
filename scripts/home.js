@@ -22,8 +22,16 @@ function insertName() {
             currentUser.get().then(userDoc => {
                 // get the user name
                 let userName = userDoc.data().name;
+                let clubs = userDoc.data().clubs;
+
+                if(clubs == ""){
+                    document.getElementById("home_show").style.display = "none";
+                    document.getElementById("name-goes-here-").innerText = userName;
+                } else{
                 // console.log(userName);
-                document.getElementById("name-goes-here").innerText = userName;
+                    document.getElementById("home_show1").style.display = "none";
+                    document.getElementById("name-goes-here").innerText = userName;
+                }
             })
         } else {
             console.log("No user is logged in.");
@@ -54,6 +62,8 @@ function displayCardsDynamically(collection) {
                         let unofficialClubData = db.collection("unofficialClubs").doc(club);
                         let clubName;
                         let clubID;
+
+                        
 
                         clubData.get().then(doc => { // check official clubs list for doc
                             if (doc.exists) {
@@ -133,7 +143,7 @@ function displayCardsDynamically(collection) {
                         newcard.querySelector(".eventName").addEventListener("click", () => {
                             location.href = "eachEvent.html?docID=" + eventCard.clubID + "&eventID=" + eventCard.ID;
                         });
-                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;
+                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;  
                         newcard.querySelector('.eventDate').innerHTML += date;
                         newcard.querySelector('.eventTime').innerHTML += time;
                         newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'

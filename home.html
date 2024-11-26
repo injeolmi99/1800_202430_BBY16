@@ -50,7 +50,7 @@
   <nav id="navPlaceholder"></nav>
 
   <!--CONTENT-->
-  <div class="content">
+  <div id="home_show" class="content">
     <div class="welcomeBanner">
       <h1>Welcome back, <span id="name-goes-here">friend</span>!</h1>
     </div>
@@ -71,12 +71,21 @@
       </div>
     </section>
   </div>
+  <div id="home_show1" class="content">
+    <div class="welcomeBanner">      
+      <h1>Welcome back, <span id="name-goes-here-">friend</span>!</h1>
+      <br>
+      <h2>You are not a member of any club</h2>
+      <br>
+      <h3><a class="button" href="clubsList.html">Find clubs</a></h3>
+    </div>
+  </div>
 
   <template id="eventCardTemplate">
     <div class="eventCard contentBox">
       <div class="nameOfHostingClub">club name</div>
       <h5 class="eventName">event name</h5>
-      <div class="eventLocation"><span class="material-icons location">location_on</span> </div>
+      <div class="eventLocation"><a href="map.html"><span class="material-icons location">location_on</span></a></div>
       <div class="eventDate"><span class="material-icons">calendar_today</span> </div>
       <div class="eventTime"><span class="material-icons">schedule</span> </div>
       <div class="goingCheck"></div>
