@@ -56,14 +56,14 @@ function displayCardsDynamically(collection) {
                 userClubs.forEach(club => { //iterate thru each club
                     // create promise so that the array isn't accessed before it is fully populated, then chain .then()
                     promise = new Promise((resolve, reject) => {
-                        let officialClubEvents = db.collection("clubs").doc(club).collection("events"); // NOT club.id because club is simply a String containing the ID of the club, from the user's clubs array
-                        let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
                         let clubData = db.collection("clubs").doc(club);
                         let unofficialClubData = db.collection("unofficialClubs").doc(club);
+
+                        let officialClubEvents = db.collection("clubs").doc(club).collection("events"); // NOT club.id because club is simply a String containing the ID of the club, from the user's clubs array
+                        let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
+
                         let clubName;
                         let clubID;
-
-
 
                         clubData.get().then(doc => { // check official clubs list for doc
                             if (doc.exists) {
@@ -90,6 +90,11 @@ function displayCardsDynamically(collection) {
                                         location: eventData.location,
                                         attendees: eventData.attendees
                                     };
+
+                                    // if before the current date, skip the current iteration of the loop
+                                    if (thisEvent.date < new Date()) {
+                                        return;
+                                    }
                                     allEvents.push(thisEvent); // pushing to an allEvents array first so that we can sort by date before displaying them
                                 });
                             }).catch(error => {
@@ -109,6 +114,11 @@ function displayCardsDynamically(collection) {
                                         location: eventData.location,
                                         attendees: eventData.attendees
                                     };
+
+                                    if (thisEvent.date < new Date()) {
+                                        return;
+                                    }
+
                                     allEvents.push(thisEvent);
                                 });
                             }).catch(error => {
@@ -149,7 +159,7 @@ function displayCardsDynamically(collection) {
                         newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'
 
                         newcard.querySelector('#' + eventCard.clubID + eventCard.ID + 'Check').onclick = () => updateGoing(eventCard.clubID, eventCard.ID);
-                        document.getElementById(collection + "-go-here").appendChild(newcard);
+                        document.getElementById("events-go-here").appendChild(newcard);
 
                         // had to move this down below cause asyncronousness is messing with me :(
                         if (eventCard.attendees.includes(currentUser.id)) {
@@ -168,6 +178,26 @@ function displayCardsDynamically(collection) {
     });
 }
 displayCardsDynamically("events");
+
+function fetchEvents(event, clubType) {
+    let eventData = event.data();
+    let thisEvent = {
+        ID: event.id,
+        clubID: clubID,
+        clubName: clubName,
+        date: eventData.date.toDate(),
+        title: eventData.event,
+        location: eventData.location,
+        attendees: eventData.attendees
+    };
+
+    // if before the current date, skip the current iteration of the loop
+    if (thisEvent.date < new Date()) {
+        return;
+    }
+
+    return thisEvent;
+}
 
 function displayClubsDynamically(collection) {
     let cardTemplate = document.getElementById("clubsListTemplate");
@@ -201,14 +231,14 @@ function displayClubsDynamically(collection) {
 
                                 var pins = userDoc.data().pins;
                                 if (user.uid == doc.data().admin) {
-                                    if (pins.includes(doc.id)) {
+                                    if (pins && pins.includes(doc.id)) {
                                         document.getElementById("owned-clubs-go-here").prepend(newcard);
                                         document.getElementById('pin-' + docID).className = 'material-icons';
                                     } else {
                                         document.getElementById("owned-clubs-go-here").appendChild(newcard);
                                     }
                                 } else {
-                                    if (pins.includes(doc.id)) {
+                                    if (pins && pins.includes(doc.id)) {
                                         document.getElementById("clubs-go-here").prepend(newcard);
                                         document.getElementById('pin-' + docID).className = 'material-icons';
                                     } else {

@@ -108,9 +108,6 @@ function displayClubInfo() {
                     document.getElementById("clubName").innerHTML = clubName;
                     document.getElementById("clubDescription").innerHTML = clubDescription;
                     displayCardsDynamically(collection);
-
-                    // let imgEvent = document.querySelector( ".club-img" );
-                    // imgEvent.src = "../images/" + [would need some kind of identifier] + ".jpg";
                 })
         })
 };
@@ -126,7 +123,8 @@ function displayCardsDynamically(collection) {
 
     let clubEvents = db.collection(collection).doc(clubID).collection("events");
     promises.push(
-        clubEvents.get()
+        clubEvents.orderBy("date")
+            .get()
             .then(events => {
                 events.forEach(event => {
                     console.log(event.id);
