@@ -64,9 +64,19 @@
                     out? Who should join you, and why?</small>
                 <div id="insertDescription"></div>
 
-                <!--Consider looking into moving this to the text folder so it matches createAClub form-->
                 <div id="image-selection"></div>
                 <img id="displayImage" scr="" alt="">
+
+                <div>
+                    <label for="clubType">Type of club:</label>
+                    <select name="clubType" id="clubType">
+                      <option value="Other">Other</option>
+                      <option value="Tech">Tech</option>
+                      <option value="Games">Games</option>
+                      <option value="Art">Art</option>
+                      <option value="Sports">Sports</option>
+                    </select>
+                  </div>
 
                 <input type="button" id="cancel" value="Cancel" onclick="goBack()">
                 <input type="submit" id="submit" value="Submit">

@@ -43,13 +43,16 @@ function createClub() {
     let clubName = document.getElementById("clubName").value;
     let clubDescription = document.getElementById("description").value;
     let clubImage = document.getElementById("image").value;
+    let clubType = document.getElementById("clubType").value;
     // note to self to remember later: .add returns a promise in this case it is the reference to the club 
     db.collection("unofficialClubs").add({
         name: clubName,
         admin: user.uid,
         description: clubDescription,
         members: [user.uid],
-        image: clubImage
+        image: clubImage,
+        category: clubType,
+        membersCount: 1
         // optional?
         // timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(clubRef => {
