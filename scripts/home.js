@@ -24,11 +24,11 @@ function insertName() {
                 let userName = userDoc.data().name;
                 let clubs = userDoc.data().clubs;
 
-                if(clubs == ""){
+                if (clubs == "") {
                     document.getElementById("home_show").style.display = "none";
                     document.getElementById("name-goes-here-").innerText = userName;
-                } else{
-                // console.log(userName);
+                } else {
+                    // console.log(userName);
                     document.getElementById("home_show1").style.display = "none";
                     document.getElementById("name-goes-here").innerText = userName;
                 }
@@ -46,7 +46,7 @@ function displayCardsDynamically(collection) {
 
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            const currentUser = db.collection("users").doc(user.uid);
+            let currentUser = db.collection("users").doc(user.uid);
             currentUser.get().then(userDoc => {
                 let userClubs = userDoc.data().clubs;
                 // console.log(userClubs);
@@ -63,7 +63,7 @@ function displayCardsDynamically(collection) {
                         let clubName;
                         let clubID;
 
-                        
+
 
                         clubData.get().then(doc => { // check official clubs list for doc
                             if (doc.exists) {
@@ -143,7 +143,7 @@ function displayCardsDynamically(collection) {
                         newcard.querySelector(".eventName").addEventListener("click", () => {
                             location.href = "eachEvent.html?docID=" + eventCard.clubID + "&eventID=" + eventCard.ID;
                         });
-                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;  
+                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;
                         newcard.querySelector('.eventDate').innerHTML += date;
                         newcard.querySelector('.eventTime').innerHTML += time;
                         newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'
@@ -196,12 +196,25 @@ function displayClubsDynamically(collection) {
                                 newcard.querySelector(".nameTag").addEventListener("click", () => {
                                     location.href = "eachClub.html?docID=" + docID;
                                 });
+                                newcard.querySelector('i').id = 'pin-' + docID;
+                                newcard.querySelector('i').onclick = () => updatePin(docID);
+
+                                var pins = userDoc.data().pins;
                                 if (user.uid == doc.data().admin) {
-                                    document.getElementById("owned-clubs-go-here").appendChild(newcard);
+                                    if (pins.includes(doc.id)) {
+                                        document.getElementById("owned-clubs-go-here").prepend(newcard);
+                                        document.getElementById('pin-' + docID).className = 'material-icons';
+                                    } else {
+                                        document.getElementById("owned-clubs-go-here").appendChild(newcard);
+                                    }
                                 } else {
-                                    document.getElementById("clubs-go-here").appendChild(newcard);
+                                    if (pins.includes(doc.id)) {
+                                        document.getElementById("clubs-go-here").prepend(newcard);
+                                        document.getElementById('pin-' + docID).className = 'material-icons';
+                                    } else {
+                                        document.getElementById("clubs-go-here").appendChild(newcard);
+                                    }
                                 }
-                                
                             }
                         })
                     })
@@ -221,9 +234,9 @@ function formatDate(date) {
 
     let day = date.getDay(); //Day from 0 to 6
 
-    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-    return "" + dayNames[day] + ", " + monthNames[m] + " " + d;
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    return "" + days[day] + ", " + months[m] + " " + d;
 }
 
 function updateGoing(clubId, eventID) {
@@ -294,7 +307,7 @@ function updateGoing(clubId, eventID) {
                                     break;
                                 }
                             }
-        
+
                             console.log("removed from list")
                             updateLabel(clubId, "unofficialClubs", eventID);
                         } else {
@@ -327,4 +340,35 @@ function updateLabel(clubId, clubType, eventID) {
 
         document.getElementById(clubId + eventID + 'Label').innerHTML = membersGoing.length + (membersGoing.length == 1 ? ' person is' : ' people are') + ' going. Are you?'
     })
+}
+
+// adds club to the "pins" array inside user doc when clicked and changes icon to solid pin
+function updatePin(clubID) {
+    let iconID = 'pin-' + clubID;
+    // store club ID in pins array.
+    currentUser.get().then(doc => {
+        currentPins = doc.data().pins;
+        if (currentPins && currentPins.includes(clubID)) {
+            currentUser.update({
+                pins: firebase.firestore.FieldValue.arrayRemove(clubID)
+            })
+                .then(function () {
+                    console.log("pin has been removed for " + clubID);
+                    document.getElementById(iconID).className = 'material-icons-outlined';
+                })
+        } else {
+            currentUser.set({
+                pins: firebase.firestore.FieldValue.arrayUnion(clubID),
+            },
+                {
+                    merge: true
+                }
+            )
+                .then(function () {
+                    console.log("pin has been saved for " + clubID);
+                    document.getElementById(iconID).className = 'material-icons';
+                })
+        }
+    }
+    )
 }

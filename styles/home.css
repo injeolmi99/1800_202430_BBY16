@@ -15,6 +15,10 @@
   padding-top: 32px !important;
 }
 
+.eventCard a {
+    color: black;
+}
+
 .eventName {
   cursor: pointer;
   width: max-content;
@@ -57,6 +61,21 @@ content (clubs list) styling copied over from clubsListStyle.css
   overflow: hidden;
 }
 
+.clubGroup i {
+  background-color: rgb(216, 215, 215, 0.8);
+  position: absolute;
+  font-size: 40px;
+  top: 8px;
+  right: 8px;
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.clubGroup i:hover {
+
+}
+
 .clubGroup:hover .nameTag{
   display: flex;
   justify-content: center;
@@ -69,6 +88,12 @@ content (clubs list) styling copied over from clubsListStyle.css
   bottom: 0;
   left: 0;
   opacity: 0.9;
+  transition: .3s ease;
+}
+
+.clubGroup:hover i {
+  background-color: transparent;
+  color: white;
   transition: .3s ease;
 }
 
