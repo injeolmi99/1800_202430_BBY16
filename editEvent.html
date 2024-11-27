@@ -33,6 +33,7 @@
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./styles/postLoginSkeleton.css">
@@ -71,7 +72,7 @@
           <textarea id="description" required="required" maxlength="800"></textarea>
         </div>
 
-        <input type="button" id="cancel" value="Cancel" onclick="javascript:history.back()">
+        <input type="button" id="cancel" value="Cancel" onclick="confirmCancellation()">
         <input type="submit" id="submit" value="Submit">
       </form>
     </section>

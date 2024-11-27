@@ -69,9 +69,36 @@ function createClub() {
                 clubs: firebase.firestore.FieldValue.arrayUnion(clubRef.id),
                 clubsMade: newClubAmount
             }).then(() => {
-                window.location.href = "successful.html"; // redirect to the submission successful page
+                Swal.fire({
+                    title: "Success!",
+                    text: "Your club has been added!",
+                    icon: "success",
+                    confirmButtonText: "Continue",
+                    confirmButtonColor: "#4089C0"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "home.html";
+                    }
+                  })
             })
         })
+    })
+}
+
+function confirmCancellation() {
+    Swal.fire({
+        icon: "warning",
+        title: "Are you sure you want to exit?",
+        text: "You will lose your progress!",
+        showDenyButton: true,
+        confirmButtonColor: "#85ac9f",
+        denyButtonColor: "#EB7875",
+        confirmButtonText: "Keep editing",
+        denyButtonText: "Discard"
+    }).then((result) => {
+        if (result.isDenied) {
+            history.back();
+        }
     })
 }
 
