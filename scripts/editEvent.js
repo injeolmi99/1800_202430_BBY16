@@ -167,7 +167,9 @@ function updateEvent() {
                 .get()
                 .then(doc => {
                     let thisEvent = db.collection(collection).doc(clubID).collection("events").doc(eventID);
+                    // turn date received from form into javascript date object
                     let dateBeforeConverting = new Date(document.getElementById("eventDate").value);
+                    // convert to firestore timestamp
                     let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
         
                     thisEvent.update({

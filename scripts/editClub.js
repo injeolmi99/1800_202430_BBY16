@@ -173,9 +173,18 @@ function submitNewClubData() {
                             image: newClubImage,
                             category: newClubType
                         }).then(() => {
-                            console.log("documents successfully updateded");
-                            location.href = "eachClub.html?docID=" + ID;
-
+                            console.log("documents successfully updated");
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Your club has been updated!",
+                                icon: "success",
+                                confirmButtonText: "Continue",
+                                confirmButtonColor: "#4089C0"
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = "eachClub.html?docID=" + ID;
+                                }
+                            })
                         }).catch(error => {
                             console.error("Error updating club data: ", error);
                         })
