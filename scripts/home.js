@@ -42,8 +42,6 @@ insertName();
 
 // fetch events of clubs user has joined to display in event gallery on home page
 function displayCardsDynamically(collection) {
-    let cardTemplate = document.getElementById("eventCardTemplate");
-
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             let currentUser = db.collection("users").doc(user.uid);
@@ -91,10 +89,6 @@ function displayCardsDynamically(collection) {
                                         attendees: eventData.attendees
                                     };
 
-                                    // if before the current date, skip the current iteration of the loop
-                                    if (thisEvent.date < new Date()) {
-                                        return;
-                                    }
                                     allEvents.push(thisEvent); // pushing to an allEvents array first so that we can sort by date before displaying them
                                 });
                             }).catch(error => {
@@ -115,10 +109,6 @@ function displayCardsDynamically(collection) {
                                         attendees: eventData.attendees
                                     };
 
-                                    if (thisEvent.date < new Date()) {
-                                        return;
-                                    }
-
                                     allEvents.push(thisEvent);
                                 });
                             }).catch(error => {
@@ -134,38 +124,7 @@ function displayCardsDynamically(collection) {
 
                 // once promise resolves, then we sort the allEvents array and display the cards
                 promise.then(() => {
-                    allEvents.sort((event1, event2) => {
-                        return event1.date.getTime() - event2.date.getTime();
-                    }); // sort by date - getTime() returns milliseconds
-
-                    allEvents.forEach(eventCard => {
-                        let newcard = cardTemplate.content.cloneNode(true);
-                        // only extract the date
-                        let date = formatDate(eventCard.date);
-                        // only extract the time
-                        let time = eventCard.date.getHours() + ":" + (eventCard.date.getMinutes() < 10 ? "0" : "") + eventCard.date.getMinutes();
-
-                        newcard.querySelector('.nameOfHostingClub').innerHTML = eventCard.clubName;
-                        newcard.querySelector(".nameOfHostingClub").addEventListener("click", () => {
-                            location.href = "eachClub.html?docID=" + eventCard.clubID;
-                        });
-                        newcard.querySelector('.eventName').innerHTML = eventCard.title;
-                        newcard.querySelector(".eventName").addEventListener("click", () => {
-                            location.href = "eachEvent.html?docID=" + eventCard.clubID + "&eventID=" + eventCard.ID;
-                        });
-                        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;
-                        newcard.querySelector('.eventDate').innerHTML += date;
-                        newcard.querySelector('.eventTime').innerHTML += time;
-                        newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'
-
-                        newcard.querySelector('#' + eventCard.clubID + eventCard.ID + 'Check').onclick = () => updateGoing(eventCard.clubID, eventCard.ID);
-                        document.getElementById("events-go-here").appendChild(newcard);
-
-                        // had to move this down below cause asyncronousness is messing with me :(
-                        if (eventCard.attendees.includes(currentUser.id)) {
-                            document.getElementById(eventCard.clubID + eventCard.ID + "Check").checked = true
-                        }
-                    });
+                    sortEvents();
                 }).catch(error => {
                     console.error("Failed to fetch all club events", error);
                 });
@@ -179,24 +138,47 @@ function displayCardsDynamically(collection) {
 }
 displayCardsDynamically("events");
 
-function fetchEvents(event, clubType) {
-    let eventData = event.data();
-    let thisEvent = {
-        ID: event.id,
-        clubID: clubID,
-        clubName: clubName,
-        date: eventData.date.toDate(),
-        title: eventData.event,
-        location: eventData.location,
-        attendees: eventData.attendees
-    };
+// sort events in allEvents array by date
+function sortEvents() {
+    let cardTemplate = document.getElementById("eventCardTemplate");
 
-    // if before the current date, skip the current iteration of the loop
-    if (thisEvent.date < new Date()) {
-        return;
-    }
+    allEvents.sort((event1, event2) => {
+        return event1.date.getTime() - event2.date.getTime();
+    }); // sort by date - getTime() returns milliseconds
 
-    return thisEvent;
+    allEvents.forEach(eventCard => {
+        if (eventCard.date < new Date()) {
+            // if before the current date, skip the current iteration of the loop
+            return;
+        }
+
+        let newcard = cardTemplate.content.cloneNode(true);
+        // only extract the date
+        let date = formatDate(eventCard.date);
+        // only extract the time
+        let time = eventCard.date.getHours() + ":" + (eventCard.date.getMinutes() < 10 ? "0" : "") + eventCard.date.getMinutes();
+
+        newcard.querySelector('.nameOfHostingClub').innerHTML = eventCard.clubName;
+        newcard.querySelector(".nameOfHostingClub").addEventListener("click", () => {
+            location.href = "eachClub.html?docID=" + eventCard.clubID;
+        });
+        newcard.querySelector('.eventName').innerHTML = eventCard.title;
+        newcard.querySelector(".eventName").addEventListener("click", () => {
+            location.href = "eachEvent.html?docID=" + eventCard.clubID + "&eventID=" + eventCard.ID;
+        });
+        newcard.querySelector('.eventLocation').innerHTML += eventCard.location;
+        newcard.querySelector('.eventDate').innerHTML += date;
+        newcard.querySelector('.eventTime').innerHTML += time;
+        newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'
+
+        newcard.querySelector('#' + eventCard.clubID + eventCard.ID + 'Check').onclick = () => updateGoing(eventCard.clubID, eventCard.ID);
+        document.getElementById("events-go-here").appendChild(newcard);
+
+        // had to move this down below cause asyncronousness is messing with me :(
+        if (eventCard.attendees.includes(currentUser.id)) {
+            document.getElementById(eventCard.clubID + eventCard.ID + "Check").checked = true
+        }
+    });
 }
 
 function displayClubsDynamically(collection) {
@@ -226,11 +208,14 @@ function displayClubsDynamically(collection) {
                                 newcard.querySelector(".nameTag").addEventListener("click", () => {
                                     location.href = "eachClub.html?docID=" + docID;
                                 });
+
+                                // make sure each pin has a unique id
                                 newcard.querySelector('i').id = 'pin-' + docID;
                                 newcard.querySelector('i').onclick = () => updatePin(docID);
 
                                 var pins = userDoc.data().pins;
                                 if (user.uid == doc.data().admin) {
+                                    // if the user has a field for pins and this club is one of their pinned clubs, insert club BEFORE first child element
                                     if (pins && pins.includes(doc.id)) {
                                         document.getElementById("owned-clubs-go-here").prepend(newcard);
                                         document.getElementById('pin-' + docID).className = 'material-icons';
@@ -393,12 +378,10 @@ function updatePin(clubID) {
                 {
                     merge: true
                 }
-            )
-                .then(function () {
-                    console.log("pin has been saved for " + clubID);
-                    document.getElementById(iconID).className = 'material-icons';
-                })
+            ).then(function () {
+                console.log("pin has been saved for " + clubID);
+                document.getElementById(iconID).className = 'material-icons';
+            })
         }
-    }
-    )
+    })
 }

@@ -19,15 +19,15 @@ function displayEvents(collection) {
   // ensure objects are empty (for the filter to work properly without duplicating events)
   eventDates = {};
   time = {};
-  const clubCollection = db.collection(collection)
+  let clubCollection = db.collection(collection)
 
   // create a promise array in order to ensure the calendar object is only initialized once all events are loaded in
-  const promises = [];
+  var promises = [];
 
   clubCollection.get() // returns object with all documents in collection
     .then(allClubs => {
       allClubs.forEach(club => {
-        const eventCollection = clubCollection.doc(club.id).collection("events");
+        let eventCollection = clubCollection.doc(club.id).collection("events");
 
         // push all async calls into promise array
         promises.push(
@@ -38,7 +38,7 @@ function displayEvents(collection) {
                 var eventTimestamp = event.data().date.toDate();
                 // only extract the date
                 var date = formatDate(eventTimestamp);
-                console.log(date);
+                // console.log(date);
                 if (!eventDates[date]) {
                   eventDates[date] = [];
                 }
@@ -47,7 +47,7 @@ function displayEvents(collection) {
                 }
                 time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
                 eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);
-                console.log(eventDates[date]);
+                // console.log(eventDates[date]);
               })
             }).catch(error => {
               console.error("Failed to fetch events for " + club.data.name().name);
@@ -73,7 +73,7 @@ function displayUserEvents(collection) {
   eventDates = {};
   time = {};
   // create a promise array in order to ensure the calendar object is only initialized once all events are loaded in
-  const promises = [];
+  var promises = [];
 
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
@@ -91,7 +91,7 @@ function displayUserEvents(collection) {
                 var eventTimestamp = event.data().date.toDate();
                 // only extract the date
                 var date = formatDate(eventTimestamp);
-                console.log(date);
+                // console.log(date);
                 if (!eventDates[date]) {
                   eventDates[date] = [];
                 }
@@ -104,7 +104,7 @@ function displayUserEvents(collection) {
                     .then((club) => {
                       time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
                       eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);
-                      console.log(eventDates[date]);
+                      // console.log(eventDates[date]);
                     })
                 )
               })
@@ -244,6 +244,7 @@ function formatDate(date) {
   return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
 }
 
+// this is broken its not the same width :(
 function matchCalendarWidth() {
   $(".calendar-events").css({
     'width': ($(".cal-modal").outerWidth() + 'px')

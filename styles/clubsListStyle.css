@@ -34,9 +34,14 @@
     border: none;
     position: fixed;
     bottom: 128px;
-    right: 0;
+    right: 4px;
     z-index: 999;
     padding-bottom:3px;
+    transition: 0.3s;
+}
+
+#createClubButton:hover {
+    transform: scale(1.16);
 }
 
 #copyright {
