@@ -1,3 +1,5 @@
+const features = [];
+
 function showMap() {
     //------------------------------------------
     // Defines and initiates basic mapbox data
@@ -50,96 +52,110 @@ function addEventPins(map, collection) {
             let clubCollection = db.collection(collection);
 
             // READING information from "events" collection in Firestore
+
+            let promise;
+
             clubCollection.get().then(allClubs => {
-                const features = [];
 
                 allClubs.forEach(club => {
-                    let eventCollection = clubCollection.doc(club.id).collection("events");
+                    promise = new Promise((resolve, reject) => {
+                        let eventCollection = clubCollection.doc(club.id).collection("events");
 
-                    eventCollection.get()
-                        .then(events => {
-                            events.forEach(event => {
-                                lat = event.data().lat;
-                                lng = event.data().lng;
-                                console.log(lat, lng);
-                                coordinates = [lng, lat];
-                                console.log(coordinates);
-                                // Coordinates
-                                event_title = event.data().event; // Event Name
-                                preview = event.data().description; // Text Preview
+                        eventCollection.get()
+                            .then(events => {
+                                events.forEach(event => {
+                                    lat = event.data().lat;
+                                    lng = event.data().lng;
+                                    console.log(lat, lng);
+                                    coordinates = [lng, lat];
+                                    console.log(coordinates);
+                                    // Coordinates
+                                    event_title = event.data().event; // Event Name
+                                    preview = event.data().description; // Text Preview
 
-                                // Pushes information into the features array
-                                features.push({
-                                    'type': 'Feature',
-                                    'properties': {
-                                        'description':
-                                            `<strong>${event_title}</strong><p>${preview}</p> 
+                                    // Pushes information into the features array
+                                    features.push({
+                                        'type': 'Feature',
+                                        'properties': {
+                                            'description':
+                                                `<strong>${event_title}</strong><p>${preview}</p> 
                                             <br> <a href="/eachEvent.html?docID=${club.id}&eventID=${event.id}" target="_blank" 
                                             title="Opens in a new window">Read more</a>`
-                                    },
-                                    'geometry': {
-                                        'type': 'Point',
-                                        'coordinates': coordinates
-                                    }
-                                });
-                            });
-                            console.log(features);
-                        })
+                                        },
+                                        'geometry': {
+                                            'type': 'Point',
+                                            'coordinates': coordinates
+                                        }
+                                    });
+                                })
+                            })
+                            .then(() => {
+                                resolve();
+                            })
+                    }).catch(error => {
+                        reject(error);
+                    })
                 })
-                // Adds features (in our case, pins) to the map
-                // "places" is the name of this array of features
-                map.addSource(collection + '-places', {
-                    'type': 'geojson',
-                    'data': {
-                        'type': 'FeatureCollection',
-                        'features': features
-                    }
-                });
-
-                // Creates a layer above the map displaying the pins
-                map.addLayer({
-                    'id': collection + '-places',
-                    'type': 'symbol',
-                    'source': collection + '-places',
-                    'layout': {
-                        'icon-image': collection + '-eventpin', // Pin Icon
-                        'icon-size': 0.1, // Pin Size
-                        'icon-allow-overlap': true // Allows icons to overlap
-                    }
-                });
-
-                // When one of the "places" markers are clicked,
-                // create a popup that shows information 
-                // Everything related to a marker is save in features[] array
-                map.on('click', 'places', (e) => {
-                    // Copy coordinates array.
-                    const coordinates = e.features[0].geometry.coordinates.slice();
-                    const description = e.features[0].properties.description;
-
-                    // Ensure that if the map is zoomed out such that multiple 
-                    // copies of the feature are visible, the popup appears over 
-                    // the copy being pointed to.
-                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                    }
-
-                    new mapboxgl.Popup()
-                        .setLngLat(coordinates)
-                        .setHTML(description)
-                        .addTo(map);
-                });
-
-                // Change the cursor to a pointer when the mouse is over the places layer.
-                map.on('mouseenter', 'places', () => {
-                    map.getCanvas().style.cursor = 'pointer';
-                });
-
-                // Defaults cursor when not hovering over the places layer
-                map.on('mouseleave', 'places', () => {
-                    map.getCanvas().style.cursor = '';
-                });
+                promise.then(() => {
+                    displayMap(map, collection);
+                })
             })
         })
+}
+
+function displayMap(map, collection) {
+    // Adds features (in our case, pins) to the map
+    // "places" is the name of this array of features
+    map.addSource(collection + '-places', {
+        'type': 'geojson',
+        'data': {
+            'type': 'FeatureCollection',
+            'features': features
+        }
+    });
+
+    // Creates a layer above the map displaying the pins
+    map.addLayer({
+        'id': collection + '-places',
+        'type': 'symbol',
+        'source': collection + '-places',
+        'layout': {
+            'icon-image': collection + '-eventpin', // Pin Icon
+            'icon-size': 0.06, // Pin Size
+            'icon-allow-overlap': true // Allows icons to overlap
+        }
+    });
+
+    // When one of the "places" markers are clicked,
+    // create a popup that shows information 
+    // Everything related to a marker is save in features[] array
+    map.on('click', collection + '-places', (e) => {
+        // Copy coordinates array.
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple 
+        // copies of the feature are visible, the popup appears over 
+        // the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', collection + '-places', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Defaults cursor when not hovering over the places layer
+    map.on('mouseleave', collection + '-places', () => {
+        map.getCanvas().style.cursor = '';
+    });
 }
 
 //-----------------------------------------------------
