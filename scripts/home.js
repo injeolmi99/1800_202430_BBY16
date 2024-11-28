@@ -1,5 +1,6 @@
 var currentUser;
 var allEvents = [];
+var count = 0;
 
 function removeUnloggedinUsers() {
     firebase.auth().onAuthStateChanged(user => {
@@ -40,6 +41,54 @@ function insertName() {
 }
 insertName();
 
+const promises = [];
+
+function displayCardsDynamically(collection) {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            let currentUser = db.collection("users").doc(user.uid);
+            currentUser.get().then(userDoc => {
+                let userClubs = userDoc.data().clubs;
+
+                userClubs.forEach(club => { //iterate thru each club
+                    // create promise so that the array isn't accessed before it is fully populated, then chain .then()
+
+                    promises.push(
+                        
+                    )
+                })
+            })
+        }
+    })
+}
+
+// function processClubs(club) {
+//     let clubData = db.collection("clubs").doc(club);
+//     let unofficialClubData = db.collection("unofficialClubs").doc(club);
+//     let collection;
+    
+//     clubData.get().then(doc => {
+//         if (doc.exists) {
+//             collection = "clubs";
+//             clubName = doc.data().name;
+//             clubID = doc.id;
+//         } else {
+//             return unofficialClubData.get().then(doc => {
+//                 if (!clubName && doc.exists) { // if !clubName hasn't been assigned yet, doc is in unofficial clubs
+//                     collection = "unofficialClubs"
+//                     clubName = doc.data().name;
+//                     clubID = doc.id;
+//                 }
+//             });
+//         }            
+//     })
+   
+//     let clubEvents = db.collection(collection).doc(club).collection("events");
+
+//     let clubName;
+//     let clubID;
+// }
+
 // fetch events of clubs user has joined to display in event gallery on home page
 function displayCardsDynamically(collection) {
     firebase.auth().onAuthStateChanged(user => {
@@ -49,37 +98,25 @@ function displayCardsDynamically(collection) {
                 let userClubs = userDoc.data().clubs;
                 // console.log(userClubs);
 
-                let promise;
-
                 userClubs.forEach(club => { //iterate thru each club
                     // create promise so that the array isn't accessed before it is fully populated, then chain .then()
+                    let clubData = db.collection(collection).doc(club);
+
+                    let clubName;
+                    let clubID;
+
                     promise = new Promise((resolve, reject) => {
-                        let clubData = db.collection("clubs").doc(club);
-                        let unofficialClubData = db.collection("unofficialClubs").doc(club);
-
-                        let officialClubEvents = db.collection("clubs").doc(club).collection("events"); // NOT club.id because club is simply a String containing the ID of the club, from the user's clubs array
-                        let unofficialClubEvents = db.collection("unofficialClubs").doc(club).collection("events");
-
-                        let clubName;
-                        let clubID;
-
                         clubData.get().then(doc => { // check official clubs list for doc
                             if (doc.exists) {
                                 clubName = doc.data().name;
                                 clubID = doc.id;
-                            } else {
-                                return unofficialClubData.get().then(doc => {
-                                    if (!clubName && doc.exists) { // if !clubName hasn't been assigned yet, doc is in unofficial clubs
-                                        clubName = doc.data().name;
-                                        clubID = doc.id;
-                                    }
-                                });
                             }
                         }).then(() => {
-                            return officialClubEvents.get().then(events => {
+                            return db.collection(collection).doc(club).collection("events").get().then(events => {
                                 events.forEach(event => {
                                     let eventData = event.data();
                                     let thisEvent = {
+
                                         ID: event.id,
                                         clubID: clubID,
                                         clubName: clubName,
@@ -95,26 +132,6 @@ function displayCardsDynamically(collection) {
                                 console.error("Failed to fetch official events");
                             });
                         }).then(() => {
-                            // repeat for unofficial clubs
-                            return unofficialClubEvents.get().then(events => {
-                                events.forEach(event => {
-                                    let eventData = event.data();
-                                    let thisEvent = {
-                                        ID: event.id,
-                                        clubID: clubID,
-                                        clubName: clubName,
-                                        date: eventData.date.toDate(),
-                                        title: eventData.event,
-                                        location: eventData.location,
-                                        attendees: eventData.attendees
-                                    };
-
-                                    allEvents.push(thisEvent);
-                                });
-                            }).catch(error => {
-                                console.error("Failed to fetch unofficial events");
-                            });
-                        }).then(() => {
                             resolve();
                         }).catch(error => {
                             reject(error);
@@ -124,7 +141,11 @@ function displayCardsDynamically(collection) {
 
                 // once promise resolves, then we sort the allEvents array and display the cards
                 promise.then(() => {
-                    sortEvents();
+                    count++;
+                    // global variable count is only set to 2 once both official and unofficial clubs are iterated through, and then events are sorted and displayed. a bit hacky, but the best workaround we could find
+                    if (count == 2) {
+                        sortEvents();
+                    }
                 }).catch(error => {
                     console.error("Failed to fetch all club events", error);
                 });
@@ -136,7 +157,8 @@ function displayCardsDynamically(collection) {
         }
     });
 }
-displayCardsDynamically("events");
+displayCardsDynamically("clubs");
+displayCardsDynamically("unofficialClubs");
 
 // sort events in allEvents array by date
 function sortEvents() {
@@ -146,7 +168,11 @@ function sortEvents() {
         return event1.date.getTime() - event2.date.getTime();
     }); // sort by date - getTime() returns milliseconds
 
+    console.log(allEvents);
+    console.log(allEvents.length);
+
     allEvents.forEach(eventCard => {
+        console.log(eventCard);
         if (eventCard.date < new Date()) {
             // if before the current date, skip the current iteration of the loop
             return;
