@@ -99,6 +99,7 @@ function displayClubData() {
                     // event listener idea came from microsoft copilot when I was trying to find a way to restrict characters during live input
                     document.getElementById('description').addEventListener('input', function () {
                         // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
+                        // little regex stuff https://stackoverflow.com/questions/10911797/how-to-restrict-the-text-field-to-enter-only-digits
                         this.value = this.value.replace(/[<>{}\\]/g, '');
                         if (this.value.includes("$(")) {
                             console.log("here")

@@ -29,7 +29,7 @@ function showMap() {
         // Add interactive pins for the hikes
         //---------------------------------
         addEventPins(map, "clubs");
-        // addEventPins(map, "unofficialClubs");
+        addEventPins(map, "unofficialClubs");
 
         //--------------------------------------
         // Add interactive pin for the user's location

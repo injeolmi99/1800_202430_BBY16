@@ -64,10 +64,56 @@
           <label for="eventDate">Date / Time:</label>
           <input type="datetime-local" id="eventDate" required="required" maxlength="25">
 
-          <label for="eventLocation">Location:</label>
-          <input type="text" id="eventLocation" required="required" maxlength="25">
+          <!-- <label for="eventLocation">Location:</label>
+          <input type="text" id="eventLocation" required="required" maxlength="25"> -->
+
+          <select id="eventLocation2" required="required">
+            <!--North East-->
+            <option class="northEast" value="NE 01|49.2541040499435|-123.00139668750403">NE01</option>
+            <!-- <option class="northEast" value="NE 02|49.25330364399672|-123.00152686035634">NE02</option> -->
+            <option class="northEast" value="NE 04|49.25332696343335|-123.00061225482666">NE04</option>
+            <option class="northEast" value="NE 06|49.25329157404717|-122.99976647678889">NE06</option>
+            <!-- <option class="northEast" value="NE 07|49.253693522213254|-122.99858584592">NE07</option> -->
+            <!-- <option class="northEast" value="NE 08|49.25322899311032|-122.99923785407121">NE08</option> -->
+            <option class="northEast" value="NE 09|49.25402049147764|-122.99871386444704">NE09</option>
+            <!-- <option class="northEast" value="NE 10|49.25325002341487|-122.99847399904702">NE10</option> -->
+            <option class="northEast" value="NE 12|49.25268383925315|-122.99851102168671">NE12</option>
+            <!-- <option class="northEast" value="NE 16|49.25205322196024|-122.99984796498873">NE16</option> -->
+            <option class="northEast" value="NE 18|49.25205729646503|-123.00066257561633">NE18</option>
+            <!-- <option class="northEast" value="NE 20|49.252070408319184|-123.00158390914409">NE20</option> -->
+            <option class="northEast" value="NE 21|49.25290541665572|-123.00171361831197">NE21</option>
+            <!-- <option class="northEast" value="NE 23|49.25289322010892|-123.00109099365861">NE23</option> -->
+            <!-- <option class="northEast" value="NE 24|49.25246060738597|-123.00112420511353">NE24</option> -->
+            <option class="northEast" value="NE 28|49.25246352289768|-122.9998690731043">NE28</option>
+
+            <!--North West-->
+            <option class="northWest" value="NW 03|49.253269850999274|-123.00262035068683">NW03</option>
+            <option class="northWest" value="NW 04|49.25222548924861|-123.00326137777313">NW04</option>
+            <!-- <option class="northWest" value="NW 05|49.252530285598695|-123.0023868047943">NW05</option> -->
+            <!-- <option class="northWest" value="NW 06|49.2520930269151|-123.00239623167768">NW06</option> -->
+
+            <!--South East-->
+            <option class="southEast" value="SE 02|49.25136646079736|-123.00123486535863">SE02</option>
+            <!-- <option class="southEast" value="SE 04|49.25134720958921|-123.00018418280261">SE04</option> -->
+            <option class="southEast" value="SE 06|49.250885178247934|-123.00032058720731">SE06</option>
+            <!-- <option class="southEast" value="SE 08|49.25073797388921|-123.00135710569865">SE08</option> -->
+            <option class="southEast" value="SE 12|49.24990032887676|-123.00159234772002">SE12</option>
+            <!-- <option class="southEast" value="SE 14|49.2494678791054|-123.00086182086471">SE14</option> -->
+            <option class="southEast" value="SE 16|49.248821337536015|-123.00094916404845">SE16</option>
+
+            <!--southWent-->
+            <option class="southWest" value="SW 01|49.25099574023467|-123.0030333902101">SW01</option>
+            <!-- <option class="southWest" value="SW 02|49.25039633236194|-123.00336826173275">SW02</option> -->
+            <option class="southWest" value="SW 03|49.25007107444886|-123.00272012119277">SW03</option>
+            <option class="southWest" value="SW 05|49.24974456802986|-123.0026528302279">SW05</option>
+            <!-- <option class="southWest" value="SW 09|49.24857536289865|-123.00274153271305">SW09</option> -->
+
+            <!--Downtown-->
+            <option class="downtown" value="Downtown Campus|49.28349095247658|-123.11525139626357">DownTown campus</option>
+          </select>
 
           <label for="description">Description: </label>
+          <small>This could be things like extra details on the locations (room number) or what will be happening at the event.</small>
           <textarea id="description" required="required" maxlength="800"></textarea>
         </div>
 

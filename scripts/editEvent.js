@@ -104,11 +104,22 @@ function displayEventInfo() {
                     let description = thisEvent.description;
                     let date = thisEvent.date.toDate().toISOString().slice(0, 16);;
                     let location = thisEvent.location;
+                    console.log(description)
 
                     document.getElementById("eventName").value = title;
                     document.getElementById("eventDate").value = date;
-                    document.getElementById("eventLocation").value = location;
+                    document.getElementById("eventLocation2").value = location;
                     document.getElementById("description").value = description;
+
+                    let dropdown = document.getElementById("eventLocation2");
+                    let options = dropdown.options;
+
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].value.includes(location)) {
+                            dropdown.selectedIndex = i;
+                            break;
+                        }
+                    }
                 })
         })
 }
@@ -169,12 +180,22 @@ function updateEvent() {
                     let thisEvent = db.collection(collection).doc(clubID).collection("events").doc(eventID);
                     let dateBeforeConverting = new Date(document.getElementById("eventDate").value);
                     let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
-        
+
+                    // Idea for how to split string from: https://stackoverflow.com/questions/96428/how-do-i-split-a-string-breaking-at-a-particular-character
+                    let geo = document.getElementById("eventLocation2").value;
+                    let fields = geo.split('|');
+
+                    let eventLocation = fields[0];
+                    let latitude = fields[1];
+                    let longitude = fields[2];
+
                     thisEvent.update({
                         event: document.getElementById("eventName").value,
                         description: document.getElementById("description").value,
                         date: eventDateTime,
-                        location: document.getElementById("eventLocation").value,
+                        location: eventLocation,
+                        lat: latitude,
+                        lng: longitude
                     }).then(() => {
                         alert("Your event was updated successfully!");
                         history.back();
