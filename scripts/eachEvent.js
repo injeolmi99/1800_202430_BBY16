@@ -6,8 +6,14 @@ function removeUnloggedinUsers() {
             console.log("user detected");
             currentUser = user;
         } else {
-            alert("You must be logged in to have access to this page.");
-            location.href = "login.html";
+            Swal.fire({
+                title: "No user signed in!",
+                text: "Please sign in first!",
+                icon: "warning",
+                confirmButtonColor: "#4089C0"
+              }).then(() => {
+                location.href = "login.html";
+              })
         }
     })
 }

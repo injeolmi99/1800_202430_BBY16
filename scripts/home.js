@@ -7,8 +7,14 @@ function removeUnloggedinUsers() {
         if (user) {
             console.log("user detected");
         } else {
-            alert("You must be logged in to have access to this page.");
-            location.href = "login.html";
+            Swal.fire({
+                title: "No user signed in!",
+                text: "Please sign in first!",
+                icon: "warning",
+                confirmButtonColor: "#4089C0"
+              }).then(() => {
+                location.href = "login.html";
+              })
         }
     })
 }
@@ -169,10 +175,8 @@ function sortEvents() {
     }); // sort by date - getTime() returns milliseconds
 
     console.log(allEvents);
-    console.log(allEvents.length);
 
     allEvents.forEach(eventCard => {
-        console.log(eventCard);
         if (eventCard.date < new Date()) {
             // if before the current date, skip the current iteration of the loop
             return;
