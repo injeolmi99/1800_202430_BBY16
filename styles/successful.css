@@ -1,9 +1,0 @@
-#makeLightBlue {
-    background-color: rgb(6, 85, 188);
-    margin: 0, auto;
-    margin-top: 20px;
-}
-#continueDiv {
-    display: flex;
-    justify-content: center;
-}

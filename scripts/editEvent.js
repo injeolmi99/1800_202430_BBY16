@@ -178,7 +178,9 @@ function updateEvent() {
                 .get()
                 .then(doc => {
                     let thisEvent = db.collection(collection).doc(clubID).collection("events").doc(eventID);
+                    // turn date received from form into javascript date object
                     let dateBeforeConverting = new Date(document.getElementById("eventDate").value);
+                    // convert to firestore timestamp
                     let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
 
                     // Idea for how to split string from: https://stackoverflow.com/questions/96428/how-do-i-split-a-string-breaking-at-a-particular-character
@@ -197,9 +199,35 @@ function updateEvent() {
                         lat: latitude,
                         lng: longitude
                     }).then(() => {
-                        alert("Your event was updated successfully!");
-                        history.back();
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Your event has been updated!",
+                            icon: "success",
+                            confirmButtonText: "Continue",
+                            confirmButtonColor: "#4089C0"
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                                history.back();
+                            }
+                          })
                     })
                 })
         })
+}
+
+function confirmCancellation() {
+    Swal.fire({
+        icon: "warning",
+        title: "Are you sure you want to exit?",
+        text: "You will lose your changes!",
+        showDenyButton: true,
+        confirmButtonColor: "#85ac9f",
+        denyButtonColor: "#EB7875",
+        confirmButtonText: "Keep editing",
+        denyButtonText: "Discard"
+    }).then((result) => {
+        if (result.isDenied) {
+            history.back();
+        }
+    })
 }

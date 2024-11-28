@@ -107,9 +107,35 @@ function addEvent() {
                         lng: longitude,
                         attendees: [user.uid],
                     }).then(() => {
-                        alert("Your event was added successfully!");
-                        history.back();
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Your event was added!",
+                            icon: "success",
+                            confirmButtonText: "Continue",
+                            confirmButtonColor: "#4089C0"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                history.back();
+                            }
+                        })
                     })
                 })
         })
+}
+
+function confirmCancellation() {
+    Swal.fire({
+        icon: "warning",
+        title: "Are you sure you want to exit?",
+        text: "You will lose your progress!",
+        showDenyButton: true,
+        confirmButtonColor: "#85ac9f",
+        denyButtonColor: "#EB7875",
+        confirmButtonText: "Keep editing",
+        denyButtonText: "Discard"
+    }).then((result) => {
+        if (result.isDenied) {
+            history.back();
+        }
+    })
 }
