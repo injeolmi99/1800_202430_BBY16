@@ -25,7 +25,8 @@ var uiConfig = {
           clubs: [],                                  // I hope this will add an empty list Then need to add friend code (work with later)
           friends: [],                                // This array is empty cause they have no friends.
           profilePicture: "./images/icons/pfp" + pfpNum + ".png", // gives the user a random profile picture to start
-          clubsMade: 0                              // just creating the field now so it can be seen on firestore or is not null when we need it
+          clubsMade: 0,                              // just creating the field now so it can be seen on firestore or is not null when we need it
+          pins: []
         }).then(function () {
           console.log("New user added to firestore");
           window.location.assign("clubsList.html");       //re-direct to clubsList.html after signup

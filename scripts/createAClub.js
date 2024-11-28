@@ -106,7 +106,7 @@ function showImage() {
     document.getElementById("displayImage").src = "./images/clubImages/" + document.getElementById("image").value
 }
 
-// mentioned in edit club that the idea for this code was from microsoft copilot
+// https://stackoverflow.com/questions/10911797/how-to-restrict-the-text-field-to-enter-only-digits
 document.getElementById('clubName').addEventListener('input', function() {
     // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
     this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
@@ -121,12 +121,3 @@ document.getElementById('description').addEventListener('input', function() {
         this.value = this.value.replace("$(", "$ (")
     }
 });
-
-// HERE JUST FOR REFERENCE
-// function stuff() {
-//     db.collection("hello").doc("world").collection("events").add({
-//         time: "10:40",
-//         AMOrPM: "am",
-//         location: "SW05"
-//     })
-// } 
