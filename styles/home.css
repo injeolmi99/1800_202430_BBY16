@@ -72,10 +72,6 @@ content (clubs list) styling copied over from clubsListStyle.css
   cursor: pointer;
 }
 
-.clubGroup i:hover {
-
-}
-
 .clubGroup:hover .nameTag{
   display: flex;
   justify-content: center;
@@ -123,9 +119,9 @@ content (clubs list) styling copied over from clubsListStyle.css
 }
 
 input[type="checkbox"] {
+  max-height: 20px;
   transform: scale(1.2);
   margin-left: 6px;
-  padding: 50px;
   cursor: pointer;
 }
 
