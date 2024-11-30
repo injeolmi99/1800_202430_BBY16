@@ -72,10 +72,6 @@ content (clubs list) styling copied over from clubsListStyle.css
   cursor: pointer;
 }
 
-.clubGroup i:hover {
-
-}
-
 .clubGroup:hover .nameTag{
   display: flex;
   justify-content: center;
