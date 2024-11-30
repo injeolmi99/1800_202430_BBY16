@@ -99,7 +99,7 @@ function displayEventInfo() {
                         // overwrites the classes of the element by id insert-status
                         document.querySelector('#insert-status').className = "material-icons green";
                     } else {
-                        document.querySelector('#insert-status').innerHTML = "cancel";
+                        document.querySelector('#insert-status').innerHTML = "check_circle";
                         document.querySelector('#insert-status').className = "material-icons red";
                     }
 
@@ -153,7 +153,7 @@ function changeGoing() {
                         attendees: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)
                     })
                     console.log("removed from list")
-                    document.querySelector('#insert-status').innerHTML = "cancel";
+                    document.querySelector('#insert-status').innerHTML = "check_circle";
                     document.querySelector('#insert-status').className = "material-icons red";
                     updateGoingList(eventRef)
                 } else {
@@ -181,7 +181,7 @@ function changeGoing() {
                                 attendees: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)
                             })
                             console.log("removed from list")
-                            document.querySelector('#insert-status').innerHTML = "cancel";
+                            document.querySelector('#insert-status').innerHTML = "check_circle";
                             document.querySelector('#insert-status').className = "material-icons red";
                             updateGoingList(eventRef)
                         } else {
