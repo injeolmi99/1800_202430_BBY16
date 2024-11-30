@@ -1,5 +1,23 @@
 const features = [];
 
+function removeUnloggedinUsers() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            console.log("user detected");
+        } else {
+            Swal.fire({
+                title: "No user signed in!",
+                text: "Please sign in first!",
+                icon: "warning",
+                confirmButtonColor: "#4089C0"
+              }).then(() => {
+                location.href = "login.html";
+              })
+        }
+    })
+}
+removeUnloggedinUsers();
+
 function showMap() {
     //------------------------------------------
     // Defines and initiates basic mapbox data

@@ -10,8 +10,14 @@ function removeUnloggedinUsersandClubOwners() {
                 // console.log(userData)
                 if (userData.clubsMade != null && userData.clubsMade >= 2) {
                     // users owns the max number of clubs or more so we can kick them out of this form
-                    alert("you have made the maximum number of clubs per user")
-                    location.href = "clubsList.html";
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "You have made the maximum number of clubs per user (2)!",
+                        confirmButtonColor: "#4089C0"
+                    }).then(() => {
+                        history.back();
+                    });
                 } else if (userData.clubsMade == null) {
                     // the user does not have a clubs made field so we will create one and set to 0
                     currentUser.update({
@@ -22,8 +28,14 @@ function removeUnloggedinUsersandClubOwners() {
                 }
             })
         } else {
-            alert("You must be logged in to have access to this page.");
-            location.href = "login.html";
+            Swal.fire({
+                title: "No user signed in!",
+                text: "Please sign in first!",
+                icon: "warning",
+                confirmButtonColor: "#4089C0"
+              }).then(() => {
+                location.href = "login.html";
+              })
         }
     })
 }

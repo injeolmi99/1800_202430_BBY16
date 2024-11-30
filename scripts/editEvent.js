@@ -13,12 +13,24 @@ function removeNonAdmins() {
                 if (user) {
                     userID = user.uid;
                     if (userID != clubAdmin) {
-                        alert("You are not the club admin.")
-                        location.href = "home.html";
+                        Swal.fire({
+                            title: "Not club admin!",
+                            text: "You do not have permission to access this page!",
+                            icon: "warning",
+                            confirmButtonColor: "#4089C0"
+                          }).then(() => {
+                            history.back();
+                          })
                     }
                 } else {
-                    alert("No user signed in. Please sign in first.")
-                    location.href = "login.html";
+                    Swal.fire({
+                        title: "No user signed in!",
+                        text: "Please sign in first!",
+                        icon: "warning",
+                        confirmButtonColor: "#4089C0"
+                      }).then(() => {
+                        location.href = "login.html";
+                      })
                 }
             })
         } else {
@@ -32,12 +44,24 @@ function removeNonAdmins() {
                         if (user) {
                             userID = user.uid;
                             if (userID != clubAdmin) {
-                                alert("You are not the club admin.")
-                                location.href = "home.html";
+                                Swal.fire({
+                                    title: "Not club admin!",
+                                    text: "You do not have permission to access this page!",
+                                    icon: "warning",
+                                    confirmButtonColor: "#4089C0"
+                                  }).then(() => {
+                                    history.back();
+                                  })
                             }
                         } else {
-                            alert("No user signed in. Please sign in first.")
-                            location.href = "login.html";
+                            Swal.fire({
+                                title: "No user signed in!",
+                                text: "Please sign in first!",
+                                icon: "warning",
+                                confirmButtonColor: "#4089C0"
+                              }).then(() => {
+                                location.href = "login.html";
+                              })
                         }
                     })
                 }
