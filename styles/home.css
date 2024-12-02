@@ -3,6 +3,7 @@
   text-align: center;
   background-color: white;
 }
+
 #house {
   background-color: #4089C0;
 }
@@ -16,7 +17,7 @@
 }
 
 .eventCard a {
-    color: black;
+  color: black;
 }
 
 .eventName {
@@ -72,7 +73,7 @@ content (clubs list) styling copied over from clubsListStyle.css
   cursor: pointer;
 }
 
-.clubGroup:hover .nameTag{
+.clubGroup:hover .nameTag {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -147,7 +148,7 @@ label {
   font-size: 16px;
 }
 
-.button:hover{
+.button:hover {
   background-color: #4089C0;
   transition: 0.3s;
 }

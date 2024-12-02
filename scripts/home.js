@@ -12,9 +12,9 @@ function removeUnloggedinUsers() {
                 text: "Please sign in first!",
                 icon: "warning",
                 confirmButtonColor: "#4089C0"
-              }).then(() => {
+            }).then(() => {
                 location.href = "login.html";
-              })
+            })
         }
     })
 }
@@ -60,7 +60,7 @@ function displayCardsDynamically(collection) {
                     // create promise so that the array isn't accessed before it is fully populated, then chain .then()
 
                     promises.push(
-                        
+
                     )
                 })
             })
@@ -72,7 +72,7 @@ function displayCardsDynamically(collection) {
 //     let clubData = db.collection("clubs").doc(club);
 //     let unofficialClubData = db.collection("unofficialClubs").doc(club);
 //     let collection;
-    
+
 //     clubData.get().then(doc => {
 //         if (doc.exists) {
 //             collection = "clubs";
@@ -88,7 +88,7 @@ function displayCardsDynamically(collection) {
 //             });
 //         }            
 //     })
-   
+
 //     let clubEvents = db.collection(collection).doc(club).collection("events");
 
 //     let clubName;

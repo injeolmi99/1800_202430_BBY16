@@ -8,9 +8,9 @@ function removeUnloggedinUsers() {
                 text: "Please sign in first!",
                 icon: "warning",
                 confirmButtonColor: "#4089C0"
-              }).then(() => {
+            }).then(() => {
                 location.href = "login.html";
-              })
+            })
         }
     })
 }
@@ -37,16 +37,16 @@ function insertNameFromFirestore() {
                 let userPic = userDoc.data().profilePicture;
                 console.log(userPic)
                 //$("#name-goes-here").text(userName); // jQuery
-                if(userName != null){
+                if (userName != null) {
                     document.getElementById("nameInput").value = userName;
                 }
-                if(displayNameInput != null){
+                if (displayNameInput != null) {
                     document.getElementById("displayNameInput").value = userDisplayName;
                 }
-                if(userEmail != null){
+                if (userEmail != null) {
                     document.getElementById("emailInput").value = userEmail;
                 }
-                if(userDescription != null){
+                if (userDescription != null) {
                     document.getElementById("descriptionInput").value = userDescription;
                 }
                 // inserts the users profile picture if it is not null else asigns the first one
@@ -63,7 +63,7 @@ function insertNameFromFirestore() {
                         })
                     })
                 }
-                
+
             })
         } else {
             console.log("No user is logged in."); // Log a message when no user is logged in
@@ -78,9 +78,9 @@ function editUserInfo() {
     // thow in edit profile pic button
     // Change inner text to a pencil image eventually
     document.getElementById('insert-edit-pic-button').innerHTML = "<button id='change-profile-pic-button' onclick='openAvailablePics()'><span class='material-icons'>edit</span></button>";
- }
+}
 
- function saveUserInfo() {
+function saveUserInfo() {
     //enter code here
     userName = document.getElementById('nameInput').value;
     userDisplayName = document.getElementById('displayNameInput').value;
@@ -94,9 +94,9 @@ function editUserInfo() {
         displayName: userDisplayName,
         description: userDescription
     })
-    .then(() => {
-        console.log("Document successfully updated!");
-    })
+        .then(() => {
+            console.log("Document successfully updated!");
+        })
 
     // Iterate though each profile pic number to tell if it has been selected 
     let num = 1;
@@ -132,7 +132,7 @@ function openAvailablePics() {
     document.getElementById("insert-profile-options").innerHTML = "";
     // Each picture is specifically named so this loop will work
     while (num <= 30) {
-        document.getElementById("insert-profile-options").innerHTML += "<input type='radio' id='pfp" + num + "' name='pfp' value='./images/icons/pfp" + num + ".png'><label for='pfp" + num +"'><img onclick='liveUpdatePFP(\"./images/icons/pfp" + num + ".png\")' class='icons-image' src='./images/icons/pfp" + num + ".png' alt='icon missing'></label>"
+        document.getElementById("insert-profile-options").innerHTML += "<input type='radio' id='pfp" + num + "' name='pfp' value='./images/icons/pfp" + num + ".png'><label for='pfp" + num + "'><img onclick='liveUpdatePFP(\"./images/icons/pfp" + num + ".png\")' class='icons-image' src='./images/icons/pfp" + num + ".png' alt='icon missing'></label>"
         num += 1;
     }
 }
@@ -143,18 +143,18 @@ function liveUpdatePFP(pfp) {
 }
 
 // These next three methods restrict the input on Name, display name, and description
-document.getElementById('nameInput').addEventListener('input', function() {
+document.getElementById('nameInput').addEventListener('input', function () {
     // replaces any user input that is not A-Za-z -' with an empty space (appears nothing is happneing)
     this.value = this.value.replace(/[^A-Za-z -']/g, '');
 });
 
 
-document.getElementById('displayNameInput').addEventListener('input', function() {
+document.getElementById('displayNameInput').addEventListener('input', function () {
     // replaces any user input that is <>{}\$ with an empty space (appears nothing is happneing)
     this.value = this.value.replace(/[<>{}\\$]/g, '');
 });
 
-document.getElementById('descriptionInput').addEventListener('input', function() {
+document.getElementById('descriptionInput').addEventListener('input', function () {
     // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
     this.value = this.value.replace(/[<>{}\\]/g, '');
     // if users input $( a space gets added between the $ and ( to prevent some possible insertions

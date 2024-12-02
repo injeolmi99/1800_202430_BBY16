@@ -36,7 +36,7 @@
     bottom: 128px;
     right: 4px;
     z-index: 999;
-    padding-bottom:3px;
+    padding-bottom: 3px;
     transition: 0.3s;
 }
 
@@ -80,7 +80,7 @@ content (clubs list) styling
     box-shadow: 0px 0px 8px rgb(216, 215, 215);
 }
 
-.clubGroup:hover .nameTag{
+.clubGroup:hover .nameTag {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -174,9 +174,9 @@ what does this do? i don't see a corresponding class in the html (doesnt do anyt
 } */
 
 a {
-    display:block;
+    display: block;
     text-decoration: none;
-    color:black;
+    color: black;
 }
 
 #cl {
@@ -194,38 +194,40 @@ a {
     padding: 16px;
     font-size: 16px;
     border: none;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
     position: relative;
     display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  /* Show the dropdown menu on hover */
-  /* .dropdown:hover .dropdown-content {display: block;} */
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown 
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+/* .dropdown:hover .dropdown-content {display: block;} */
+
+/* Change the background color of the dropdown button when the dropdown content is shown 
   AK: got rid of this because i moved the filter into the search box*/
-  /* .dropdown:hover .dropbtn {background-color: #4089C0;} */
+/* .dropdown:hover .dropbtn {background-color: #4089C0;} */

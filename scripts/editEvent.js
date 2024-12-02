@@ -18,9 +18,9 @@ function removeNonAdmins() {
                             text: "You do not have permission to access this page!",
                             icon: "warning",
                             confirmButtonColor: "#4089C0"
-                          }).then(() => {
+                        }).then(() => {
                             history.back();
-                          })
+                        })
                     }
                 } else {
                     Swal.fire({
@@ -28,9 +28,9 @@ function removeNonAdmins() {
                         text: "Please sign in first!",
                         icon: "warning",
                         confirmButtonColor: "#4089C0"
-                      }).then(() => {
+                    }).then(() => {
                         location.href = "login.html";
-                      })
+                    })
                 }
             })
         } else {
@@ -49,9 +49,9 @@ function removeNonAdmins() {
                                     text: "You do not have permission to access this page!",
                                     icon: "warning",
                                     confirmButtonColor: "#4089C0"
-                                  }).then(() => {
+                                }).then(() => {
                                     history.back();
-                                  })
+                                })
                             }
                         } else {
                             Swal.fire({
@@ -59,9 +59,9 @@ function removeNonAdmins() {
                                 text: "Please sign in first!",
                                 icon: "warning",
                                 confirmButtonColor: "#4089C0"
-                              }).then(() => {
+                            }).then(() => {
                                 location.href = "login.html";
-                              })
+                            })
                         }
                     })
                 }
@@ -229,11 +229,11 @@ function updateEvent() {
                             icon: "success",
                             confirmButtonText: "Continue",
                             confirmButtonColor: "#4089C0"
-                          }).then((result) => {
+                        }).then((result) => {
                             if (result.isConfirmed) {
                                 history.back();
                             }
-                          })
+                        })
                     })
                 })
         })

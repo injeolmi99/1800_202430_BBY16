@@ -7,7 +7,8 @@
 }
 
 .content {
-  padding: 0rem 0 4rem; /* note to self (ak): maybe change bottom padding, come back once whole page is set up */
+  padding: 0rem 0 4rem;
+  /* note to self (ak): maybe change bottom padding, come back once whole page is set up */
   position: relative;
 }
 
@@ -25,7 +26,7 @@ button {
   font-size: 12pt;
   border: none;
   border-radius: 5px;
-  vertical-align: middle;  
+  vertical-align: middle;
 }
 
 #Admin-edit-button-goes-here {

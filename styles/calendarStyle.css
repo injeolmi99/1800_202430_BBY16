@@ -71,7 +71,7 @@ with edits to match our color scheme
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;    
+    height: 100%;
     flex-direction: column;
 }
 
@@ -223,6 +223,7 @@ with edits to match our color scheme
         }
     }
 }
+
 .calendar-events {
     overflow-y: scroll !important;
     text-align: center;

@@ -37,7 +37,7 @@ body {
 
 #green {
     grid-column: 1 / span 5;
-    grid-row: 6 / span 5; 
+    grid-row: 6 / span 5;
 }
 
 .responsive {
@@ -154,7 +154,7 @@ input[type="radio"] {
     /* margin: 1px; */
 }
 
-input[type="radio"]:checked + label {
+input[type="radio"]:checked+label {
     max-width: 75px;
     max-height: 75px;
     border: 1px solid red;
