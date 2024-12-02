@@ -37,8 +37,8 @@ button {
 
 #attendeesBrick {
   display: flex;
+  flex-direction: column;
   align-items: baseline;
-  justify-content: space-between;
 }
 
 #attendees {
@@ -46,9 +46,7 @@ button {
 }
 
 #going {
-  position: absolute;
-  top: 24px;
-  right: 24px;
+  align-self: end;
   font-weight: bold;
 }
 

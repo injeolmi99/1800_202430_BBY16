@@ -1,4 +1,6 @@
+const eventList = [];
 const features = [];
+var count = 0;
 
 function removeUnloggedinUsers() {
     firebase.auth().onAuthStateChanged(user => {
@@ -10,9 +12,9 @@ function removeUnloggedinUsers() {
                 text: "Please sign in first!",
                 icon: "warning",
                 confirmButtonColor: "#4089C0"
-              }).then(() => {
+            }).then(() => {
                 location.href = "login.html";
-              })
+            })
         }
     })
 }
@@ -77,11 +79,17 @@ function addEventPins(map, collection) {
 
                 allClubs.forEach(club => {
                     promise = new Promise((resolve, reject) => {
+                        let club_name = club.data().name;
                         let eventCollection = clubCollection.doc(club.id).collection("events");
 
-                        eventCollection.get()
+                        eventCollection.orderBy("lat").get()
                             .then(events => {
                                 events.forEach(event => {
+                                    if (event.data().date.toDate() < new Date()) {
+                                        // if before the current date, skip the current iteration of the loop
+                                        return;
+                                    }
+
                                     lat = event.data().lat;
                                     lng = event.data().lng;
                                     console.log(lat, lng);
@@ -91,20 +99,15 @@ function addEventPins(map, collection) {
                                     event_title = event.data().event; // Event Name
                                     preview = event.data().description; // Text Preview
 
-                                    // Pushes information into the features array
-                                    features.push({
-                                        'type': 'Feature',
-                                        'properties': {
-                                            'description':
-                                                `<strong>${event_title}</strong><p>${preview}</p> 
-                                            <br> <a href="/eachEvent.html?docID=${club.id}&eventID=${event.id}" target="_blank" 
-                                            title="Opens in a new window">Read more</a>`
-                                        },
-                                        'geometry': {
-                                            'type': 'Point',
-                                            'coordinates': coordinates
-                                        }
-                                    });
+                                    let thisEvent = {
+                                        club_name: club_name,
+                                        coordinates: coordinates,
+                                        event_title: event_title,
+                                        preview: preview,
+                                        url: `?docID=${club.id}&eventID=${event.id}`
+                                    }
+
+                                    eventList.push(thisEvent);
                                 })
                             })
                             .then(() => {
@@ -115,10 +118,86 @@ function addEventPins(map, collection) {
                     })
                 })
                 promise.then(() => {
-                    displayMap(map, collection);
+                    count++;
+                    // global variable count is only set to 2 once both official and unofficial clubs are iterated through, and then events are sorted and displayed. a bit hacky, but the best workaround we could find
+                    if (count == 2) {
+                        processMarkers(map);
+                    }
                 })
             })
         })
+}
+
+function processMarkers(map) {
+    let previousCoordinates;
+    let description = "";
+    let eventCount = 0;
+
+    // sort events so that events with the same coordinates are adjacent in the array
+    eventList.sort((a, b) => {
+        // if lng is the same, compare latitude
+        if (a.coordinates[0] === b.coordinates[0]) {
+            return a.coordinates[1] - b.coordinates[1];
+        }
+        
+        // if lng is different, compare lng
+        return a.coordinates[0] - b.coordinates[0];
+    });
+
+    console.log(eventList);
+
+    for (const event of eventList) {
+        if (eventCount == 0) {
+            description = `<strong>${event.club_name}: ${event.event_title}</strong><p>${event.preview} <a href="/eachEvent.html${event.url}" target="_blank" title="Opens in a new window">» More Details</a></p>`;
+            previousCoordinates = event.coordinates.slice();
+            eventCount++;
+
+            if (eventList.length > 1) {
+                continue;
+            } else {
+                pushToFeatures(description, previousCoordinates);
+            }
+        }
+
+        if (eventCount != 0 && JSON.stringify(event.coordinates) === JSON.stringify(previousCoordinates)) {
+            description += `<strong>${event.club_name}: ${event.event_title}</strong><p>${event.preview} <a href="/eachEvent.html${event.url}" target="_blank" title="Opens in a new window">» More Details</a></p>`;
+            previousCoordinates = event.coordinates.slice();
+            eventCount++;
+
+            if (eventCount < eventList.length) {
+                continue;
+            } else {
+                pushToFeatures(description, previousCoordinates);             
+            }
+        } else {
+            pushToFeatures(description, previousCoordinates);
+
+            description = `<strong>${event.club_name}: ${event.event_title}</strong><p>${event.preview} <a href="/eachEvent.html${event.url}" target="_blank" title="Opens in a new window">» More Details</a></p>`;
+            previousCoordinates = event.coordinates.slice();
+            eventCount++;
+
+            if (eventCount == eventList.length) {
+                pushToFeatures(description, previousCoordinates);
+            }
+        }
+    }
+
+    console.log(features);
+
+    displayMap(map, "events")
+}
+
+function pushToFeatures(description, coordinates) {
+    features.push({
+        'type': 'Feature',
+        'properties': {
+            'description': description
+        },
+        'geometry': {
+            'type': 'Point',
+            'coordinates': coordinates
+        }
+    })
 }
 
 function displayMap(map, collection) {
@@ -138,7 +217,7 @@ function displayMap(map, collection) {
         'type': 'symbol',
         'source': collection + '-places',
         'layout': {
-            'icon-image': collection + '-eventpin', // Pin Icon
+            'icon-image': 'clubs-eventpin', // Pin Icon
             'icon-size': 0.06, // Pin Size
             'icon-allow-overlap': true // Allows icons to overlap
         }
