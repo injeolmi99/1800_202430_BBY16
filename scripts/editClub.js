@@ -18,9 +18,9 @@ function removeNonAdmins() {
                             text: "You do not have permission to access this page!",
                             icon: "warning",
                             confirmButtonColor: "#4089C0"
-                          }).then(() => {
+                        }).then(() => {
                             history.back();
-                          })
+                        })
                     }
                 } else {
                     Swal.fire({
@@ -28,9 +28,9 @@ function removeNonAdmins() {
                         text: "Please sign in first!",
                         icon: "warning",
                         confirmButtonColor: "#4089C0"
-                      }).then(() => {
+                    }).then(() => {
                         location.href = "login.html";
-                      })
+                    })
                 }
             })
         } else {
@@ -49,9 +49,9 @@ function removeNonAdmins() {
                                     text: "You do not have permission to access this page!",
                                     icon: "warning",
                                     confirmButtonColor: "#4089C0"
-                                  }).then(() => {
+                                }).then(() => {
                                     history.back();
-                                  })        
+                                })
                             }
                         } else {
                             Swal.fire({
@@ -59,9 +59,9 @@ function removeNonAdmins() {
                                 text: "Please sign in first!",
                                 icon: "warning",
                                 confirmButtonColor: "#4089C0"
-                              }).then(() => {
+                            }).then(() => {
                                 location.href = "login.html";
-                              })
+                            })
                         }
                     })
                 }
@@ -149,7 +149,7 @@ function displayClubData() {
                     // getting info on what club categories we have works even if we add more
                     let dropdown2 = document.getElementById("clubType");
                     let options2 = dropdown2.options;
-                    
+
                     // displays what the current club type is (category)
                     for (let i = 0; i < options2.length; i++) {
                         if (options2[i].value == clubType) {
@@ -205,7 +205,7 @@ function submitNewClubData() {
                                 icon: "success",
                                 confirmButtonText: "Continue",
                                 confirmButtonColor: "#4089C0"
-                              }).then((result) => {
+                            }).then((result) => {
                                 if (result.isConfirmed) {
                                     location.href = "eachClub.html?docID=" + ID;
                                 }
@@ -249,7 +249,7 @@ function submitNewClubData() {
                                         icon: "success",
                                         confirmButtonText: "Continue",
                                         confirmButtonColor: "#4089C0"
-                                      }).then((result) => {
+                                    }).then((result) => {
                                         if (result.isConfirmed) {
                                             location.href = "eachClub.html?docID=" + ID;
                                         }

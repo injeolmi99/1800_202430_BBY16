@@ -10,9 +10,9 @@ function removeUnloggedinUsers() {
                 text: "Please sign in first!",
                 icon: "warning",
                 confirmButtonColor: "#4089C0"
-              }).then(() => {
+            }).then(() => {
                 location.href = "login.html";
-              })
+            })
         }
     })
 }

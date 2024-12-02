@@ -8,9 +8,9 @@ function removeUnloggedinUsers() {
                 text: "Please sign in first!",
                 icon: "warning",
                 confirmButtonColor: "#4089C0"
-              }).then(() => {
+            }).then(() => {
                 location.href = "login.html";
-              })
+            })
         }
     })
 }
@@ -56,7 +56,7 @@ function displayClubInfo() {
                     let clubDescription = thisClub.description;
                     let clubMembers = thisClub.members;
                     let clubAdmin = thisClub.admin;
-                    
+
                     db.collection("users").doc(clubAdmin).get().then(adminRef => {
                         if (adminRef.exists) {
                             let adminPFP = adminRef.data().profilePicture
@@ -86,7 +86,7 @@ function displayCardsDynamically(collection) {
     let params = new URL(window.location.href);
     let ID = params.searchParams.get("docID");
 
-    
+
     db.collection(collection).doc(ID).get()
         .then(club => {
             let members = club.data().members;
@@ -98,7 +98,7 @@ function displayCardsDynamically(collection) {
                         if (userDoc.exists && userID != admin) {
                             let newcard = cardTemplate.content.cloneNode(true);
                             let userData = userDoc.data();
-                            newcard.querySelector('.topBar').innerHTML = 
+                            newcard.querySelector('.topBar').innerHTML =
                                 '<img src="' + userData.profilePicture + '" alt="Profile missing" class="pfp"> ' + userData.displayName + ' ( ' + userData.name + ' ) ';
                             newcard.querySelector('.userDescription').innerHTML = userData.description;
                             document.getElementById("insert-members").appendChild(newcard);

@@ -33,9 +33,9 @@ function removeUnloggedinUsersandClubOwners() {
                 text: "Please sign in first!",
                 icon: "warning",
                 confirmButtonColor: "#4089C0"
-              }).then(() => {
+            }).then(() => {
                 location.href = "login.html";
-              })
+            })
         }
     })
 }
@@ -87,11 +87,11 @@ function createClub() {
                     icon: "success",
                     confirmButtonText: "Continue",
                     confirmButtonColor: "#4089C0"
-                  }).then((result) => {
+                }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = "home.html";
                     }
-                  })
+                })
             })
         })
     })
@@ -119,12 +119,12 @@ function showImage() {
 }
 
 // https://stackoverflow.com/questions/10911797/how-to-restrict-the-text-field-to-enter-only-digits
-document.getElementById('clubName').addEventListener('input', function() {
+document.getElementById('clubName').addEventListener('input', function () {
     // replaces any user input that is not A-Za-z0-9 ',.!?:/ with an empty space (appears nothing is happneing)
     this.value = this.value.replace(/[^A-Za-z0-9 ',.!?:/]/g, '');
 });
 
-document.getElementById('description').addEventListener('input', function() {
+document.getElementById('description').addEventListener('input', function () {
     // replaces any user input that is <>{}\ with an empty space so users cannot input weird stuff (hopefully this is enough) (appears nothing is happneing)
     this.value = this.value.replace(/[<>{}\\]/g, '');
     // if users input $( a space gets added between the $ and ( to prevent some possible insertions
