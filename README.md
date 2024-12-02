@@ -16,6 +16,7 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
 * Flatpickr v4.6.13 - Calendar Source Code: https://codepen.io/alvarotrigo/pen/NWyNgoy
+* Images from Adobe Stock images and Unsplash: https://stock.adobe.com/ca/photos, https://unsplash.com/
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?

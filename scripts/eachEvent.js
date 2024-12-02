@@ -62,6 +62,7 @@ function displayEventInfo() {
                     // Searches for the users ID in the club members array and acts accordingly
                     if (clubMembers.includes(user.uid) && user.uid == admin) {
                         document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editEvent()'><span class='material-icons'>settings</span> Edit Event</button>";
+                        document.getElementById("Admin-delete-button-goes-here").innerHTML = "<button id='delete-event' onclick='deleteEvent()'><span class='material-icons'>warning</span> Delete Event</button>";
                     }
 
                     // only shows the ability to join the event if the user is a member of the club (anyone else can see the events data so this doesnt do much)
@@ -213,5 +214,52 @@ function updateGoingList(eventRef) {
                     document.querySelector('#insert-members').innerHTML += "<div class='attendee'><img class='pfp' src='" + doc.data().profilePicture + "'>" + doc.data().displayName + "</div>";
                 })
         }))
+    })
+}
+
+function deleteEvent() {
+    let params = new URL(window.location.href); // get URL of search bar
+    let clubID = params.searchParams.get("docID"); //get value for club id
+    let eventID = params.searchParams.get("eventID"); //get value for event id
+    let collection = "clubs"
+
+    // Stolen from create a club js (thats our code for anyone wondering)
+    Swal.fire({
+        icon: "warning",
+        title: "Are you sure you want to delete the event?",
+        text: "Events cannot be retrieved after deletion!",
+        showDenyButton: true,
+        confirmButtonColor: "#85ac9f",
+        denyButtonColor: "#EB7875",
+        confirmButtonText: "Keep event",
+        denyButtonText: "Delete event"
+    }).then((result) => {
+        if (result.isDenied) {
+            // this all happens only if the user hits Delete event on the sweet alert or whatever it is called
+            db.collection(collection).doc(clubID).collection("events").doc(eventID).get().then(doc => {
+                if (doc.exists) {
+                    // delete event then redirect to club page Eachclub
+                    //console.log("official")
+                    db.collection(collection).doc(clubID).collection("events").doc(eventID).delete().then(() => {
+                        window.location.href = "eachClub.html?docID=" + clubID;
+                    })
+                } else {
+                    // unofficial clubs path
+                    collection = "unofficialClubs";
+                    db.collection(collection).doc(clubID).collection("events").doc(eventID).get().then(doc => {
+                        if (doc.exists) {
+                            // delete event then redirect to unnoficial club page Eachclub
+                            //console.log("unofficial")
+                            db.collection(collection).doc(clubID).collection("events").doc(eventID).delete().then(() => {
+                                window.location.href = "eachClub.html?docID=" + clubID;
+                            })
+                        } else {
+                            // At this point this should never run but just incase :)
+                            console.log("Event does not exist");
+                        }
+                    })
+                }
+            })
+        }
     })
 }
