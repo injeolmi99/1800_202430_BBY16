@@ -16,6 +16,10 @@
   padding-top: 0;
 }
 
+#events-go-here .contentBox {
+  max-height: 12rem;
+}
+
 button {
   /* doesn't have to be this color but orange was starting to make me want to peel my eyes */
   /* wow I have been quoted -- my life is complete */
@@ -66,8 +70,10 @@ button {
 }
 
 #see-all {
+  font-size: 14pt;
+  font-style: italic;
+  font-weight: bold;
   background-color: transparent;
   border: none;
-  color: grey;
-  text-decoration: underline;
+  color: var(--bs-body-color);
 }

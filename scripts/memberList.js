@@ -99,7 +99,7 @@ function displayCardsDynamically(collection) {
                             let newcard = cardTemplate.content.cloneNode(true);
                             let userData = userDoc.data();
                             newcard.querySelector('.topBar').innerHTML =
-                                '<img src="' + userData.profilePicture + '" alt="Profile missing" class="pfp"> ' + userData.displayName + ' ( ' + userData.name + ' ) ';
+                                '<img src="' + userData.profilePicture + '" alt="Profile missing" class="pfp"> ' + userData.displayName + ' (' + userData.name + ') ';
                             newcard.querySelector('.userDescription').innerHTML = userData.description;
                             document.getElementById("insert-members").appendChild(newcard);
                         } else if (userDoc.exists && userID == admin) {

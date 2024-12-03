@@ -1,7 +1,6 @@
 var currentUser;
+var map;
 const features = [];
-const eventList = [];
-var count = 0;
 
 function removeUnloggedinUsers() {
     firebase.auth().onAuthStateChanged(user => {
@@ -31,6 +30,7 @@ function displayEventInfo() {
     // new and improved way to check club bc storing previousPage url in session storage was unreliable and hack-y
     let collection;
     let clubMembers;
+    let clubName;
     let admin;
     let officialClubsList = db.collection("clubs").doc(clubID);
     let unofficialClubsList = db.collection("unofficialClubs").doc(clubID);
@@ -41,6 +41,7 @@ function displayEventInfo() {
                 // if official club, set collection to "clubs"
                 collection = "clubs";
                 clubMembers = doc.data().members;
+                clubName = doc.data().name;
                 admin = doc.data().admin;
             } else {
                 // because this return value is "thenable", next .then() in the chain can handle its result, preserving async handling
@@ -53,6 +54,7 @@ function displayEventInfo() {
             if (!collection && doc.exists) {
                 collection = "unofficialClubs";
                 clubMembers = doc.data().members;
+                clubName = doc.data().name;
                 admin = doc.data().admin;
             } else if (!collection) {
                 console.error("Club doesn't exist!");
@@ -96,6 +98,17 @@ function displayEventInfo() {
                     document.querySelector('.numberGoing').innerHTML += thisEvent.attendees.length + " going";
                     document.querySelector('.eventDate').innerHTML += date;
                     document.querySelector('.eventTime').innerHTML += time;
+
+                    document.querySelector('#clubName').innerHTML = `<a href="/eachClub.html?docID=${clubID}">» ${clubName} «</a>`;
+
+                    lat = thisEvent.lat;
+                    lng = thisEvent.lng;
+                    coordinates = [lng, lat];
+
+                    description = "Find Us Here!";
+                    pushToFeatures(description, coordinates);
+
+                    showMap();
 
                     // Sets the status of if the user is going or not
                     if (thisEvent.attendees.includes(currentUser.uid)) {
@@ -269,4 +282,117 @@ function deleteIt(clubID, eventID, collection) {
             })
         }
     })
+}
+
+function showMap() {
+    //------------------------------------------
+    // Defines and initiates basic mapbox data
+    //------------------------------------------
+    // TO MAKE THE MAP APPEAR YOU MUST
+    // ADD YOUR ACCESS TOKEN FROM
+    // https://account.mapbox.com
+    // Source: https://bcit-cst.notion.site/M01-How-to-implement-Mapbox-to-show-the-location-of-posts-eg-hikes-and-the-location-of-the-user-1306dfaf038a81e9b495ef984340b27e
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaW5qZW9sbWk5OSIsImEiOiJjbTN5cjBrNGoxdjlqMmlvYjBxYmZ2ajR2In0.QolTQid4w4FiVh5_IfKRZw';
+    map = new mapboxgl.Map({
+        container: 'map', // Container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // Styling URL
+        center: [-123.0010006, 49.2494324], // Starting position
+        zoom: 10 // Starting zoom
+    });
+
+    // Add user controls to map, zoom bar
+    map.addControl(new mapboxgl.NavigationControl());
+
+    //------------------------------------------------
+    // Add listener for when the map finishes loading.
+    // After loading, we can add map features
+    //------------------------------------------------
+    map.on('load', () => {
+
+        //--------------------------------------
+        // Add interactive pins for the event and user's location
+        //--------------------------------------
+        addEventPin(map);
+    });
+}
+
+function pushToFeatures(description, coordinates) {
+
+    features.push({
+        'type': 'Feature',
+        'properties': {
+            'description': description
+        },
+        'geometry': {
+            'type': 'Point',
+            'coordinates': coordinates
+        }
+    })
+}
+
+function addEventPin(map) {
+    map.loadImage(
+        './images/mapPin.png',
+        (error, image) => {
+            if (error) throw error;
+            map.addImage('eventpin', image); // Pin Icon
+        }
+    )
+    
+    displayMap(map);
+}
+
+function displayMap(map) {
+    // Adds features (in our case, pins) to the map
+    // "places" is the name of this array of features
+    map.addSource('place', {
+        'type': 'geojson',
+        'data': {
+            'type': 'FeatureCollection',
+            'features': features
+        }
+    });
+
+    // Creates a layer above the map displaying the pins
+    map.addLayer({
+        'id': 'place',
+        'type': 'symbol',
+        'source': 'place',
+        'layout': {
+            'icon-image': 'eventpin', // Pin Icon
+            'icon-size': 0.06, // Pin Size
+            'icon-allow-overlap': true // Allows icons to overlap
+        }
+    });
+
+    // When one of the "places" markers are clicked,
+    // create a popup that shows information 
+    // Everything related to a marker is save in features[] array
+    map.on('click', 'place', (e) => {
+        // Copy coordinates array.
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple 
+        // copies of the feature are visible, the popup appears over 
+        // the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', 'place', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Defaults cursor when not hovering over the places layer
+    map.on('mouseleave', 'place', () => {
+        map.getCanvas().style.cursor = '';
+    });
 }

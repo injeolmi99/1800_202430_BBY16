@@ -19,6 +19,7 @@ removeUnloggedinUsers();
 // create eventDates object
 var eventDates = {};
 var time = {};
+var urls = {};
 
 // displays all events for ALL CLUBS on their respective date in the calendar object 
 function displayEvents(collection) {
@@ -51,6 +52,11 @@ function displayEvents(collection) {
                 if (!time[date]) {
                   time[date] = [];
                 }
+                if (!urls[date]) {
+                  urls[date] = [];
+                }
+
+                urls[date].push(`/eachEvent.html?docID=${club.id}&eventID=${event.id}`);
                 time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
                 eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);
                 // console.log(eventDates[date]);
@@ -97,17 +103,22 @@ function displayUserEvents(collection) {
                 var eventTimestamp = event.data().date.toDate();
                 // only extract the date
                 var date = formatDate(eventTimestamp);
-                // console.log(date);
+
+                // if array for that date doesn't exist yet, initialize it
                 if (!eventDates[date]) {
                   eventDates[date] = [];
                 }
                 if (!time[date]) {
                   time[date] = [];
                 }
+                if (!urls[date]) {
+                  urls[date] = [];
+                }
 
                 promises.push(
                   clubRef.get()
                     .then((club) => {
+                      urls[date].push(`eachEvent.html?docID=${club.id}&eventID=${event.id}`);
                       time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
                       eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);
                       // console.log(eventDates[date]);
@@ -175,7 +186,9 @@ function initializeCalendar() {
           // l - day of week
           // F - month
           // J - day
-          contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l F J') + " @ " + time[str][i] + '</div><div class="location">' + eventDates[str][i] + '</div></div>';
+
+          let redirectLink = urls[str][i];
+          contents += '<div class="event"><div class="date">' + flatpickr.formatDate(date[0], 'l F J') + " @ " + time[str][i] + '</div><div class="location" style="cursor: pointer;" onclick="redirectToEventPage(\'' + redirectLink + '\')">' + eventDates[str][i] + '</div></div>';
         }
       }
       $('.calendar-events').html(contents)
@@ -257,3 +270,7 @@ function matchCalendarWidth() {
   });
 }
 matchCalendarWidth();
+
+function redirectToEventPage(url) {
+  location.href = "/" + url;
+}

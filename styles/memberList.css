@@ -8,7 +8,6 @@
 
 .content {
     padding: 0rem 0 4rem;
-    /* note to self (ak): maybe change bottom padding, come back once whole page is set up */
     position: relative;
 }
 
@@ -31,6 +30,12 @@ button {
     position: relative;
 }
 
+#insert-members {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
 /* 
 #insertJoinOrLeave button {
     width: 6rem;
@@ -46,8 +51,11 @@ button {
 }
 
 .topBar {
-    background-color: rgb(222, 207, 206);
     width: 100%;
+    padding: 0.6rem;
+    border-radius: 1rem;
+    background-color: rgb(222, 207, 206);
+    margin-bottom: 0.8rem;
 }
 
 .greyBottom {

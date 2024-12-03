@@ -14,6 +14,12 @@
   position: relative;
 }
 
+#clubName a {
+  color: var(--bs-body-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+
 button {
   background-color: #85ac9f;
   color: white;
