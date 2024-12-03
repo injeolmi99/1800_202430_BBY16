@@ -75,12 +75,19 @@ insertNameFromFirestore();
 function editUserInfo() {
     //Enable the form fields
     document.getElementById('personalInfoFields').disabled = false;
+    document.getElementById('emailInput').disabled = true;
     // thow in edit profile pic button
     // Change inner text to a pencil image eventually
-    document.getElementById('insert-edit-pic-button').innerHTML = "<button id='change-profile-pic-button' onclick='openAvailablePics()'><span class='material-icons'>edit</span></button>";
+    document.getElementById('insert-edit-pic-button').innerHTML = "<button id='change-profile-pic-button' onclick='openAvailablePics()'><span class='material-icons'>edit</span></button>"
+    
+    document.getElementById('editButton').style.display = "none";
+    document.getElementById('saveButton').style.display = "inline-block";
 }
 
 function saveUserInfo() {
+    document.getElementById('editButton').style.display = "inline-block";
+    document.getElementById('saveButton').style.display = "none";
+
     //enter code here
     userName = document.getElementById('nameInput').value;
     userDisplayName = document.getElementById('displayNameInput').value;
@@ -162,3 +169,7 @@ document.getElementById('descriptionInput').addEventListener('input', function (
         this.value = this.value.replace("$(", "$ (")
     }
 });
+
+function logout() {
+    location.href = "../index.html";
+}

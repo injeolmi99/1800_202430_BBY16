@@ -10,11 +10,15 @@ body {
     grid-row: 1;
 }
 
-
 .btn {
-    background-color: #F17C0E;
+    background-color: #85ac9f;
     color: white;
     border: none;
+}
+
+.btn:hover {
+    background-color: #85ac9f;
+    color: white;
 }
 
 #whole-profile {
@@ -120,15 +124,18 @@ body {
     border: 1px lightgrey solid;
 }
 
+#save_edit {
+    display: flex;
+    padding-top: 1rem;
+    position: absolute;
+    right: 1rem;
+    justify-content: end;
+}
+
 #Log-out-Button {
-    grid-row: 11;
-    grid-column: 4;
-    /* position: absolute; 
-    bottom: 0; 
-    right: 0; */
-    /* background-color: lightblue; */
-    justify-self: right;
-    padding: 10px;
+    background-color: #EB7875;
+    margin-bottom: 1rem;
+    justify-content: end;
 }
 
 #bottomNav {
@@ -171,4 +178,8 @@ input[type="radio"]:checked+label {
 
 #descriptionInput {
     height: 200px;
+}
+
+#saveButton {
+    display: none;
 }

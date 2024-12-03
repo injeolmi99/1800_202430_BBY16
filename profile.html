@@ -80,30 +80,26 @@
     </div>
   </nav>
 
-
   <!--use predetermined avatars instead of uploading personal images-->
   <div id="whole-profile">
-    <div id="profile-image" class="container text-center py-4">
-      <div id="pfp-box">
-        <div id="insert-pfp" class="rounded-circle overflow-hidden"></div>
-        <!--Insert a pencil icon eventually for -->
-        <div id="insert-edit-pic-button"></div>
-      </div>
-    </div>
-
     <div id="green">
+      <div class="container">
+        <div id="save_edit">
+          <button id="editButton" type="button" class="btn btn-info" onclick="editUserInfo()"><span class='material-icons'>edit</span> Edit</button>
+          <button id="saveButton" type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+        </div>
+      </div>  
+      <div id="profile-image" class="container text-center py-4">
+        <div id="pfp-box">
+          <div id="insert-pfp" class="rounded-circle overflow-hidden"></div>
+          <!--Insert a pencil icon eventually for -->
+          <div id="insert-edit-pic-button"></div>
+        </div>
+      </div>
+  
       <div class="container">
         <form>
           <div id="insert-profile-options"></div>
-          <!--Email should not be changable since it is used for authentication-->
-          <!--Just moved it outside of the personalInfoFields so it wouldnt appear editable-->
-          <fieldset class="mb-3" disabled>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
-            </div>
-          </fieldset>
-
           <fieldset class="mb-3" id="personalInfoFields" disabled>
             <div class="form-group">
               <!--Debating if this should be changable-->
@@ -111,20 +107,22 @@
               <input type="text" id="nameInput" class="form-control" placeholder="Enter your name" maxlength="30">
             </div>
             <div class="form-group">
+              <label>Email</label>
+              <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
               <label>Display name</label>
-              <input type="text" id="displayNameInput" class="form-control" placeholder="Enter your display name" maxlength="30">
+              <input type="text" id="displayNameInput" class="form-control" placeholder="Enter your display name"
+                maxlength="30">
             </div>
             <div class="form-group">
               <label>Description</label>
-              <textarea type="text" id="descriptionInput" class="form-control" placeholder="Enter your description" maxlength="800"></textarea>
+              <textarea type="text" id="descriptionInput" class="form-control" placeholder="Enter your description"
+                maxlength="800"></textarea>
             </div>
           </fieldset>
-          <div id="save_edit" class="d-flex justify-content-end mt-5">
-            <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-            <span style="width: 10px"></span>
-            <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
-          </div>
         </form>
+        <button id="Log-out-Button" type="button" class="btn btn-info" onclick="logout()">Logout</button>
       </div>
     </div>
 
@@ -145,9 +143,6 @@
     <!--Friends list and maybe friends code or something do later if time permits-->
 
     <!--Logout button-->
-    <div id="Log-out-Button" class="d-flex">
-      <a class="btn btn-outline-success" href="../index.html">Logout</a>
-    </div>
   </div>
 
   <!--BOTTOM NAVBAR-->
