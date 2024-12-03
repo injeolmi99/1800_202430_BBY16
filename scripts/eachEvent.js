@@ -235,29 +235,33 @@ function deleteEvent() {
         denyButtonText: "Delete event"
     }).then((result) => {
         if (result.isDenied) {
-            // this all happens only if the user hits Delete event on the sweet alert or whatever it is called
+            deleteIt(clubID, eventID, collection);
+        }
+    })
+}
+
+function deleteIt(clubID, eventID, collection) {
+    // this all happens only if the user hits Delete event on the sweet alert or whatever it is called
+    db.collection(collection).doc(clubID).collection("events").doc(eventID).get().then(doc => {
+        if (doc.exists) {
+            // delete event then redirect to club page Eachclub
+            //console.log("official")
+            db.collection(collection).doc(clubID).collection("events").doc(eventID).delete().then(() => {
+                window.location.href = "eachClub.html?docID=" + clubID;
+            })
+        } else {
+            // unofficial clubs path
+            collection = "unofficialClubs";
             db.collection(collection).doc(clubID).collection("events").doc(eventID).get().then(doc => {
                 if (doc.exists) {
-                    // delete event then redirect to club page Eachclub
-                    //console.log("official")
+                    // delete event then redirect to unnoficial club page Eachclub
+                    //console.log("unofficial")
                     db.collection(collection).doc(clubID).collection("events").doc(eventID).delete().then(() => {
                         window.location.href = "eachClub.html?docID=" + clubID;
                     })
                 } else {
-                    // unofficial clubs path
-                    collection = "unofficialClubs";
-                    db.collection(collection).doc(clubID).collection("events").doc(eventID).get().then(doc => {
-                        if (doc.exists) {
-                            // delete event then redirect to unnoficial club page Eachclub
-                            //console.log("unofficial")
-                            db.collection(collection).doc(clubID).collection("events").doc(eventID).delete().then(() => {
-                                window.location.href = "eachClub.html?docID=" + clubID;
-                            })
-                        } else {
-                            // At this point this should never run but just incase :)
-                            console.log("Event does not exist");
-                        }
-                    })
+                    // At this point this should never run but just incase :)
+                    console.log("Event does not exist");
                 }
             })
         }
