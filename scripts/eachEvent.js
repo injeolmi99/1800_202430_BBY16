@@ -1,4 +1,7 @@
 var currentUser;
+const features = [];
+const eventList = [];
+var count = 0;
 
 function removeUnloggedinUsers() {
     firebase.auth().onAuthStateChanged(user => {
