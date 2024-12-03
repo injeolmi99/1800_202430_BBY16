@@ -9,6 +9,10 @@
     text-align: center;
 }
 
+.container {
+    padding-top: 4rem;
+}
+
 /* #top-lock {
     background-color: #003e6eff;
     overflow: hidden;
