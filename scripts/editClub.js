@@ -236,11 +236,13 @@ function submitNewClubData() {
                                 newClubName = document.getElementById("clubName").value;
                                 newClubDescription = document.getElementById("description").value;
                                 let newClubImage = document.getElementById("image").value;
+                                let newClubType = document.getElementById("clubType").value;
 
                                 thisClubID.update({
                                     name: newClubName,
                                     description: newClubDescription,
-                                    image: newClubImage
+                                    image: newClubImage,
+                                    category: newClubType
                                 }).then(() => {
                                     console.log("documents successfully updated");
                                     Swal.fire({

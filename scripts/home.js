@@ -415,3 +415,22 @@ function updatePin(clubID) {
         }
     })
 }
+
+// Function to create a new official club
+// function createClub() {
+//     var user = "pv3WY9eYKveiO51pGLPvx0sr9Sm2";
+//     let clubName = "Outdoor Club";
+//     let clubDescription = "Dedicated to running outdoor events to meet like minded people and have fun. We do hiking, biking, camping, skiing and snowboarding sometimes we even go to the beach. There is never a dull moment in this club!";
+//     let clubImage = "SP2.jpg";
+//     let clubType = "Games";
+
+//     db.collection("clubs").add({
+//         name: clubName,
+//         admin: user,
+//         description: clubDescription,
+//         members: [user],
+//         image: clubImage,
+//         category: clubType,
+//         membersCount: 1
+//     })
+// }
