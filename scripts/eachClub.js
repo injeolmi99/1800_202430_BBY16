@@ -83,10 +83,10 @@ function displayClubInfo() {
                                 document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>+ Add Event</button>";
                             } else if (clubMembers.includes(user.uid)) {
                                 // console.log("Here");
-                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>";
+                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #EB7875;'>Leave</button>";
                             } else {
                                 // console.log("not in club");
-                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>";
+                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #85ac9f;'>Join</button>";
                             }
 
                         } else {
@@ -254,7 +254,7 @@ function removeUserFromClub(thisClubID, userDocRef, user) {
         }).then(() => {
             console.log("Club ID removed from user's club list.");
             // change the button to match the users status with club
-            document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Join</button>"
+            document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #85ac9f;'>Join</button>"
             updateCount(thisClubID)
         }).catch(error => {
             console.error("Error updating user document: ", error);
@@ -280,7 +280,7 @@ function addUserToClub(thisClubID, userDocRef, user) {
         }).then(() => {
             console.log("Club ID added to user's club list.");
             // change the button to match the users status with club
-            document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()'>Leave</button>"
+            document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #EB7875;'>Leave</button>"
             updateCount(thisClubID)
         }).catch(error => {
             console.error("Error updating user document: ", error);
