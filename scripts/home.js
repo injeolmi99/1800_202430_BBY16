@@ -385,4 +385,6 @@ function updatePin(clubID) {
 //         category: clubType,
 //         membersCount: 1
 //     })
+//     // if this function gets used again make it automatically put the new club in the users clubs array
+//     // forgot to do that and had short problems can be found in the create a club js
 // }

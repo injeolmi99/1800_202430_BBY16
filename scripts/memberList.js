@@ -84,22 +84,27 @@ function displayAdmin(collection) {
     })
 }
 
+// Function to display each club member and their info
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("memberCardTemplate");
 
+    // Get club ID
     let params = new URL(window.location.href);
     let ID = params.searchParams.get("docID");
 
-
+    // get the club then it's data
     db.collection(collection).doc(ID).get()
         .then(club => {
             let members = club.data().members;
             let admin = club.data().admin;
 
+            // For each user get the user
             members.forEach(userID => {
                 db.collection("users").doc(userID).get()
                     .then(userDoc => {
+                        // ensure user ID is not the admin becuase admin is displayed somewhere else
                         if (userDoc.exists && userID != admin) {
+                            // add all the users details to a new card then add the new card to the document
                             let newcard = cardTemplate.content.cloneNode(true);
                             let userData = userDoc.data();
                             newcard.querySelector('.topBar').innerHTML =
