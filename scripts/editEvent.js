@@ -120,34 +120,43 @@ function displayEventInfo() {
             })
         })
         .then(() => {
-            db.collection(collection).doc(clubID).collection("events").doc(eventID)
-                .get()
-                .then(doc => {
-                    thisEvent = doc.data();
-                    let title = thisEvent.event;
-                    let description = thisEvent.description;
-                    let date = thisEvent.date.toDate().toISOString().slice(0, 16);;
-                    let location = thisEvent.location;
-                    console.log(description)
-
-                    document.getElementById("eventName").value = title;
-                    document.getElementById("eventDate").value = date;
-                    document.getElementById("eventLocation2").value = location;
-                    document.getElementById("description").value = description;
-
-                    let dropdown = document.getElementById("eventLocation2");
-                    let options = dropdown.options;
-
-                    for (let i = 0; i < options.length; i++) {
-                        if (options[i].value.includes(location)) {
-                            dropdown.selectedIndex = i;
-                            break;
-                        }
-                    }
-                })
+            pullEventInfo(collection);
         })
 }
 displayEventInfo();
+
+function pullEventInfo(collection) {
+    // pull currently stored event info from firestore to be displayed in the form for editing
+    let params = new URL(window.location.href); //get URL of search bar
+    let clubID = params.searchParams.get("docID"); //get value for club id
+    let eventID = params.searchParams.get("eventID"); //get value for event id
+
+    db.collection(collection).doc(clubID).collection("events").doc(eventID)
+    .get()
+    .then(doc => {
+        thisEvent = doc.data();
+        let title = thisEvent.event;
+        let description = thisEvent.description;
+        let date = thisEvent.date.toDate().toISOString().slice(0, 16);;
+        let location = thisEvent.location;
+        console.log(description)
+
+        document.getElementById("eventName").value = title;
+        document.getElementById("eventDate").value = date;
+        document.getElementById("eventLocation2").value = location;
+        document.getElementById("description").value = description;
+
+        let dropdown = document.getElementById("eventLocation2");
+        let options = dropdown.options;
+
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value.includes(location)) {
+                dropdown.selectedIndex = i;
+                break;
+            }
+        }
+    })
+}
 
 function updateEvent() {
     let params = new URL(window.location.href); //get URL of search bar
@@ -198,45 +207,53 @@ function updateEvent() {
             })
         })
         .then(() => {
-            db.collection(collection).doc(clubID).collection("events").doc(eventID)
-                .get()
-                .then(doc => {
-                    let thisEvent = db.collection(collection).doc(clubID).collection("events").doc(eventID);
-                    // turn date received from form into javascript date object
-                    let dateBeforeConverting = new Date(document.getElementById("eventDate").value);
-                    // convert to firestore timestamp
-                    let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
-
-                    // Idea for how to split string from: https://stackoverflow.com/questions/96428/how-do-i-split-a-string-breaking-at-a-particular-character
-                    let geo = document.getElementById("eventLocation2").value;
-                    let fields = geo.split('|');
-
-                    let eventLocation = fields[0];
-                    let latitude = fields[1];
-                    let longitude = fields[2];
-
-                    thisEvent.update({
-                        event: document.getElementById("eventName").value,
-                        description: document.getElementById("description").value,
-                        date: eventDateTime,
-                        location: eventLocation,
-                        lat: latitude,
-                        lng: longitude
-                    }).then(() => {
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Your event has been updated!",
-                            icon: "success",
-                            confirmButtonText: "Continue",
-                            confirmButtonColor: "#4089C0"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                history.back();
-                            }
-                        })
-                    })
-                })
+            submitChanges(collection);
         })
+}
+
+function submitChanges(collection) {
+    let params = new URL(window.location.href); //get URL of search bar
+    let clubID = params.searchParams.get("docID"); //get value for club id
+    let eventID = params.searchParams.get("eventID"); //get value for event id
+
+    db.collection(collection).doc(clubID).collection("events").doc(eventID)
+    .get()
+    .then(doc => {
+        let thisEvent = db.collection(collection).doc(clubID).collection("events").doc(eventID);
+        // turn date received from form into javascript date object
+        let dateBeforeConverting = new Date(document.getElementById("eventDate").value);
+        // convert to firestore timestamp
+        let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
+
+        // Idea for how to split string from: https://stackoverflow.com/questions/96428/how-do-i-split-a-string-breaking-at-a-particular-character
+        let geo = document.getElementById("eventLocation2").value;
+        let fields = geo.split('|');
+
+        let eventLocation = fields[0];
+        let latitude = fields[1];
+        let longitude = fields[2];
+
+        thisEvent.update({
+            event: document.getElementById("eventName").value,
+            description: document.getElementById("description").value,
+            date: eventDateTime,
+            location: eventLocation,
+            lat: latitude,
+            lng: longitude
+        }).then(() => {
+            Swal.fire({
+                title: "Success!",
+                text: "Your event has been updated!",
+                icon: "success",
+                confirmButtonText: "Continue",
+                confirmButtonColor: "#4089C0"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    history.back();
+                }
+            })
+        })
+    })
 }
 
 function confirmCancellation() {

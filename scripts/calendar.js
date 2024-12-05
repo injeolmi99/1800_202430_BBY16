@@ -56,6 +56,7 @@ function displayEvents(collection) {
                   urls[date] = [];
                 }
 
+                // unfortunately because we push event info as a String there is no straightforward to sort events on the same date by time. an oversight that needs to be addressed at a later point
                 urls[date].push(`/eachEvent.html?docID=${club.id}&eventID=${event.id}`);
                 time[date].push(eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes());
                 eventDates[date].push(club.data().name + ": " + event.data().event + "<br><span class='material-icons location'>location_on</span>" + event.data().location);

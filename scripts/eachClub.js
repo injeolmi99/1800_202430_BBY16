@@ -47,77 +47,89 @@ function displayClubInfo() {
             }
         })
         .then(() => {
-            db.collection(collection)
-                .doc(ID)
-                .get()
-                .then(doc => {
-                    thisClub = doc.data();
-                    let clubImage = thisClub.image;
-                    let clubName = thisClub.name;
-                    let clubDescription = thisClub.description;
-                    let clubMembers = thisClub.members;
-                    let clubAdmin = thisClub.admin;
-
-                    db.collection("users").doc(clubAdmin).get().then(adminRef => {
-                        if (adminRef.exists) {
-                            let adminPFP = adminRef.data().profilePicture
-                            let adminDisplay = adminRef.data().displayName
-                            document.getElementById("insert-admin").innerHTML += '<img class="pfp" src="' + adminPFP + '" alt=""><span>' + adminDisplay + '</span>'
-                        } else {
-                            document.getElementById("insert-admin").innerHTML = "This club has no admin";
-                        }
-                    })
-
-                    //this is for displaying the Join or leave club button since it needs to change based on your status with the club
-                    // Getting user ID
-                    firebase.auth().onAuthStateChanged(user => {
-                        // If a user is logged in then go inside else fail
-                        if (user) {
-
-                            // Searches for the users ID in the club members array and acts accordingly
-                            if (clubMembers.includes(user.uid) && user.uid == clubAdmin) {
-                                //Line after this can be removed whenever just a place holder to tell JT when it works // Thank you sometimes im just forgetful to remove stuff
-                                // document.getElementById("insertJoinOrLeave").innerHTML = "Admin cannot leave their own club";
-
-                                document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'><span class='material-icons'>settings</span> Edit Club</button>";
-                                document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>+ Add Event</button>";
-                            } else if (clubMembers.includes(user.uid)) {
-                                // console.log("Here");
-                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #EB7875;'>Leave</button>";
-                            } else {
-                                // console.log("not in club");
-                                document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #85ac9f;'>Join</button>";
-                            }
-
-                        } else {
-                            console.log("Failed at user check / none logged in?");
-                            document.getElementById("insertJoinOrLeave").innerHTML = "ERROR!!!";
-                        }
-                    })
-
-                    // for loop to display 10 members in the members list
-                    let displayTen = 10;
-                    for (let i = 0; i < displayTen; i++) {
-                        if (clubMembers[i] != null && clubMembers[i] != clubAdmin) {
-                            db.collection("users").doc(clubMembers[i]).get().then(clubMemberData => {
-                                let thisMemberData = clubMemberData.data();
-                                document.getElementById("insert-members").innerHTML += '<p><img class="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.displayName + '</span></p>'
-                            })
-                        } else if (clubMembers[i] != null && clubMembers[i] == clubAdmin) {
-                            // this is just to ensure that if the admin's card comes up that it will still display 10 users
-                            // just becuase 10 is a better number than 9 :)
-                            displayTen++;
-                        }
-                    }
-
-                    document.getElementById("clubImage").style.backgroundImage = "url('./images/clubImages/" + clubImage + "')"
-                    document.getElementById("clubName").innerHTML = clubName;
-                    document.getElementById("clubDescription").innerHTML = clubDescription;
-                    displayCardsDynamically(collection);
-                })
+            processClubInfo(collection);
         })
 };
 displayClubInfo();
+
+function processClubInfo(collection) {
+    // after determining whether club is an official or unofficial club, process club info to be displayed on page
+    let params = new URL(window.location.href); //get URL of search bar
+    let ID = params.searchParams.get("docID"); //get value for key "id"
+
+    db.collection(collection)
+    .doc(ID)
+    .get()
+    .then(doc => {
+        thisClub = doc.data();
+        let clubImage = thisClub.image;
+        let clubName = thisClub.name;
+        let clubDescription = thisClub.description;
+        let clubMembers = thisClub.members;
+        let clubAdmin = thisClub.admin;
+
+        db.collection("users").doc(clubAdmin).get().then(adminRef => {
+            if (adminRef.exists) {
+                let adminPFP = adminRef.data().profilePicture
+                let adminDisplay = adminRef.data().displayName
+                document.getElementById("insert-admin").innerHTML += '<img class="pfp" src="' + adminPFP + '" alt=""><span>' + adminDisplay + '</span>'
+            } else {
+                document.getElementById("insert-admin").innerHTML = "This club has no admin";
+            }
+        })
+
+        dynamicLeaveOrJoin(clubMembers, clubAdmin)
+
+        // for loop to display 10 members in the members list
+        let displayTen = 10;
+        for (let i = 0; i < displayTen; i++) {
+            if (clubMembers[i] != null && clubMembers[i] != clubAdmin) {
+                db.collection("users").doc(clubMembers[i]).get().then(clubMemberData => {
+                    let thisMemberData = clubMemberData.data();
+                    document.getElementById("insert-members").innerHTML += '<p><img class="pfp" src="' + thisMemberData.profilePicture + '" alt=""><span>' + thisMemberData.displayName + '</span></p>'
+                })
+            } else if (clubMembers[i] != null && clubMembers[i] == clubAdmin) {
+                // this is just to ensure that if the admin's card comes up that it will still display 10 users
+                // just because 10 is a better number than 9 :)
+                displayTen++;
+            }
+        }
+
+        document.getElementById("clubImage").style.backgroundImage = "url('./images/clubImages/" + clubImage + "')"
+        document.getElementById("clubName").innerHTML = clubName;
+        document.getElementById("clubDescription").innerHTML = clubDescription;
+        displayCardsDynamically(collection);
+    })
+}
+
+function dynamicLeaveOrJoin(clubMembers, clubAdmin) {
+        //this is for displaying the Join or leave club button since it needs to change based on your status with the club
+        // Getting user ID
+        firebase.auth().onAuthStateChanged(user => {
+            // If a user is logged in then go inside else fail
+            if (user) {
+
+                // Searches for the users ID in the club members array and acts accordingly
+                if (clubMembers.includes(user.uid) && user.uid == clubAdmin) {
+                    //Line after this can be removed whenever just a place holder to tell JT when it works // Thank you sometimes im just forgetful to remove stuff
+                    // document.getElementById("insertJoinOrLeave").innerHTML = "Admin cannot leave their own club";
+
+                    document.getElementById("Admin-edit-button-goes-here").innerHTML = "<button onclick='editClub()'><span class='material-icons'>settings</span> Edit Club</button>";
+                    document.getElementById("insert-add-event").innerHTML = "<button onclick='addEvent()'>+ Add Event</button>";
+                } else if (clubMembers.includes(user.uid)) {
+                    // console.log("Here");
+                    document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #EB7875;'>Leave</button>";
+                } else {
+                    // console.log("not in club");
+                    document.getElementById("insertJoinOrLeave").innerHTML = "<button onclick='leaveOrJoin()' style='background-color: #85ac9f;'>Join</button>";
+                }
+
+            } else {
+                console.log("Failed at user check / none logged in?");
+                document.getElementById("insertJoinOrLeave").innerHTML = "ERROR!!!";
+            }
+        })
+}
 
 // fetch events of the current club to display in event gallery
 function displayCardsDynamically(collection) {

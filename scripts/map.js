@@ -85,29 +85,7 @@ function addEventPins(map, collection) {
                         eventCollection.orderBy("lat").get()
                             .then(events => {
                                 events.forEach(event => {
-                                    if (event.data().date.toDate() < new Date()) {
-                                        // if before the current date, skip the current iteration of the loop
-                                        return;
-                                    }
-
-                                    lat = event.data().lat;
-                                    lng = event.data().lng;
-                                    console.log(lat, lng);
-                                    coordinates = [lng, lat];
-                                    console.log(coordinates);
-                                    // Coordinates
-                                    event_title = event.data().event; // Event Name
-                                    preview = event.data().description; // Text Preview
-
-                                    let thisEvent = {
-                                        club_name: club_name,
-                                        coordinates: coordinates,
-                                        event_title: event_title,
-                                        preview: preview,
-                                        url: `?docID=${club.id}&eventID=${event.id}`
-                                    }
-
-                                    eventList.push(thisEvent);
+                                    pushToEventList(club.id, club_name, event);
                                 })
                             })
                             .then(() => {
@@ -126,6 +104,33 @@ function addEventPins(map, collection) {
                 })
             })
         })
+}
+
+function pushToEventList(clubID, club_name, event) {
+    // push to local eventList array to be processed by processMarkers()
+    if (event.data().date.toDate() < new Date()) {
+        // if before the current date, skip the current iteration of the loop
+        return;
+    }
+
+    lat = event.data().lat;
+    lng = event.data().lng;
+    console.log(lat, lng);
+    coordinates = [lng, lat];
+    console.log(coordinates);
+    // Coordinates
+    event_title = event.data().event; // Event Name
+    preview = event.data().description; // Text Preview
+
+    let thisEvent = {
+        club_name: club_name,
+        coordinates: coordinates,
+        event_title: event_title,
+        preview: preview,
+        url: `?docID=${clubID}&eventID=${event.id}`
+    }
+
+    eventList.push(thisEvent);
 }
 
 function processMarkers(map) {
@@ -147,10 +152,11 @@ function processMarkers(map) {
     console.log(eventList);
 
     for (const event of eventList) {
+        // handling first event separately as well as accounting for the edge case where there is only one event
         if (eventCount == 0) {
             description = `<strong>${event.club_name}: ${event.event_title}</strong><p>${event.preview} <a href="/eachEvent.html${event.url}" target="_blank" title="Opens in a new window">» More Details</a></p>`;
-            previousCoordinates = event.coordinates.slice();
-            eventCount++;
+            previousCoordinates = event.coordinates.slice(); // copy the array instead of creating an alias
+            eventCount++; // increment event count
 
             if (eventList.length > 1) {
                 continue;
@@ -159,23 +165,28 @@ function processMarkers(map) {
             }
         }
 
+        // check if not the first event and if the event coordinates of this event + the previous event are the same
         if (eventCount != 0 && JSON.stringify(event.coordinates) === JSON.stringify(previousCoordinates)) {
             description += `<strong>${event.club_name}: ${event.event_title}</strong><p>${event.preview} <a href="/eachEvent.html${event.url}" target="_blank" title="Opens in a new window">» More Details</a></p>`;
             previousCoordinates = event.coordinates.slice();
             eventCount++;
 
+            // continue to concatenate as long as there are events left to read
             if (eventCount < eventList.length) {
                 continue;
             } else {
-                pushToFeatures(description, previousCoordinates);             
+                pushToFeatures(description, previousCoordinates); // if this is the last event to process, display current marker            
             }
         } else {
+            // if event coordinates are different, push the previous marker
             pushToFeatures(description, previousCoordinates);
 
+            // start a new string description
             description = `<strong>${event.club_name}: ${event.event_title}</strong><p>${event.preview} <a href="/eachEvent.html${event.url}" target="_blank" title="Opens in a new window">» More Details</a></p>`;
             previousCoordinates = event.coordinates.slice();
             eventCount++;
 
+            // if last event, display current marker
             if (eventCount == eventList.length) {
                 pushToFeatures(description, previousCoordinates);
             }
@@ -184,10 +195,12 @@ function processMarkers(map) {
 
     console.log(features);
 
+    // once all markers are processsed, display the map
     displayMap(map, "events")
 }
 
 function pushToFeatures(description, coordinates) {
+    // pushes map marker to the local features array prior to being displayed on the map
     features.push({
         'type': 'Feature',
         'properties': {

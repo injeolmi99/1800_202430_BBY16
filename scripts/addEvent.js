@@ -88,7 +88,6 @@ function addEvent() {
             // this is needed because if we just get the value raw from the form it'll store in Firestore as a string, which might be fine but i already coded the event display cards to convert from Firestore timestamp to Javascript date object
             let dateBeforeConverting = new Date(document.getElementById("eventDate").value);
             let eventDateTime = firebase.firestore.Timestamp.fromDate(dateBeforeConverting);
-            // let eventLocation = document.getElementById("eventLocation").value;
             let eventDescription = document.getElementById("description").value;
 
             // Idea for how to split string from: https://stackoverflow.com/questions/96428/how-do-i-split-a-string-breaking-at-a-particular-character

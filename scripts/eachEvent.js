@@ -80,56 +80,64 @@ function displayEventInfo() {
             })
         })
         .then(() => {
-            db.collection(collection).doc(clubID).collection("events").doc(eventID)
-                .get()
-                .then(doc => {
-                    thisEvent = doc.data();
-                    let eventName = thisEvent.event;
-                    let eventDescription = thisEvent.description;
-                    let eventTimestamp = thisEvent.date.toDate();
-                    let location = thisEvent.location;
-                    let date = formatDate(eventTimestamp);
-                    let time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
-                    let eventAttendees = thisEvent.attendees;
-
-                    document.getElementById("eventName").innerHTML = eventName;
-                    document.getElementById("eventDescription").innerHTML = eventDescription;
-                    document.querySelector('.eventLocation').innerHTML += location;
-                    document.querySelector('.numberGoing').innerHTML += thisEvent.attendees.length + " going";
-                    document.querySelector('.eventDate').innerHTML += date;
-                    document.querySelector('.eventTime').innerHTML += time;
-
-                    document.querySelector('#clubName').innerHTML = `<a href="/eachClub.html?docID=${clubID}">» ${clubName} «</a>`;
-
-                    lat = thisEvent.lat;
-                    lng = thisEvent.lng;
-                    coordinates = [lng, lat];
-
-                    description = "Find Us Here!";
-                    pushToFeatures(description, coordinates);
-
-                    showMap();
-
-                    // Sets the status of if the user is going or not
-                    if (thisEvent.attendees.includes(currentUser.uid)) {
-                        document.querySelector('#insert-status').innerHTML = "check_circle";
-                        // overwrites the classes of the element by id insert-status
-                        document.querySelector('#insert-status').className = "material-icons green";
-                    } else {
-                        document.querySelector('#insert-status').innerHTML = "check_circle";
-                        document.querySelector('#insert-status').className = "material-icons red";
-                    }
-
-                    eventAttendees.forEach((attendee => {
-                        db.collection("users").doc(attendee).get()
-                            .then(doc => {
-                                document.querySelector('#insert-members').innerHTML += "<div class='attendee'><img class='pfp' src='" + doc.data().profilePicture + "'>" + doc.data().displayName + "</div>";
-                            })
-                    }))
-                })
+            processEventInfo(collection, clubName);
         })
 };
 displayEventInfo();
+
+function processEventInfo(collection, clubName) {
+    let params = new URL(window.location.href); //get URL of search bar
+    let clubID = params.searchParams.get("docID"); //get value for club id
+    let eventID = params.searchParams.get("eventID"); //get value for event id
+
+    db.collection(collection).doc(clubID).collection("events").doc(eventID)
+    .get()
+    .then(doc => {
+        thisEvent = doc.data();
+        let eventName = thisEvent.event;
+        let eventDescription = thisEvent.description;
+        let eventTimestamp = thisEvent.date.toDate();
+        let location = thisEvent.location;
+        let date = formatDate(eventTimestamp);
+        let time = eventTimestamp.getHours() + ":" + (eventTimestamp.getMinutes() < 10 ? "0" : "") + eventTimestamp.getMinutes();
+        let eventAttendees = thisEvent.attendees;
+
+        document.getElementById("eventName").innerHTML = eventName;
+        document.getElementById("eventDescription").innerHTML = eventDescription;
+        document.querySelector('.eventLocation').innerHTML += location;
+        document.querySelector('.numberGoing').innerHTML += thisEvent.attendees.length + " going";
+        document.querySelector('.eventDate').innerHTML += date;
+        document.querySelector('.eventTime').innerHTML += time;
+
+        document.querySelector('#clubName').innerHTML = `<a href="/eachClub.html?docID=${clubID}">» ${clubName} «</a>`;
+
+        lat = thisEvent.lat;
+        lng = thisEvent.lng;
+        coordinates = [lng, lat];
+
+        description = "Find Us Here!";
+        pushToFeatures(description, coordinates);
+
+        showMap(); // only initilaize map once event location data has been retrieved and pushed to features array
+
+        // Sets the status of if the user is going or not
+        if (thisEvent.attendees.includes(currentUser.uid)) {
+            document.querySelector('#insert-status').innerHTML = "check_circle";
+            // overwrites the classes of the element by id insert-status
+            document.querySelector('#insert-status').className = "material-icons green";
+        } else {
+            document.querySelector('#insert-status').innerHTML = "check_circle";
+            document.querySelector('#insert-status').className = "material-icons red";
+        }
+
+        eventAttendees.forEach((attendee => {
+            db.collection("users").doc(attendee).get()
+                .then(doc => {
+                    document.querySelector('#insert-members').innerHTML += "<div class='attendee'><img class='pfp' src='" + doc.data().profilePicture + "'>" + doc.data().displayName + "</div>";
+                })
+        }))
+    })
+}
 
 // format date to be displayed on card
 function formatDate(date) {
@@ -335,6 +343,7 @@ function addEventPin(map) {
         './images/mapPin.png',
         (error, image) => {
             if (error) throw error;
+
             map.addImage('eventpin', image); // Pin Icon
         }
     )

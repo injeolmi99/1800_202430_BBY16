@@ -47,54 +47,6 @@ function insertName() {
 }
 insertName();
 
-const promises = [];
-
-function displayCardsDynamically(collection) {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            let currentUser = db.collection("users").doc(user.uid);
-            currentUser.get().then(userDoc => {
-                let userClubs = userDoc.data().clubs;
-
-                userClubs.forEach(club => { //iterate thru each club
-                    // create promise so that the array isn't accessed before it is fully populated, then chain .then()
-
-                    promises.push(
-
-                    )
-                })
-            })
-        }
-    })
-}
-
-// function processClubs(club) {
-//     let clubData = db.collection("clubs").doc(club);
-//     let unofficialClubData = db.collection("unofficialClubs").doc(club);
-//     let collection;
-
-//     clubData.get().then(doc => {
-//         if (doc.exists) {
-//             collection = "clubs";
-//             clubName = doc.data().name;
-//             clubID = doc.id;
-//         } else {
-//             return unofficialClubData.get().then(doc => {
-//                 if (!clubName && doc.exists) { // if !clubName hasn't been assigned yet, doc is in unofficial clubs
-//                     collection = "unofficialClubs"
-//                     clubName = doc.data().name;
-//                     clubID = doc.id;
-//                 }
-//             });
-//         }            
-//     })
-
-//     let clubEvents = db.collection(collection).doc(club).collection("events");
-
-//     let clubName;
-//     let clubID;
-// }
-
 // fetch events of clubs user has joined to display in event gallery on home page
 function displayCardsDynamically(collection) {
     firebase.auth().onAuthStateChanged(user => {

@@ -46,39 +46,43 @@ function displayClubInfo() {
             }
         })
         .then(() => {
-            db.collection(collection)
-                .doc(ID)
-                .get()
-                .then(doc => {
-                    thisClub = doc.data();
-                    let clubImage = thisClub.image;
-                    let clubName = thisClub.name;
-                    let clubDescription = thisClub.description;
-                    let clubMembers = thisClub.members;
-                    let clubAdmin = thisClub.admin;
-
-                    db.collection("users").doc(clubAdmin).get().then(adminRef => {
-                        if (adminRef.exists) {
-                            let adminPFP = adminRef.data().profilePicture
-                            let adminDisplay = adminRef.data().displayName
-                            let adminName = adminRef.data().name
-                            let adminDesc = adminRef.data().description
-                            document.getElementById("insert-admin").innerHTML = '<div class="topBar"><img src="' + adminPFP + '" alt="Profile missing" class="pfp"> ' + adminDisplay + ' ( ' + adminName + ' ) </div><div class="userDescription">' + adminDesc + '</div><div class="adminKickButton greyBottom"></div>'
-                        } else {
-                            document.getElementById("insert-admin").innerHTML = "This club has no admin";
-                        }
-                    })
-
-                    document.getElementById("clubImage").style.backgroundImage = "url('./images/clubImages/" + clubImage + "')"
-                    document.getElementById("clubName").innerHTML = clubName;
-                    displayCardsDynamically(collection);
-
-                    // let imgEvent = document.querySelector( ".club-img" );
-                    // imgEvent.src = "../images/" + [would need some kind of identifier] + ".jpg";
-                })
+            displayAdmin(collection);
         })
 };
 displayClubInfo();
+
+function displayAdmin(collection) {
+    // displays admin of club separately in members list
+    let params = new URL(window.location.href); //get URL of search bar
+    let ID = params.searchParams.get("docID"); //get value for key "id"
+
+    db.collection(collection)
+    .doc(ID)
+    .get()
+    .then(doc => {
+        thisClub = doc.data();
+        // display club image & name
+        let clubImage = thisClub.image;
+        let clubName = thisClub.name;
+        let clubAdmin = thisClub.admin;
+
+        db.collection("users").doc(clubAdmin).get().then(adminRef => {
+            if (adminRef.exists) {
+                let adminPFP = adminRef.data().profilePicture
+                let adminDisplay = adminRef.data().displayName
+                let adminName = adminRef.data().name
+                let adminDesc = adminRef.data().description
+                document.getElementById("insert-admin").innerHTML = '<div class="topBar"><img src="' + adminPFP + '" alt="Profile missing" class="pfp"> ' + adminDisplay + ' ( ' + adminName + ' ) </div><div class="userDescription">' + adminDesc + '</div>'
+            } else {
+                document.getElementById("insert-admin").innerHTML = "This club has no admin";
+            }
+        })
+
+        document.getElementById("clubImage").style.backgroundImage = "url('./images/clubImages/" + clubImage + "')"
+        document.getElementById("clubName").innerHTML = clubName;
+        displayCardsDynamically(collection);
+    })
+}
 
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("memberCardTemplate");
