@@ -201,7 +201,7 @@ function sortEvents() {
         newcard.querySelector('.eventTime').innerHTML += time;
         newcard.querySelector('.goingCheck').innerHTML += '<label id="' + eventCard.clubID + eventCard.ID + 'Label" for="going">' + eventCard.attendees.length + (eventCard.attendees.length == 1 ? ' person is' : ' people are') + ' going. Are you?</label><input id="' + eventCard.clubID + eventCard.ID + 'Check" type="checkbox" name="going" value="' + eventCard.clubID + '">'
 
-        newcard.querySelector('#' + eventCard.clubID + eventCard.ID + 'Check').onclick = () => updateGoing(eventCard.clubID, eventCard.ID);
+        newcard.getElementById(eventCard.clubID + eventCard.ID + 'Check').onclick = () => updateGoing(eventCard.clubID, eventCard.ID);
         document.getElementById("events-go-here").appendChild(newcard);
 
         // had to move this down below cause asyncronousness is messing with me :(
