@@ -223,6 +223,7 @@ function submitNewClubData() {
                 }
             })
         } else {
+            // Everything below here is the same as what was done before but for a different database collection (unnofficial clubs)
             let thisClubID = db.collection("unofficialClubs").doc(ID);
             thisClubID.get().then(doc => {
                 if (doc.exists) {
